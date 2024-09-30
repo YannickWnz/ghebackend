@@ -8,12 +8,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(name="UTI_CODE")
     private String code;
-
+    
+    @Column(name="UTI_NOM")
     private String nom;
-
+    
+    @Column(name="UTI_PRENOM")
     private String prenom;
     
+    @Column(name="UTI_PASSWORD")
     private String password;
 
     // Constructors, getters & setters 
@@ -41,7 +46,15 @@ public class User {
         this.prenom = prenom;
     }
 
-    
+    private String getPassword() {
+        return password;
+    }
+
+    private void setPassword(String password) {
+        this.password = password;
+    }
+
+
 
 
 }

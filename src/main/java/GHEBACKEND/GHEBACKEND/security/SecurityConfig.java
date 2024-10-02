@@ -21,10 +21,10 @@ public class SecurityConfig {
                 .requestMatchers("/register", "/login").permitAll() // Allow access to register and login endpoints
                 .anyRequest().authenticated() // All other requests require authentication
             )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .permitAll()
-            )
+            // .formLogin(form -> form
+            //     .loginPage("/login")
+            //     .permitAll()
+            // )
             .logout(logout -> logout
                 .permitAll()
             );

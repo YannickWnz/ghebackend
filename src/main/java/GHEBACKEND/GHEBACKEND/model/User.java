@@ -22,35 +22,35 @@ public class User {
     private String password;
 
     // Constructors, getters & setters 
-    private String getCode() {
+    public String getCode() {
         return code;
     }
 
-    private void setCode(String code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    private String getNom() {
+    public String getNom() {
         return nom;
     }
 
-    private void setNom(String nom) {
+    public void setNom(String nom) {
         this.nom = nom;
     }
 
-    private String getPrenom() {
+    public String getPrenom() {
         return prenom;
     }
 
-    private void setPrenom(String prenom) {
+    public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
-    private String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    private void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

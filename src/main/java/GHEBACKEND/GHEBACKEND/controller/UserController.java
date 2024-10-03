@@ -21,14 +21,27 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    // public User registerUser(@RequestBody User user) {
-    //     // userService.registerUser(user);
-    //     return user;
-    // }
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
-        userService.registerUser(user);
-        return ResponseEntity.ok("User successfully registered.");
+    public String registerUser(@RequestBody User user) {
+        // userService.registerUser(user);
+
+        int a = 0;
+        int b = 0;
+        int c = 0;
+
+        int num = a + b + c;
+
+        String lname = user.getNom();
+        String fname = user.getPrenom();
+        String lNameFirstLetter = user.getNom().substring(0, 1);
+        String fNameFirstLetter = user.getPrenom().substring(0, 1);
+        
+        return lNameFirstLetter.concat(fNameFirstLetter);
     }
+    
+    // public ResponseEntity<?> registerUser(@RequestBody User user) {
+    //     userService.registerUser(user);
+    //     return ResponseEntity.ok("User successfully registered.");
+    // }
 
     // @GetMapping
     // @PostMapping("/login")

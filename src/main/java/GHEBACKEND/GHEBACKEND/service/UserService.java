@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.User;
 import GHEBACKEND.GHEBACKEND.repository.UserRepository;
+import GHEBACKEND.GHEBACKEND.security.JwtUtils;
 
 @Service
 public class UserService {
@@ -21,6 +22,8 @@ public class UserService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private JwtUtils jwtUtils;
 
 
     public void registerUser(User user) {

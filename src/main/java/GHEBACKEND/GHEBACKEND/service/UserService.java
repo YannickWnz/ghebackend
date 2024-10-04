@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
+
 
 import GHEBACKEND.GHEBACKEND.model.User;
 import GHEBACKEND.GHEBACKEND.repository.UserRepository;
@@ -36,6 +38,14 @@ public class UserService {
 
         // user.setPassword(passwordEncoder.encode(user.getPassword()));
         // return userRepository.save(user);
+    }
+
+    public String loginUser(String code, String password) {
+        Optional<User> user = userRepository.findById(code);
+        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword()) ) {
+            return jwtUtils.generateJwtToken(user.get().getNom());
+        }
+        return null;
     }
 
     // public User addUser(User user) {

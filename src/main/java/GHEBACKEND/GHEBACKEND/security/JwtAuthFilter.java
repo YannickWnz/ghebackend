@@ -3,6 +3,7 @@ package GHEBACKEND.GHEBACKEND.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.io.IOException;
@@ -11,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -24,6 +26,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+            // if (jwt != null && jwtUtils.getClaimsFromToken(jwt)) {
                 String username = jwtUtils.getUsernameFromJwtToken(jwt);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);

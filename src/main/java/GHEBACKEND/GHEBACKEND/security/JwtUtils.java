@@ -29,16 +29,27 @@ public class JwtUtils {
                 .compact();
     }
 
+    // @SuppressWarnings("deprecation")
     @SuppressWarnings("deprecation")
     public boolean validateJwtToken(String token) {
-        try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+    try {
+            // Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            System.out.println("Invalid JWT token");
+            System.out.println("Invalid JWT token " + token); 
         }
         return false;
     }
+    // public Claims validateJwtToken(String token) {
+    //     Key key = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+
+    //     return Jwts.parserBuilder()
+    //             .setSigningKey(key)  // Use the SecretKey instead of the deprecated String method
+    //             .build()
+    //             .parseClaimsJws(token)
+    //             .getBody();
+    // }
 
     @SuppressWarnings("deprecation")
     public String getUsernameFromJwtToken(String token) {

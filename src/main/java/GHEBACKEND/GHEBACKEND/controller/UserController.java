@@ -19,8 +19,6 @@ import GHEBACKEND.GHEBACKEND.service.UserService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 // @RequestMapping("/api/auth")
-// @RequestMapping("/api/auth")
-// @CrossOrigin("*")
 public class UserController {
 
     @Autowired
@@ -54,7 +52,6 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    // public ResponseEntity<?> loginUser(@RequestParam String code, @RequestParam String password) {
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         String token = userService.loginUser(user.getCode(), user.getPassword());
         if (token != null) {
@@ -63,22 +60,12 @@ public class UserController {
         } else {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
-        // return ResponseEntity.badRequest().body("Invalid credentials");
     }
 
-    // @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/api/getStudent")
     public String getStudentList() {
         return "Student List";
     }
-
-    // test 
-    
-    // @GetMapping
-    // @PostMapping("/login")
-    // public String returnSmth() {
-    //     return "trying ....";
-    // }
 
 
 }

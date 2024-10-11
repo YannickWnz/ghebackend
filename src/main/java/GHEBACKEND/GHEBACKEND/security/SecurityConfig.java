@@ -25,11 +25,6 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
-
-    // @Bean
-    // public JwtAuthFilter jwtAuthFilter() {
-    //     return new JwtAuthFilter();
-    // }
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,7 +32,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/register", "/login").permitAll() // Allow access to register and login endpoints
+                .requestMatchers("/register", "/login").permitAll() // Only Allow access to register and login endpoints
                 .anyRequest().authenticated() // All other requests require authentication
             )
             .sessionManagement(sessionManagement ->
@@ -64,20 +59,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-    // @Bean
-    // public WebMvcConfigurer corsConfigurer() {
-    //     return new WebMvcConfigurer() {
-    //         @Override
-    //        public void addCorsMappings(CorsRegistry registry) {
-    //             registry.addMapping("/**")
-    //                 .allowedOrigins("http://localhost:3000")
-    //                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-    //                 .allowedHeaders("*")
-    //                 .allowCredentials(true);
-    //         }
-    //     };
-    // }
 
      @Bean
     public CorsConfigurationSource corsConfigurationSource() {

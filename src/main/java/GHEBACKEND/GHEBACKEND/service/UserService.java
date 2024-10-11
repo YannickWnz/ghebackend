@@ -27,7 +27,7 @@ public class UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
-
+    // user registration function
     public void registerUser(User user) {
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -40,6 +40,7 @@ public class UserService {
         // return userRepository.save(user);
     }
 
+    // user login function
     public String loginUser(String code, String password) {
         Optional<User> user = userRepository.findById(code);
         if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword()) ) {

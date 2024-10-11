@@ -11,13 +11,14 @@ import java.security.Key;
 public class JwtUtils {
 
     private final String secretKey = "13f44524ad70c6a921e1a4741f63f8f9aafa3d6b6c67212be69f8197890b14bb";
-    private final long jwtExpirations = 86400;
+    private final long jwtExpirations = 86400000;
 
     // @SuppressWarnings("deprecation")
     public String generateJwtToken(String username) {
 
         // Generate key from secret string 
-        Key key = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+        // Key key = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+        Key key = new SecretKeySpec(Base64.getDecoder().decode(secretKey), SignatureAlgorithm.HS256.getJcaName());
 
 
         return Jwts.builder()
@@ -29,16 +30,41 @@ public class JwtUtils {
                 .compact();
     }
 
+    // @SuppressWarnings("deprecation")
     @SuppressWarnings("deprecation")
+    // public boolean validateJwtToken(String token) {
+    // try {
+    //         Key key = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+    //         // Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+    //         // Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
+    //         Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+    //         return true;
+    //     } catch (JwtException | IllegalArgumentException e) {
+    //         System.out.println("Invalid JWT token " + token); 
+    //     }
+    //     return false;
+    // }
+
     public boolean validateJwtToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            // Key key = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+            Key key = new SecretKeySpec(Base64.getDecoder().decode(secretKey), SignatureAlgorithm.HS256.getJcaName());
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            System.out.println("Invalid JWT token");
+            System.out.println("Invalid JWT token: " + e.getMessage()); 
         }
         return false;
     }
+    // public Claims validateJwtToken(String token) {
+    //     Key key = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+
+    //     return Jwts.parserBuilder()
+    //             .setSigningKey(key)  // Use the SecretKey instead of the deprecated String method
+    //             .build()
+    //             .parseClaimsJws(token)
+    //             .getBody();
+    // }
 
     @SuppressWarnings("deprecation")
     public String getUsernameFromJwtToken(String token) {

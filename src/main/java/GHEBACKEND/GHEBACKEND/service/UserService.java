@@ -43,7 +43,7 @@ public class UserService {
     public String loginUser(String code, String password) {
         Optional<User> user = userRepository.findById(code);
         if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword()) ) {
-            return jwtUtils.generateJwtToken(user.get().getNom());
+            return jwtUtils.generateJwtToken(user.get().getCode());
         }
         return null;
     }

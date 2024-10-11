@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,16 +34,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))  // Use custom CORS configuration
-            .csrf(csrf -> csrf.disable()) // Disable CSRF protection (enable if using forms)
-            // .authorizeHttpRequests(auth -> auth
-            //     .requestMatchers("/register", "/login").permitAll() // Allow access to register and login endpoints
-            //     // .requestMatchers("/api/getStudent").authenticated()  // Require authentication for this endpoint
-            //     .anyRequest().authenticated() // All other requests require authentication
-            // )
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
+                .requestMatchers("/register", "/login").permitAll() // Allow access to register and login endpoints
+                .anyRequest().authenticated() // All other requests require authentication
             )
+            .sessionManagement(sessionManagement ->
+                sessionManagement
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            // .authorizeHttpRequests(auth -> auth
+            //     .anyRequest().permitAll()
+            // )
             .logout(logout -> logout
                 .permitAll()
             )

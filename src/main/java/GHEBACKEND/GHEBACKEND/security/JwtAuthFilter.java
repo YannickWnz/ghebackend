@@ -18,6 +18,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtils jwtUtils;
 
+    // @Autowired
+    // private JwtUtility jwtUtility;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
     HttpServletResponse response,
@@ -26,8 +29,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-            // if (jwt != null && jwtUtils.getClaimsFromToken(jwt)) {
+            // if (jwt != null && jwtUtility.extractClaim(jwt, claims -> true)) {
                 String username = jwtUtils.getUsernameFromJwtToken(jwt);
+                // String username = jwtUtility.extractCode(jwt);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

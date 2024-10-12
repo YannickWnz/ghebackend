@@ -27,14 +27,25 @@ public class UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
+
+    // user signup function
+    public void signupUser(User user) {}
+
     // user registration function
     public void registerUser(User user) {
+
+        String lname = user.getNom();
+        String fname = user.getPrenom();
+    
+        String username = fname + lname.charAt(0);
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
 
         String insertUserQuery = "INSERT INTO T_UTILISATEURS (UTI_CODE, UTI_NOM, UTI_PRENOM, UTI_PASSWORD) VALUES (?, ?, ?, ?)";
 
-        jdbcTemplate.update(insertUserQuery, user.getCode(), user.getNom(), user.getPrenom(), encodedPassword);
+        jdbcTemplate.update(insertUserQuery, username.toLowerCase(), user.getNom(), user.getPrenom(), encodedPassword);
+    
+        // jdbcTemplate.update(insertUserQuery, user.getCode(), user.getNom(), user.getPrenom(), encodedPassword);
 
         // user.setPassword(passwordEncoder.encode(user.getPassword()));
         // return userRepository.save(user);

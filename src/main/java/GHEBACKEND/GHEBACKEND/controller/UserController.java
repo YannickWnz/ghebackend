@@ -27,7 +27,6 @@ public class UserController {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @PostMapping("/register")
     // public String registerUser(@RequestBody User user) {
     //     // userService.registerUser(user);
 
@@ -44,6 +43,22 @@ public class UserController {
         
     //     return lNameFirstLetter.concat(fNameFirstLetter);
     // }
+
+    @PostMapping("/signup")
+    public String signupUser(@RequestBody User user) {
+
+        String lname = user.getNom();
+        String fname = user.getPrenom();
+        String password = user.getPassword();
+        
+
+        String username = fname + lname.charAt(0);
+
+
+        return username.toLowerCase();
+    }
+
+    @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         userService.registerUser(user);
         String token = userService.loginUser(user.getCode(), user.getPassword());

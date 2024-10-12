@@ -31,16 +31,16 @@ public class SecurityConfig {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/register", "/login").permitAll() // Only Allow access to register and login endpoints
-                .anyRequest().authenticated() // All other requests require authentication
-            )
+            // .authorizeHttpRequests(auth -> auth
+            //     .requestMatchers("/register", "/login").permitAll() // Only Allow access to register and login endpoints
+            //     .anyRequest().authenticated() // All other requests require authentication
+            // )
             .sessionManagement(sessionManagement ->
                 sessionManagement
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // .authorizeHttpRequests(auth -> auth
-            //     .anyRequest().permitAll()
-            // )
+            .authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+            )
             .logout(logout -> logout
                 .permitAll()
             )

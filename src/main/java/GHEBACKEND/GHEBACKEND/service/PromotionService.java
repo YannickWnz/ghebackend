@@ -14,7 +14,7 @@ public class PromotionService {
 
     public void addPromotion(Promotion promotion) {
 
-        String insertPromotionQuery = "INSERT INTO T_PROMOTIO (PRO_CODE, PRO_LIB, PRO_CREER_PAR, PRO_VERSION) VALUES (?, ?, ?, ?)";
+        String insertPromotionQuery = "INSERT INTO T_PROMOTION (PRO_CODE, PRO_LIB, PRO_CREER_PAR, PRO_VERSION) VALUES (?, ?, ?, ?)";
 
         // running insert query
         jdbcTemplate.update(

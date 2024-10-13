@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,24 +36,38 @@ public class PromotionController {
         return ResponseEntity.ok("Promotion successfully created");
     }
 
-    // function qui recupere toutes les promotion
+    // function qui recupere toutes les promotions
     @GetMapping("/api/getAllPromotion")
     public List<Promotion> getAllPromo() {
         return promotionService.getAllPromoRefData();
     }
 
-    // function handle data update
+    // function qui se charge de la mise a jour
     @PutMapping("/api/promotion/{proCode}")
     public ResponseEntity<Promotion> updatePromoData(@PathVariable int proCode, @RequestBody Promotion updatedPromotionData) {
 
         Promotion updated = promotionService.updatePromoData(
             proCode,
             updatedPromotionData.getProLib(),
-            updatedPromotionData.getModifierPar(),
-            updatedPromotionData.getProVersion()
+            updatedPromotionData.getModifierPar()
         );
 
         return ResponseEntity.ok(updated);
+    }
+
+    // controller function qui se charge de la suppression
+    @DeleteMapping("/api/deletePromotion/{proCode}")
+    public ResponseEntity<String> deletePromoData(@PathVariable Integer proCode) {
+
+        try {
+
+            promotionService.deletePromoData(proCode);
+            return ResponseEntity.ok("Promotion delete successfully");
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
 }

@@ -56,19 +56,40 @@ public class PromotionService {
 
     }
 
-    public Promotion updatePromoData(Integer proCode, String proLib, String proModifierPar, Integer proVersion) {
+    // function handling data update
+    public Promotion updatePromoData(Integer proCode, String proLib, String proModifierPar) {
 
+        // get current promotion version from repo function
+        int currentVersion = promotionRepo.findProVersion(proCode);
+        
+        // get a new version by increment current by 1
+        int newVersion = currentVersion + 1;
+        
+        
+        // find data before update else throw error
         Promotion existingPromoData = promotionRepo.findById(proCode)
-            .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
-
+        .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
+        
+        // set new data then save ...
             existingPromoData.setProLib(proLib);
             existingPromoData.setModifierPar(proModifierPar);
-            existingPromoData.setProVersion(proVersion);
+            existingPromoData.setProVersion(newVersion);
 
             return promotionRepo.save(existingPromoData);
 
 
     }
-    
+
+    // function handling data deletion 
+    public void deletePromoData(Integer proCode) {
+
+        if(promotionRepo.existsById(proCode)) {
+            promotionRepo.deleteById(proCode);
+        } else {
+            throw new IllegalArgumentException("Could not find data with the provided code.");
+        }
+
+    }
+
 
 }

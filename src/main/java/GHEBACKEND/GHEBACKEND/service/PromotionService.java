@@ -26,19 +26,6 @@ public class PromotionService {
         return promotionRepo.findAll();
     }
 
-    private int generateCode() {
-
-        int code = 1001; 
-
-        String findByIdQuery = "SELECT PRO_CODE FROM T_PROMOTION WHERE PRO_CODE = ?";
-
-        jdbcTemplate.execute(findByIdQuery);
-
-
-
-        return 1;
-    }
-
     // service function inserting promotion donnees ref to db
     // @SuppressWarnings("deprecation")
     public void addPromotion(Promotion promotion) {
@@ -66,6 +53,20 @@ public class PromotionService {
                 promotion.getCreerPar(), 
                 promotion.getProVersion()
             );
+
+    }
+
+    public Promotion updatePromoData(Integer proCode, String proLib, String proModifierPar, Integer proVersion) {
+
+        Promotion existingPromoData = promotionRepo.findById(proCode)
+            .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
+
+            existingPromoData.setProLib(proLib);
+            existingPromoData.setModifierPar(proModifierPar);
+            existingPromoData.setProVersion(proVersion);
+
+            return promotionRepo.save(existingPromoData);
+
 
     }
     

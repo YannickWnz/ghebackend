@@ -23,7 +23,7 @@ public class Promotion {
     private String pro_modifier_par;
 
     @Column(name="PRO_VERSION")
-    private String pro_version;
+    private int pro_version;
 
     public int getProCode() {
         return pro_code;
@@ -49,11 +49,11 @@ public class Promotion {
         return pro_modifier_par;
     }
 
-    public String getProVersion() {
+    public int getProVersion() {
         return pro_version;
     }
 
-    public void setProVersion(String pro_version) {
+    public void setProVersion(int pro_version) {
         this.pro_version = pro_version;
     }
 

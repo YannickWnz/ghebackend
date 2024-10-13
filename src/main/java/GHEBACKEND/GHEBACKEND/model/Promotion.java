@@ -11,7 +11,7 @@ public class Promotion {
 
     @Id
     @Column(name="PRO_CODE")
-    private String pro_code;
+    private int pro_code;
 
     @Column(name="PRO_LIB")
     private String pro_lib;
@@ -25,11 +25,11 @@ public class Promotion {
     @Column(name="PRO_VERSION")
     private String pro_version;
 
-    public String getProCode() {
+    public int getProCode() {
         return pro_code;
     }
 
-    public void setProCode(String pro_code) {
+    public void setProCode(int pro_code) {
         this.pro_code = pro_code;
     }
 

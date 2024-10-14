@@ -27,8 +27,10 @@ public class AnneeAcademique {
     @Column(name="AAC_VERSION")
     private int aac_version;
 
+    @Column(name="AAC_STATUS")
+    private boolean aac_status;
+
     // getters
-    
     public int getAacCode() {
         return aac_code;
     }
@@ -49,6 +51,9 @@ public class AnneeAcademique {
         return aac_version;
     }
 
+    public boolean getAacStatus() {
+        return aac_status;
+    }
     
     // setters
     public void setAacCode(int aac_code) {
@@ -69,6 +74,10 @@ public class AnneeAcademique {
 
     public void setAacVersion(int aac_version) {
         this.aac_version = aac_version;
+    }
+
+    public void setAacStatus(boolean aac_status) {
+        this.aac_status = aac_status;
     }
     
 

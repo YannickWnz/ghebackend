@@ -21,7 +21,7 @@ public class AnneeAcademique {
     @Column(name="AAC_CREER_PAR")
     private String aac_creer_par;
 
-    @Column(name="AAC_MODIFER_PAR")
+    @Column(name="AAC_MODIFIER_PAR")
     private String aac_modifier_par;
     
     @Column(name="AAC_VERSION")

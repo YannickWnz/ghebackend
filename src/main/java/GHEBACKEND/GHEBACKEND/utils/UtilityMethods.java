@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -72,6 +73,15 @@ public class UtilityMethods {
 
         // Return the formatted date and time as a string
         return currentDateTime.format(formatter);
+    }
+
+    @SuppressWarnings("deprecation")
+    public int getCurrentVersion(int code, String codeName, String tableName, String versionName) {
+
+        String query = "SELECT " + versionName + " FROM " + tableName + " WHERE " + codeName + " = ?";
+
+        return jdbcTemplate.queryForObject(query, new Object[]{code}, Integer.class);
+
     }
 
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.Promotion;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Filiere;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.FiliereRepo;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
@@ -24,6 +25,29 @@ public class FiliereService {
 
     public List<Filiere> getAlFiliere() {
         return filiereRepo.findAll();
+    }
+
+    public void updatePromoData(Integer filCode, String filLib, String filModifierPar) {
+
+        // get current promotion version from repo function
+        int currentVersion = utilityMethods.getCurrentVersion(filCode, "FIL_CODE", "T_FILIERE", "FIL_VERSION");
+        
+        // get a new version by increment current by 1
+        int newVersion = currentVersion + 1;
+        
+        
+        // find data before update else throw error
+        Filiere existingFiliereData = filiereRepo.findById(filCode)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
+        
+        // s.et new data then save ...
+        existingFiliereData.setFilLib(filLib);
+        existingFiliereData.setFilModifierPar(filModifierPar);
+        existingFiliereData.setFilVersion(newVersion);
+
+        filiereRepo.save(existingFiliereData);
+
+
     }
 
 

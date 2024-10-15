@@ -17,6 +17,8 @@ import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.FiliereRepo;
 
@@ -53,9 +55,15 @@ public class FiliereController {
 
         return filiereService.getAlFiliere();
     }
+
+    @PutMapping("/api/filiere/{filCode}")
+    public ResponseEntity<?> updateFiliere(@PathVariable int filCode, @RequestBody Filiere filiere) {
+
+        filiereService.updatePromoData(filCode, filiere.getFilLib(), filiere.getFilModifierPar());
+
+        return ResponseEntity.ok("Data successfully updated");
+
+    }
     
-
-
-
 
 }

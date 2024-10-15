@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Filiere;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.FiliereRepo;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
@@ -18,7 +19,6 @@ public class FiliereService {
 
     @Autowired
     private UtilityMethods utilityMethods;
-
 
 
 }

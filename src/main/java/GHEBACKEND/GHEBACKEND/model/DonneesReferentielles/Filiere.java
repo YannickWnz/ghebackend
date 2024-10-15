@@ -20,8 +20,8 @@ public class Filiere {
     private int fil_code;
 
     @Column(name="FIL_LIB")
-    @NotEmpty(message = "Libelle cannot be empty")
-    @Pattern(regexp = "[a-zA-Z0-9 ]")
+    // @NotEmpty(message = "Libelle cannot be empty")
+    // @Pattern(regexp = "[a-zA-Z0-9]")
     private String fil_lib;
 
     @Column(name="FIL_CREER_PAR")

@@ -18,6 +18,7 @@ public class UtilityMethods {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    // custom method to delete donnees referentielles
     public void deleteDonneesRef(Integer code, String tableName, String codeName) {
 
         String deleteQuery = "DELETE FROM " + tableName + " WHERE " + codeName + " = ?";
@@ -121,7 +122,8 @@ public class UtilityMethods {
         }
 
         // Check if input contains only letters and numbers
-        if (!input.matches("[a-zA-Z0-9]+")) {
+        // if (!input.matches("[a-zA-Z0-9]+")) {
+        if (!input.matches("([A-Za-z0-9]+( [A-Za-z0-9]+)+)")) {
             System.out.println("Input must contain only letters and numbers.");
             return false;
         }

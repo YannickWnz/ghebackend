@@ -73,12 +73,14 @@ public class FiliereController {
     public ResponseEntity<?> deleteFiliere(@PathVariable int filCode) {
 
         try {
-            filiereService.deleteFiliereData(filCode);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
 
-        return ResponseEntity.ok("Data successfully deleted");
+            utilityMethods.deleteDonneesRef(filCode, "T_FILIERE", "FIL_CODE");
+
+            return ResponseEntity.ok("Filiere deleted successfully");
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
     }
     

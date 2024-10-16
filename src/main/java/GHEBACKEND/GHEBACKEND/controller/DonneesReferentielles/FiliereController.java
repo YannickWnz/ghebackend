@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class FiliereController {
     @Autowired 
     private UtilityMethods utilityMethods;
 
-    // @PostMapping
+    // creating filiere
     @PostMapping("/api/filiere")
     public ResponseEntity<?> addNewFiliere(@RequestBody Filiere filiere) {
 
@@ -50,12 +51,14 @@ public class FiliereController {
 
     }
 
+    // get all filiere method
     @GetMapping("/api/filiere")
     public List<Filiere> getAllFiliere() {
 
         return filiereService.getAlFiliere();
     }
 
+    // update method
     @PutMapping("/api/filiere/{filCode}")
     public ResponseEntity<?> updateFiliere(@PathVariable int filCode, @RequestBody Filiere filiere) {
 
@@ -64,6 +67,21 @@ public class FiliereController {
         return ResponseEntity.ok("Data successfully updated");
 
     }
+
+    // delete method
+    @DeleteMapping("/api/filiere/{filCode}")
+    public ResponseEntity<?> deleteFiliere(@PathVariable int filCode) {
+
+        try {
+            filiereService.deleteFiliereData(filCode);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
+        return ResponseEntity.ok("Data successfully deleted");
+
+    }
+    
     
 
 }

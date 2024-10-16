@@ -18,6 +18,7 @@ public class UtilityMethods {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    // custom method to delete donnees referentielles
     public void deleteDonneesRef(Integer code, String tableName, String codeName) {
 
         String deleteQuery = "DELETE FROM " + tableName + " WHERE " + codeName + " = ?";
@@ -75,6 +76,7 @@ public class UtilityMethods {
         return currentDateTime.format(formatter);
     }
 
+    // method getting current data version
     @SuppressWarnings("deprecation")
     public int getCurrentVersion(int code, String codeName, String tableName, String versionName) {
 
@@ -82,6 +84,51 @@ public class UtilityMethods {
 
         return jdbcTemplate.queryForObject(query, new Object[]{code}, Integer.class);
 
+    }
+
+    // method validating user input string
+    public static boolean validateInputString(String input, int minLength, int maxLength) {
+
+        /**
+         * Validation de l'input sur les bases suivantes:
+         * - Not null
+         * - Not empty
+         * - Min and max length
+         * - Ne doit contenir que des lettres et chiffres
+         *
+         * @param input le string a valider 
+         * @param minLength la longueur minimum de l'input
+         * @param maxLength la longueur maximum de l'input
+         * @return true if valid, false otherwise
+         */
+
+        // Check if the input is null
+        if (input == null) {
+            System.out.println("Input is null");
+            return false;
+        }
+        
+        // Check if input is empty or only contains spaces
+        if (input.trim().isEmpty()) {
+            System.out.println("Input is empty");
+            return false;
+        }
+
+        // Check input length
+        if (input.length() < minLength || input.length() > maxLength) {
+            System.out.println("Input length must be between " + minLength + " and " + maxLength + " characters.");
+            return false;
+        }
+
+        // Check if input contains only letters and numbers
+        // if (!input.matches("[a-zA-Z0-9]+")) {
+        if (!input.matches("([A-Za-z0-9]+( [A-Za-z0-9]+)+)")) {
+            System.out.println("Input must contain only letters and numbers.");
+            return false;
+        }
+
+        // return true si aucune validation return false 
+        return true;
     }
 
 

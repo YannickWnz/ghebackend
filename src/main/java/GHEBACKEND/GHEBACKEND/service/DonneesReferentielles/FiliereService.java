@@ -51,18 +51,5 @@ public class FiliereService {
 
     }
 
-    // function qui se charge de la suppression 
-    public void deleteFiliereData(Integer filCode) {
-
-        // rechercher la donnee par code ... si retrouver on supprime dans le cas contraire la donnee n'existe pas donc throw error
-        if(filiereRepo.existsById(filCode)) {
-            filiereRepo.deleteById(filCode);
-        } else {
-            throw new IllegalArgumentException("Could not find data with the provided code.");
-        }
-
-    }
-
-
 
 }

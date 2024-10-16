@@ -47,13 +47,17 @@ public class NiveauController {
 
         try {
             
+            // validation du libelle en utilisant la methode definie dans la classe utilityMethods
             if(!UtilityMethods.validateInputString(niveau.getNivLib(), 4, 100)) {
                 return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
             }
 
+            // run service function addNewNiveau if no error from validation
             niveauService.addNewNiveau(niveau);
     
+            // return Response with statusCode 200
             return ResponseEntity.ok("New niveau successfully added");
+
         } catch (Exception e) {
             logger.error("Error while creating niveau: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while creating niveau data.");
@@ -69,10 +73,12 @@ public class NiveauController {
 
         try {
 
+            // validation en utilisant la methode definie dans la classe utilityMethods
             if(!UtilityMethods.validateInputString(niveau.getNivLib(), 4, 100) || !UtilityMethods.validateInputString(niveau.getNivModifierPar(), 4, 100)) {
                 return new ResponseEntity<>("Invalid inputs format", HttpStatus.BAD_REQUEST);
             }
 
+            // run service function updateNiveauData if no error from validation
             niveauService.updateNiveauData(nivCode, niveau);
 
             return ResponseEntity.ok("Niveau successfully updated");

@@ -17,6 +17,7 @@ import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,13 +32,14 @@ public class NiveauController {
     @Autowired
     private NiveauService niveauService;
 
+    // method qui se charge de la recuperation de tous les niveaux
     @GetMapping("/api/niveau")
     public List<Niveau> getAllNiveau() {
 
         return niveauService.getAllNiveau();
     }
 
-
+    // method qui se charge de la creation de nouveaux niveaux
     @PostMapping("/api/niveau")
     public ResponseEntity<String> addNewNiveau(@RequestBody Niveau niveau) {
 
@@ -59,6 +61,7 @@ public class NiveauController {
 
     }
 
+    // method qui se charge de la mise a jour des niveaux
     @PutMapping("/api/niveau/{nivCode}")
     public ResponseEntity<String> updateNiveau(@PathVariable int nivCode, @RequestBody Niveau niveau) {
 
@@ -77,6 +80,26 @@ public class NiveauController {
         } catch (Exception e) {
 
             logger.error("Error while updating data: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occured");        
+        }
+    
+    }
+
+    // method qui se charge de la mise a jour des niveaux
+    @DeleteMapping("/api/niveau/{nivCode}")
+    public ResponseEntity<String> deleteNiveau(@PathVariable int nivCode) {
+
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+
+        try {
+
+            niveauService.deleteNiveauData(nivCode);
+
+            return ResponseEntity.ok("Niveau successfully deleted");
+
+        } catch (Exception e) {
+
+            logger.error("Error while deleting data: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occured");        
         }
 

@@ -48,4 +48,14 @@ public class NiveauService {
 
     }
 
+    public void deleteNiveauData(int nivCode) {
+
+        if(niveauRepo.existsById(nivCode)) {
+            niveauRepo.deleteById(nivCode);
+        } else {
+            throw new IllegalArgumentException("Could not find data with the provided code.");
+        }
+
+    }
+
 }

@@ -90,7 +90,6 @@ public class UtilityMethods {
     public static boolean validateInputString(String input, int minLength, int maxLength) {
 
         /**
-         * Validate input string based on common conditions:
          * Validation de l'input sur les bases suivantes:
          * - Not null
          * - Not empty

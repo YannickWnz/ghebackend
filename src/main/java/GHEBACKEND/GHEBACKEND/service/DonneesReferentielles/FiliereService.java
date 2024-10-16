@@ -23,10 +23,12 @@ public class FiliereService {
     @Autowired
     private UtilityMethods utilityMethods;
 
+    // method qui se charge de la recuperation de toutes les filieres
     public List<Filiere> getAlFiliere() {
         return filiereRepo.findAll();
     }
 
+    // update method
     public void updatePromoData(Integer filCode, String filLib, String filModifierPar) {
 
         // get current promotion version from repo function
@@ -40,15 +42,27 @@ public class FiliereService {
         Filiere existingFiliereData = filiereRepo.findById(filCode)
         .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
         
-        // s.et new data then save ...
+        // set new data then save ...
         existingFiliereData.setFilLib(filLib);
         existingFiliereData.setFilModifierPar(filModifierPar);
         existingFiliereData.setFilVersion(newVersion);
 
         filiereRepo.save(existingFiliereData);
 
+    }
+
+    // function qui se charge de la suppression 
+    public void deleteFiliereData(Integer filCode) {
+
+        // rechercher la donnee par code ... si retrouver on supprime dans le cas contraire la donnee n'existe pas donc throw error
+        if(filiereRepo.existsById(filCode)) {
+            filiereRepo.deleteById(filCode);
+        } else {
+            throw new IllegalArgumentException("Could not find data with the provided code.");
+        }
 
     }
+
 
 
 }

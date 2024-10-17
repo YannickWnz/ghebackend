@@ -1,4 +1,4 @@
-package GHEBACKEND.GHEBACKEND.controller;
+package GHEBACKEND.GHEBACKEND.controller.DonneesReferentielles;
 
 import java.util.*;
 
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import GHEBACKEND.GHEBACKEND.model.Promotion;
-import GHEBACKEND.GHEBACKEND.repository.PromotionRepo;
-import GHEBACKEND.GHEBACKEND.service.PromotionService;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Promotion;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.PromotionRepo;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.PromotionService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,7 +28,7 @@ public class PromotionController {
     private PromotionRepo promotionRepo;
 
     // function s'occupant de la sauvegarde des promotions
-    @PostMapping("/api/addPromotion")
+    @PostMapping("/api/promotion")
     public ResponseEntity<?> addPromotion(@RequestBody Promotion promotion) {
 
         promotionService.addPromotion(promotion);
@@ -36,8 +36,14 @@ public class PromotionController {
         return ResponseEntity.ok("Promotion successfully created");
     }
 
+    @PostMapping("/api/test")
+    public Promotion addTestPromotion(@RequestBody Promotion promotion) {
+
+        return promotion;
+    }
+
     // function qui recupere toutes les promotions
-    @GetMapping("/api/getAllPromotion")
+    @GetMapping("/api/promotion")
     public List<Promotion> getAllPromo() {
         return promotionService.getAllPromoRefData();
     }
@@ -56,7 +62,7 @@ public class PromotionController {
     }
 
     // controller function qui se charge de la suppression
-    @DeleteMapping("/api/deletePromotion/{proCode}")
+    @DeleteMapping("/api/promotion/{proCode}")
     public ResponseEntity<String> deletePromoData(@PathVariable Integer proCode) {
 
         try {

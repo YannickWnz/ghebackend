@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import GHEBACKEND.GHEBACKEND.model.Promotion;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
@@ -58,6 +57,16 @@ public class RubriqueService {
             existingRubriqueData.setRubVersion(newVersion);
 
             rubriqueRepo.save(existingRubriqueData);
+
+    }
+
+    public void deleteRubriqueData(int code) {
+
+        if(rubriqueRepo.existsById(code)) {
+            rubriqueRepo.deleteById(code);
+        } else {
+            throw new IllegalArgumentException("Could not find data with the provided code.");
+        }
 
     }
 

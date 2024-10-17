@@ -1,4 +1,4 @@
-package GHEBACKEND.GHEBACKEND.service;
+package GHEBACKEND.GHEBACKEND.service.DonneesReferentielles;
 
 import java.util.List;
 
@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import GHEBACKEND.GHEBACKEND.model.AnneeAcademique;
-import GHEBACKEND.GHEBACKEND.repository.AnneeAcademiqueRepo;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.AnneeAcademiqueRepo;
 import GHEBACKEND.GHEBACKEND.utils.CodeGenerator;
+import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
 @Service
 public class AnneeAcademiqueService {
@@ -22,6 +23,9 @@ public class AnneeAcademiqueService {
     @Autowired
     private CodeGenerator codeGenerator;
 
+    @Autowired
+    private UtilityMethods utilityMethods;
+
     public List<AnneeAcademique> getAllAnneeAcademique() {
         return anneeAcademiqueRepo.findAll();
     }
@@ -31,23 +35,34 @@ public class AnneeAcademiqueService {
         // get code from generateCode util method
         int code = codeGenerator.generateCode("ANNEE_ACADEMIQUE");
 
-         // Set the unique aac code to the aac object
-         anneeAcademique.setAacCode(code);
-         
-         // Set default version to 1 
-         anneeAcademique.setAacVersion(1);
+        Integer aacCode = utilityMethods.codeGenerator("AAC_CODE", "T_ANNEE_ACADEMIQUE");
 
-         String insertAacQuery = "INSERT INTO T_ANNEE_ACADEMIQUE (AAC_CODE, AAC_LIB, AAC_CREER_PAR, AAC_STATUS, AAC_VERSION) VALUES (?, ?, ?, ?, ?)";
+        Integer defaultVersion = 1;
+
+        String currentDateTime = utilityMethods.getCurrentDateTime();
+
+        anneeAcademique.setAacCode(aacCode);
+        anneeAcademique.setAacVersion(defaultVersion);
+
+        anneeAcademiqueRepo.save(anneeAcademique);
+
+        //  // Set the unique aac code to the aac object
+        //  anneeAcademique.setAacCode(code);
+         
+        //  // Set default version to 1 
+        //  anneeAcademique.setAacVersion(1);
+
+        //  String insertAacQuery = "INSERT INTO T_ANNEE_ACADEMIQUE (AAC_CODE, AAC_LIB, AAC_CREER_PAR, AAC_STATUS, AAC_VERSION) VALUES (?, ?, ?, ?, ?)";
  
-         // running insert query
-         jdbcTemplate.update(
-                insertAacQuery, 
-                anneeAcademique.getAacCode(),
-                anneeAcademique.getAacLib(),
-                anneeAcademique.getAacCreerPar(),
-                anneeAcademique.getAacStatus(),
-                anneeAcademique.getAacVersion()
-             );
+        //  // running insert query
+        //  jdbcTemplate.update(
+        //         insertAacQuery, 
+        //         anneeAcademique.getAacCode(),
+        //         anneeAcademique.getAacLib(),
+        //         anneeAcademique.getAacCreerPar(),
+        //         anneeAcademique.getAacStatus(),
+        //         anneeAcademique.getAacVersion()
+        //      );
     }
 
     public void updateAnneeAcademique(Integer aacCode, String aacLib, String aacModifierPar, boolean aacStatus) {

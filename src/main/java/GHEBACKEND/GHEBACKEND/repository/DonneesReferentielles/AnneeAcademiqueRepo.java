@@ -1,10 +1,10 @@
-package GHEBACKEND.GHEBACKEND.repository;
+package GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import GHEBACKEND.GHEBACKEND.model.AnneeAcademique;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
 
 @Repository
 public interface AnneeAcademiqueRepo extends JpaRepository<AnneeAcademique, Integer> {

@@ -1,13 +1,15 @@
-package GHEBACKEND.GHEBACKEND.service;
+package GHEBACKEND.GHEBACKEND.service.DonneesReferentielles;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import GHEBACKEND.GHEBACKEND.model.Promotion;
-import GHEBACKEND.GHEBACKEND.repository.PromotionRepo;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Promotion;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.PromotionRepo;
 
 import java.util.*;
+
+import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
 @Service
 public class PromotionService {
@@ -17,6 +19,9 @@ public class PromotionService {
 
     @Autowired
     private PromotionRepo promotionRepo;
+
+    @Autowired
+    private UtilityMethods utilityMethods;
 
     // function fetching all promo ref data
     public List<Promotion> getAllPromoRefData() {
@@ -30,29 +35,29 @@ public class PromotionService {
     // @SuppressWarnings("deprecation")
     public void addPromotion(Promotion promotion) {
 
-        int pro_code = 1001; // Default starting promotion code
+        Integer code = utilityMethods.codeGenerator("PRO_CODE", "T_PROMOTION");
 
-        // Query to check if the promotion code exists
-        String checkCodeQuery = "SELECT COUNT(*) FROM T_PROMOTION WHERE PRO_CODE = ?";
+        Integer defaultVersion = 1;
 
-        // Loop to increment code if it already exists
-        while (jdbcTemplate.queryForObject(checkCodeQuery, Integer.class, pro_code) > 0) {
-            pro_code++;
-        }
+        // getting datetime from utilityMethod class
+        String currentDateTime = utilityMethods.getCurrentDateTime();
 
-        // Set the unique promotion code to the promotion object
-        promotion.setProCode(pro_code);
+        promotion.setProCode(code);
+        promotion.setProVersion(defaultVersion);
+        promotion.setProDateCreation(currentDateTime);
 
-        String insertPromotionQuery = "INSERT INTO T_PROMOTION (PRO_CODE, PRO_LIB, PRO_CREER_PAR, PRO_VERSION) VALUES (?, ?, ?, ?)";
+        promotionRepo.save(promotion);
 
-        // running insert query
-        jdbcTemplate.update(
-                insertPromotionQuery, 
-                promotion.getProCode(), 
-                promotion.getProLib(), 
-                promotion.getCreerPar(), 
-                promotion.getProVersion()
-            );
+        // String insertPromotionQuery = "INSERT INTO T_PROMOTION (PRO_CODE, PRO_LIB, PRO_CREER_PAR, PRO_VERSION) VALUES (?, ?, ?, ?)";
+
+        // // running insert query
+        // jdbcTemplate.update(
+        //         insertPromotionQuery, 
+        //         promotion.getProCode(), 
+        //         promotion.getProLib(), 
+        //         promotion.getCreerPar(), 
+        //         promotion.getProVersion()
+        //     );
 
     }
 

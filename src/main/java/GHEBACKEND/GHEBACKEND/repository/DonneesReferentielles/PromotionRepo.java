@@ -1,8 +1,8 @@
-package GHEBACKEND.GHEBACKEND.repository;
+package GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles;
 
 import org.springframework.data.jpa.repository.*;
 
-import GHEBACKEND.GHEBACKEND.model.Promotion;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Promotion;
 import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;

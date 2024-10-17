@@ -1,4 +1,4 @@
-package GHEBACKEND.GHEBACKEND.model;
+package GHEBACKEND.GHEBACKEND.model.DonneesReferentielles;
 
 import org.springframework.web.util.UriBuilder;
 

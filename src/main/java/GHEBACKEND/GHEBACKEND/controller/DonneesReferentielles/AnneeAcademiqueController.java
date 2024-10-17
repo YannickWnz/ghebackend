@@ -1,4 +1,4 @@
-package GHEBACKEND.GHEBACKEND.controller;
+package GHEBACKEND.GHEBACKEND.controller.DonneesReferentielles;
 
 import java.util.List;
 
@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import GHEBACKEND.GHEBACKEND.model.AnneeAcademique;
-import GHEBACKEND.GHEBACKEND.model.Promotion;
-import GHEBACKEND.GHEBACKEND.service.AnneeAcademiqueService;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.AnneeAcademiqueService;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
 @CrossOrigin("http://localhost:3000")
@@ -29,7 +28,7 @@ public class AnneeAcademiqueController {
     @Autowired
     private UtilityMethods utilityMethods;
 
-    @GetMapping("/api/getAnneeAcademique")
+    @GetMapping("/api/anneeAcademique")
     public ResponseEntity<List<AnneeAcademique>> getAllAnneeAcademique() {
         return new ResponseEntity<>(anneeAcademiqueService.getAllAnneeAcademique(), HttpStatus.OK);
     }
@@ -56,7 +55,7 @@ public class AnneeAcademiqueController {
     }
 
     // controller function qui se charge de la suppression
-    @DeleteMapping("/api/deleteAnneeAcademique/{aacCode}")
+    @DeleteMapping("/api/anneeAcademique/{aacCode}")
     public ResponseEntity<String> deleteAnneeAcademique(@PathVariable Integer aacCode) {
 
         try {

@@ -1,5 +1,6 @@
 package GHEBACKEND.GHEBACKEND.model.DonneesReferentielles;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 import jakarta.persistence.Column;
@@ -31,7 +32,11 @@ public class RubriqueModel {
     private boolean rub_frais_unique;
     
     @Column(name="RUB_MONTANT")
-    private DecimalFormat rub_montant;
+    // private DecimalFormat rub_montant;
+    private BigDecimal rub_montant;
+    
+    @Column(name="RUB_DATE_CREATION")
+    private String rub_date_creation;
 
     // getters
     public int getRubCode() {
@@ -58,8 +63,12 @@ public class RubriqueModel {
         return rub_frais_unique;
     }
 
-    public DecimalFormat getRubMontant() {
+    public BigDecimal getRubMontant() {
         return rub_montant;
+    }
+
+    public String getRubDateCreation() {
+        return rub_date_creation;
     }
     
     // setters
@@ -87,8 +96,12 @@ public class RubriqueModel {
         this.rub_frais_unique = rub_frais_unique;
     }
 
-    public void setRubFraisUnique(DecimalFormat rub_montant) {
+    public void setRubMontant(BigDecimal rub_montant) {
         this.rub_montant = rub_montant;
+    }
+
+    public void setRubDateCreation(String rub_date_creation) {
+        this.rub_date_creation = rub_date_creation;
     }
 
 }

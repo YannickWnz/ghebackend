@@ -61,4 +61,14 @@ public class RubriqueService {
 
     }
 
+    public void deleteRubriqueData(int code) {
+
+        if(rubriqueRepo.existsById(code)) {
+            rubriqueRepo.deleteById(code);
+        } else {
+            throw new IllegalArgumentException("Could not find data with the provided code.");
+        }
+
+    }
+
 }

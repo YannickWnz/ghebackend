@@ -77,9 +77,16 @@ public class UtilityMethods {
     }
 
     // method getting current data version
+    // function qui se charge de la recuperation de la version courant d'une donnee referentielle
     @SuppressWarnings("deprecation")
     public int getCurrentVersion(int code, String codeName, String tableName, String versionName) {
 
+        /**
+         * parametre utiliser pour la recuperation
+         * - versionName; (nom de la colonne version dans la table Ex: FIL_VERSION, PRO_VERSION)
+         * - tableName (nom de la table Ex: T_PROMOTION, T_FILIERE ...)
+         * - codeName (nom de la colonne code Ex: PRO_CODE, AAC_CODE, FIL_CODE ...)
+         */
         String query = "SELECT " + versionName + " FROM " + tableName + " WHERE " + codeName + " = ?";
 
         return jdbcTemplate.queryForObject(query, new Object[]{code}, Integer.class);

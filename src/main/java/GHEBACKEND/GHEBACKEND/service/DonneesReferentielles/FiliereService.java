@@ -50,5 +50,23 @@ public class FiliereService {
 
     }
 
+    public void addNewFiliereData(Filiere filiere) {
+
+        Integer code = utilityMethods.codeGenerator("FIL_CODE", "T_FILIERE");
+
+         // version definie sur 1 par default a la creation
+         Integer version = 1;
+        
+         // getting datetime from utilityMethod class
+         String currentDateTime = utilityMethods.getCurrentDateTime();
+ 
+ 
+         filiere.setFilCode(code);
+         filiere.setFilVersion(version);
+
+         filiereRepo.save(filiere);
+
+    }
+
 
 }

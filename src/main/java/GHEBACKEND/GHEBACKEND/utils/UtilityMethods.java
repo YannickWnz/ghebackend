@@ -42,27 +42,6 @@ public class UtilityMethods {
         return (maxCode != null) ? (maxCode + 1) : defaultCode;
     }
 
-    // utility methods qui ajoute les donnees aux tables qui ont les champs suivant (code, lib, creerPar, modifierPar, dateCreate, version)
-    public void addDonneesRef(String lib, String creerPar, String codeName, String tableName) {
-
-        // getting code from codeGenerator method
-        Integer Code = codeGenerator("FIL_CODE", "T_FILIERE");
-
-        // version set to 1 by default on creation
-        Integer version = 1;
-        
-        String query = "INSERT INTO " + tableName + " (FIL_CODE, FIL_LIB, FIL_CREER_PAR, FIL_VERSION) VALUES (?, ?, ?, ?)";
-
-        jdbcTemplate.update(
-            query,
-            Code,
-            lib,
-            creerPar,
-            version
-        );
-
-    }
-
     // method qui se charge de la recuperation de la date et heure actuelle
     public String getCurrentDateTime() {
         // Get the current date and time
@@ -77,9 +56,16 @@ public class UtilityMethods {
     }
 
     // method getting current data version
+    // function qui se charge de la recuperation de la version courant d'une donnee referentielle
     @SuppressWarnings("deprecation")
     public int getCurrentVersion(int code, String codeName, String tableName, String versionName) {
 
+        /**
+         * parametre utiliser pour la recuperation
+         * - versionName; (nom de la colonne version dans la table Ex: FIL_VERSION pour la table T_FILIERE, PRO_VERSION pour la talbe T_PROMOTION etc ...)
+         * - tableName (nom de la table Ex: T_PROMOTION, T_FILIERE ...)
+         * - codeName (nom de la colonne code Ex: PRO_CODE pour la table T_PROMOTION, AAC_CODE pour la table T_ANNEE_ACADEMIQUE, FIL_CODE ...)
+         */
         String query = "SELECT " + versionName + " FROM " + tableName + " WHERE " + codeName + " = ?";
 
         return jdbcTemplate.queryForObject(query, new Object[]{code}, Integer.class);

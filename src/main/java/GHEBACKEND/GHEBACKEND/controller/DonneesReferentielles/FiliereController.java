@@ -40,7 +40,8 @@ public class FiliereController {
         Logger logger = LoggerFactory.getLogger(this.getClass());
 
         try {
-            utilityMethods.addDonneesRef(filiere.getFilLib(), filiere.getFilCreerPar(), "FIL_CODE", "T_FILIERE");
+
+            filiereService.addNewFiliereData(filiere);
 
             return ResponseEntity.ok("Filiere successfully created");
 

@@ -35,8 +35,10 @@ public class PromotionService {
     // @SuppressWarnings("deprecation")
     public void addPromotion(Promotion promotion) {
 
+        // recuperation du code apres generation par la methode utilitaire
         Integer code = utilityMethods.codeGenerator("PRO_CODE", "T_PROMOTION");
-
+        
+        // version par default a la creation
         Integer defaultVersion = 1;
 
         // getting datetime from utilityMethod class
@@ -47,24 +49,13 @@ public class PromotionService {
         promotion.setProDateCreation(currentDateTime);
 
         promotionRepo.save(promotion);
-
-        // String insertPromotionQuery = "INSERT INTO T_PROMOTION (PRO_CODE, PRO_LIB, PRO_CREER_PAR, PRO_VERSION) VALUES (?, ?, ?, ?)";
-
-        // // running insert query
-        // jdbcTemplate.update(
-        //         insertPromotionQuery, 
-        //         promotion.getProCode(), 
-        //         promotion.getProLib(), 
-        //         promotion.getCreerPar(), 
-        //         promotion.getProVersion()
-        //     );
-
     }
 
     // function handling data update
     public Promotion updatePromoData(Integer proCode, String proLib, String proModifierPar) {
 
         // get current promotion version from repo function
+        // recuperation de la version courante en utilisant la method definit dans l'interface promotionRepo
         int currentVersion = promotionRepo.findProVersion(proCode);
         
         // get a new version by increment current by 1
@@ -72,15 +63,16 @@ public class PromotionService {
         
         
         // find data before update else throw error
+        // recherche de la donnee ... throw err si non trouvee 
         Promotion existingPromoData = promotionRepo.findById(proCode)
         .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
         
         // set new data then save ...
-            existingPromoData.setProLib(proLib);
-            existingPromoData.setModifierPar(proModifierPar);
-            existingPromoData.setProVersion(newVersion);
+        existingPromoData.setProLib(proLib);
+        existingPromoData.setModifierPar(proModifierPar);
+        existingPromoData.setProVersion(newVersion);
 
-            return promotionRepo.save(existingPromoData);
+        return promotionRepo.save(existingPromoData);
 
 
     }
@@ -88,6 +80,7 @@ public class PromotionService {
     // function handling data deletion 
     public void deletePromoData(Integer proCode) {
 
+        // check if data exists before delete
         if(promotionRepo.existsById(proCode)) {
             promotionRepo.deleteById(proCode);
         } else {

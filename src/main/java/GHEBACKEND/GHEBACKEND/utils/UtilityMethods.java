@@ -42,27 +42,6 @@ public class UtilityMethods {
         return (maxCode != null) ? (maxCode + 1) : defaultCode;
     }
 
-    // utility methods qui ajoute les donnees aux tables qui ont les champs suivant (code, lib, creerPar, modifierPar, dateCreate, version)
-    public void addDonneesRef(String lib, String creerPar, String codeName, String tableName) {
-
-        // getting code from codeGenerator method
-        Integer Code = codeGenerator("FIL_CODE", "T_FILIERE");
-
-        // version set to 1 by default on creation
-        Integer version = 1;
-        
-        String query = "INSERT INTO " + tableName + " (FIL_CODE, FIL_LIB, FIL_CREER_PAR, FIL_VERSION) VALUES (?, ?, ?, ?)";
-
-        jdbcTemplate.update(
-            query,
-            Code,
-            lib,
-            creerPar,
-            version
-        );
-
-    }
-
     // method qui se charge de la recuperation de la date et heure actuelle
     public String getCurrentDateTime() {
         // Get the current date and time

@@ -62,9 +62,9 @@ public class UtilityMethods {
 
         /**
          * parametre utiliser pour la recuperation
-         * - versionName; (nom de la colonne version dans la table Ex: FIL_VERSION, PRO_VERSION)
+         * - versionName; (nom de la colonne version dans la table Ex: FIL_VERSION pour la table T_FILIERE, PRO_VERSION pour la talbe T_PROMOTION etc ...)
          * - tableName (nom de la table Ex: T_PROMOTION, T_FILIERE ...)
-         * - codeName (nom de la colonne code Ex: PRO_CODE, AAC_CODE, FIL_CODE ...)
+         * - codeName (nom de la colonne code Ex: PRO_CODE pour la table T_PROMOTION, AAC_CODE pour la table T_ANNEE_ACADEMIQUE, FIL_CODE ...)
          */
         String query = "SELECT " + versionName + " FROM " + tableName + " WHERE " + codeName + " = ?";
 

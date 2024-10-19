@@ -72,6 +72,18 @@ public class AnneeAcademiqueService {
         String updateQuery;
 
         if(aacLib == null) {
+
+            if(aacStatus == true) {
+                String setAllToFalse = "UPDATE T_ANNEE_ACADEMIQUE SET AAC_STATUS = ?";  
+
+                boolean status = false;
+
+                jdbcTemplate.update(
+                    setAllToFalse, 
+                    "false"
+                );
+
+            }
             updateQuery = "UPDATE T_ANNEE_ACADEMIQUE SET AAC_STATUS = ?, AAC_MODIFIER_PAR = ?, AAC_VERSION = ? WHERE AAC_CODE = ?";
 
             // running update query
@@ -82,6 +94,7 @@ public class AnneeAcademiqueService {
                 newVersion,
                 aacCode
             );
+
         } 
         else {
 
@@ -98,6 +111,14 @@ public class AnneeAcademiqueService {
             );
 
         }
+
+    }
+
+    public void updateAnneeAcademiqueStatus(Integer code) {
+
+        int newVersion = anneeAcademiqueRepo.findProVersion(code) + 1;
+
+        
 
     }
     

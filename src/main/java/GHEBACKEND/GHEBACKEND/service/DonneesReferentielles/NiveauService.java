@@ -37,6 +37,9 @@ public class NiveauService {
         
         // set default version ... 
         Integer defaultVersion = 1;
+
+        String currentDateTime = utilityMethods.getCurrentDateTime();
+
         
         // run create methods from niveau repo 
         niveauRepo.insertNewNiveauData(code, niveau.getNivLib(), niveau.getNivCreerPar(), defaultVersion);
@@ -65,6 +68,10 @@ public class NiveauService {
             throw new IllegalArgumentException("Could not find data with the provided code.");
         }
 
+    }
+
+    public Integer getTotalDataNumber(String tableName) {   
+        return utilityMethods.getTotalNumberOfDonneesRef(tableName);
     }
 
 }

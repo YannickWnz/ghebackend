@@ -1,14 +1,13 @@
 package GHEBACKEND.GHEBACKEND.service.DonneesReferentielles;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Promotion;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.PromotionRepo;
-
-import java.util.*;
-
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
 @Service
@@ -69,7 +68,7 @@ public class PromotionService {
         
         // set new data then save ...
         existingPromoData.setProLib(proLib);
-        existingPromoData.setModifierPar(proModifierPar);
+        existingPromoData.setProModifierPar(proModifierPar);
         existingPromoData.setProVersion(newVersion);
 
         return promotionRepo.save(existingPromoData);
@@ -88,6 +87,24 @@ public class PromotionService {
         }
 
     }
+
+    // function handling the fetch of promotion data in an Annee Ac 
+    // function qui se charge de la recuperation des promotion dans une annee academique 
+    @SuppressWarnings("deprecation")
+    public List<Promotion> getPromotionDataInAac(Integer aacCode) {
+
+        String query = "SELECT t.PRO_LIB, t.PRO_CODE FROM T_PROMOTION t WHERE t.AAC_CODE = ?";
+
+        // return jdbcTemplate.queryForObject(query, new Object[]{aacCode}, Integer.class);
+
+        return promotionRepo.getPromotionDataInAnneeAcademique(aacCode);
+
+    }
+    
+    public Integer getTotalDataNumber(String tableName) {   
+        return utilityMethods.getTotalNumberOfDonneesRef(tableName);
+    }
+
 
 
 }

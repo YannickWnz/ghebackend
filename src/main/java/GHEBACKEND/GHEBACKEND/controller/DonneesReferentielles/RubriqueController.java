@@ -1,6 +1,5 @@
 package GHEBACKEND.GHEBACKEND.controller.DonneesReferentielles;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,9 +41,9 @@ public class RubriqueController {
         try {
             
             // validation du libelle en utilisant la methode definie dans la classe utilityMethods
-            // if(!UtilityMethods.validateInputString(niveau.getNivLib(), 4, 100)) {
-            //     return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
-            // }
+            if(!UtilityMethods.validateInputString(rubriqueModel.getRubLib(), 4, 100)) {
+                return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
+            }
 
             // run service function addNewNiveau if no error from validation
             rubriqueService.addNewRubrique(rubriqueModel);
@@ -56,7 +55,6 @@ public class RubriqueController {
             logger.error("Error while creating niveau: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while creating niveau data.");
         }
-
 
     }
 

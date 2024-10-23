@@ -28,6 +28,11 @@ public class AnneeAcademiqueController {
     @Autowired
     private UtilityMethods utilityMethods;
 
+    @GetMapping("/api/anneeAcademique/totalCount")
+    public Integer getTotalDataNumber() {
+        return anneeAcademiqueService.getTotalNumberOfData("T_ANNEE_ACADEMIQUE");
+    }
+
     @GetMapping("/api/anneeAcademique")
     public ResponseEntity<List<AnneeAcademique>> getAllAnneeAcademique() {
         return new ResponseEntity<>(anneeAcademiqueService.getAllAnneeAcademique(), HttpStatus.OK);

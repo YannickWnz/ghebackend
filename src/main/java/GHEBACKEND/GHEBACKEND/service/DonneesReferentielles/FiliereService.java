@@ -68,5 +68,10 @@ public class FiliereService {
 
     }
 
+    
+    public Integer getTotalDataNumber(String tableName) {   
+        return utilityMethods.getTotalNumberOfDonneesRef(tableName);
+    }
+
 
 }

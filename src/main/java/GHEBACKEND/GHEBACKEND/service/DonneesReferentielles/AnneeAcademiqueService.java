@@ -118,8 +118,10 @@ public class AnneeAcademiqueService {
 
         int newVersion = anneeAcademiqueRepo.findProVersion(code) + 1;
 
-        
+    }
 
+    public Integer getTotalNumberOfData(String tableName) {   
+        return utilityMethods.getTotalNumberOfDonneesRef(tableName);
     }
     
 }

@@ -3,7 +3,6 @@ package GHEBACKEND.GHEBACKEND.controller.DonneesReferentielles;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,9 +36,9 @@ public class PromotionController {
     @PostMapping("/api/promotion")
     public ResponseEntity<?> addPromotion(@RequestBody Promotion promotion) {
 
-        if(promotion.getProAacCode() == null) {
-            return new ResponseEntity<>("AAC_CODE can't be null", HttpStatus.BAD_REQUEST);
-        }
+        // if(promotion.getProAacCode() == null) {
+        //     return new ResponseEntity<>("AAC_CODE can't be null", HttpStatus.BAD_REQUEST);
+        // }
 
         promotionService.addPromotion(promotion);
 
@@ -71,13 +70,13 @@ public class PromotionController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping("/api/promotion/{aacCode}")
-    public List<Promotion> getPromotionDataInAnneeAcademique(@PathVariable int aacCode) {
+    // @GetMapping("/api/promotion/{aacCode}")
+    // public List<Promotion> getPromotionDataInAnneeAcademique(@PathVariable int aacCode) {
 
-        List<Promotion> data = promotionService.getPromotionDataInAac(aacCode);
+    //     List<Promotion> data = promotionService.getPromotionDataInAac(aacCode);
 
-        return promotionService.getPromotionDataInAac(aacCode);
-    }
+    //     return promotionService.getPromotionDataInAac(aacCode);
+    // }
 
     // controller function qui se charge de la suppression
     @DeleteMapping("/api/promotion/{proCode}")

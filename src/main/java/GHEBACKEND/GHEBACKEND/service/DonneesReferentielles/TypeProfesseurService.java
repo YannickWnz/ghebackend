@@ -42,4 +42,34 @@ public class TypeProfesseurService {
 
     }
 
+    public void updateTypeProfesseurData(Integer code, TypeProfesseur typeProfesseur) {
+
+        Integer newVersion = utilityMethods.getCurrentVersion(code, "TPR_CODE", "T_TYPE_PROFESSEUR", "TPR_VERSION") + 1;
+
+        // find data before update else throw error
+        TypeProfesseur existingProfData = typeProfesseurRepo.findById(code)
+        .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
+        
+        // set new data then save ...
+            existingProfData.setTprLib(typeProfesseur.getTprLib());
+            existingProfData.setTprModifierPar(typeProfesseur.getTprModifierPar());
+            existingProfData.setTprTauxHoraire(typeProfesseur.getTprTauxHoraire());
+            existingProfData.setTprVersion(newVersion);
+
+            typeProfesseurRepo.save(existingProfData);
+
+    }
+
+    
+    public void deleteTypeProfesseurData(Integer code) {
+
+        if(typeProfesseurRepo.existsById(code)) {
+            typeProfesseurRepo.deleteById(code);
+        } else {
+            throw new IllegalArgumentException("Could not find data with the provided code.");
+        }
+
+    }
+
+
 }

@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,4 +59,49 @@ public class TypeProfesseurController {
         }
 
     }
+
+    @PutMapping("/api/typeProfesseur/{code}")
+    public ResponseEntity<String> updateTypeProfesseurData(@PathVariable Integer code, @RequestBody TypeProfesseur typeProfesseur) {
+
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+
+        try {
+
+            // run service function addNewNiveau if no error from validation
+            typeProfesseurService.updateTypeProfesseurData(code, typeProfesseur);
+    
+            // return Response with statusCode 200
+            return ResponseEntity.ok("Data successfully updated");
+
+        } catch (Exception e) {
+            logger.error("Error while updating type professeur: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while updating type professeur data.");
+        }
+
+
+    }
+
+    
+    @DeleteMapping("/api/typeProfesseur/{code}")
+    public ResponseEntity<String> deleteRubrique(@PathVariable Integer code) {
+
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+
+        try {
+            
+            typeProfesseurService.deleteTypeProfesseurData(code);
+
+            return ResponseEntity.ok("Rubrique successfully deleted");
+
+        } catch (Exception e) {
+            logger.error("Error while deleting data: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting data.");
+        }
+
+    }
+
+
+
+
+
 }

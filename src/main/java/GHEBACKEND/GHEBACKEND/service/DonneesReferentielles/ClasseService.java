@@ -62,5 +62,16 @@ public class ClasseService {
 
     }
 
+    public List<ClasseModel> getClasseInNiveauAndFiliere(Integer nivCode, Integer filCode) {
+
+        return classeRepo.getClasse(nivCode, filCode);
+
+    }
+
+    public Integer getTotalDataNumber(String tableName) {
+        
+        return utilityMethods.getTotalNumberOfDonneesRef(tableName);
+    }
+
 
 }

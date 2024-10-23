@@ -1,15 +1,11 @@
 package GHEBACKEND.GHEBACKEND.utils;
 
-import java.util.Date;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 
 @Component
@@ -108,13 +104,26 @@ public class UtilityMethods {
 
         // Check if input contains only letters and numbers
         // if (!input.matches("[a-zA-Z0-9]+")) {
-        if (!input.matches("([A-Za-z0-9]+( [A-Za-z0-9]+)+)")) {
+        // if (!input.matches("([A-Za-z0-9]+( [A-Za-z0-9]+)+)")) {
+        if (!input.matches("^[a-zA-Z0-9\\s]*$")) {
             System.out.println("Input must contain only letters and numbers.");
             return false;
         }
 
         // return true si aucune validation return false 
         return true;
+    }
+
+    public Integer getTotalNumberOfDonneesRef(String tableName) {
+
+                // requete qui recupere le total count des donnees dans la table passee en param
+                String query = "SELECT COUNT(*) FROM " + tableName;
+    
+                // Querying db
+                Integer totalCount = jdbcTemplate.queryForObject(query, Integer.class);
+
+                return totalCount;
+                
     }
 
 

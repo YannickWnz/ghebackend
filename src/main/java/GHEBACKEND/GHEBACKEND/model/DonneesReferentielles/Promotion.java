@@ -48,11 +48,11 @@ public class Promotion {
         this.pro_lib = pro_lib;
     }
 
-    public String getCreerPar() {
+    public String getProCreerPar() {
         return pro_creer_par;
     }
 
-    public String getModifierPar() {
+    public String getProModifierPar() {
         return pro_modifier_par;
     }
 
@@ -64,11 +64,11 @@ public class Promotion {
         this.pro_version = pro_version;
     }
 
-    public void setCreerPar(String pro_creer_par) {
+    public void setProCreerPar(String pro_creer_par) {
         this.pro_creer_par = pro_creer_par;
     }
 
-    public void setModifierPar(String pro_modifier_par) {
+    public void setProModifierPar(String pro_modifier_par) {
         this.pro_modifier_par = pro_modifier_par;
     }
 

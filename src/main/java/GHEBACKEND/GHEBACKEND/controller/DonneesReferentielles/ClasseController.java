@@ -27,14 +27,14 @@ public class ClasseController {
     @Autowired
     private ClasseService classeService;
 
-    // @GetMapping("/api/classe")
-    // public ResponseEntity<List<ClasseModel>> getAllClasse() {
+    @GetMapping("/api/getAllClasse")
+    public ResponseEntity<List<ClasseModel>> getAllClasse() {
 
-    //     List<ClasseModel> classes = classeService.getAllCLasse();
+        List<ClasseModel> classes = classeService.getAllCLasse();
 
-    //     return ResponseEntity.ok(classes);
+        return ResponseEntity.ok(classes);
 
-    // }
+    }
     @GetMapping("/api/classe/totalCount") 
     public Integer getClasseTotalCount() {
 

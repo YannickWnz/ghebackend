@@ -35,7 +35,7 @@ public class PromotionService {
     public void addPromotion(Promotion promotion) {
 
         // recuperation du code apres generation par la methode utilitaire
-        Integer code = utilityMethods.codeGenerator("PRO_CODE", "T_PROMOTION");
+        Integer code = utilityMethods.codeGenerator("PRO_CODE", "T_PROMOTIONS");
         
         // version par default a la creation
         Integer defaultVersion = 1;
@@ -90,16 +90,17 @@ public class PromotionService {
 
     // function handling the fetch of promotion data in an Annee Ac 
     // function qui se charge de la recuperation des promotion dans une annee academique 
-    @SuppressWarnings("deprecation")
-    public List<Promotion> getPromotionDataInAac(Integer aacCode) {
+    
+    // @SuppressWarnings("deprecation")
+    // public List<Promotion> getPromotionDataInAac(Integer aacCode) {
 
-        String query = "SELECT t.PRO_LIB, t.PRO_CODE FROM T_PROMOTION t WHERE t.AAC_CODE = ?";
+    //     String query = "SELECT t.PRO_LIB, t.PRO_CODE FROM T_PROMOTION t WHERE t.AAC_CODE = ?";
 
-        // return jdbcTemplate.queryForObject(query, new Object[]{aacCode}, Integer.class);
+    //     // return jdbcTemplate.queryForObject(query, new Object[]{aacCode}, Integer.class);
 
-        return promotionRepo.getPromotionDataInAnneeAcademique(aacCode);
+    //     return promotionRepo.getPromotionDataInAnneeAcademique(aacCode);
 
-    }
+    // }
     
     public Integer getTotalDataNumber(String tableName) {   
         return utilityMethods.getTotalNumberOfDonneesRef(tableName);

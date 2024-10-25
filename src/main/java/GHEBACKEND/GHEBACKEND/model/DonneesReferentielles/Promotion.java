@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="T_PROMOTION")
+@Table(name="T_PROMOTIONS")
 public class Promotion {
 
     @Id
@@ -25,8 +25,8 @@ public class Promotion {
     @Column(name="PRO_VERSION")
     private Integer pro_version;
 
-    @Column(name="AAC_CODE")
-    private Integer pro_aac_code;
+    // @Column(name="AAC_CODE")
+    // private Integer pro_aac_code;
 
     @Column(name="PRO_DATE_CREATION")
     private String pro_date_creation;
@@ -72,13 +72,13 @@ public class Promotion {
         this.pro_modifier_par = pro_modifier_par;
     }
 
-    public Integer getProAacCode() {
-        return pro_aac_code;
-    }
+    // public Integer getProAacCode() {
+    //     return pro_aac_code;
+    // }
 
-    public void setProAacCode(Integer pro_aac_code) {
-        this.pro_aac_code = pro_aac_code;
-    }
+    // public void setProAacCode(Integer pro_aac_code) {
+    //     this.pro_aac_code = pro_aac_code;
+    // }
 
     public void setProDateCreation(String pro_date_creation) {
         this.pro_date_creation = pro_date_creation;

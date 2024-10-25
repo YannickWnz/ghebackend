@@ -28,6 +28,11 @@ public class TypeProfesseurController {
     private TypeProfesseurService typeProfesseurService;
 
     
+    @GetMapping("/api/typeProfesseur/totalCount")
+    public Integer getTotalDataNumber() {
+        return typeProfesseurService.getTotalDataNumber("T_TYPE_PROFESSEUR");
+    }
+
     @GetMapping("/api/typeProfesseur")
     public List<TypeProfesseur> getAllTypeProfesseurs() {
 

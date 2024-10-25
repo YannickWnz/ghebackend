@@ -27,6 +27,11 @@ public class RubriqueController {
     @Autowired
     private RubriqueService rubriqueService;
 
+    @GetMapping("/api/rubrique/totalCount")
+    public Integer getTotalDataNumber() {
+        return rubriqueService.getTotalDataNumber("T_RUBRIQUE");
+    }
+
     @GetMapping("/api/rubrique")
     public List<RubriqueModel> getAllRubrique() {
 

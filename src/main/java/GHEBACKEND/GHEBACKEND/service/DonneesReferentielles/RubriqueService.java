@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
@@ -67,6 +68,14 @@ public class RubriqueService {
         } else {
             throw new IllegalArgumentException("Could not find data with the provided code.");
         }
+
+    }
+
+    @Transactional
+    public void updateRubFraisUnique(Integer code, RubriqueModel rubriqueModel) {
+
+        rubriqueRepo.updateRubriqueFraisUnique(code, rubriqueModel.getRubFraisUnique(), rubriqueModel.getRubModifierPar());
+
 
     }
     

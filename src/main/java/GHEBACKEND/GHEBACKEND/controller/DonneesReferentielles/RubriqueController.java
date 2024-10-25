@@ -63,6 +63,27 @@ public class RubriqueController {
 
     }
 
+    @PutMapping("/api/rubrique/fraisUnique/{code}")
+    public ResponseEntity<String> updateRubriqueFraisUniqueData(@PathVariable Integer code, @RequestBody RubriqueModel rubriqueModel) {
+
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+
+        try {
+
+            // run service function addNewNiveau if no error from validation
+            rubriqueService.updateRubFraisUnique(code, rubriqueModel);
+    
+            // return Response with statusCode 200
+            return ResponseEntity.ok("Rubrique Frais Unique data successfully updated");
+
+        } catch (Exception e) {
+            logger.error("Error while updating rubrique: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while updating rubrique data.");
+        }
+
+
+    }
+
     @PutMapping("/api/rubrique/{code}")
     public ResponseEntity<String> updateRubriqueData(@PathVariable Integer code, @RequestBody RubriqueModel rubriqueModel) {
 

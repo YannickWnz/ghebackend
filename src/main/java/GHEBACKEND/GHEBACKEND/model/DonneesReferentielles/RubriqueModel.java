@@ -1,7 +1,6 @@
 package GHEBACKEND.GHEBACKEND.model.DonneesReferentielles;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,6 +36,9 @@ public class RubriqueModel {
     
     @Column(name="RUB_DATE_CREATION")
     private String rub_date_creation;
+    
+    @Column(name="CLA_CODE")
+    private Integer cla_code;
 
     // getters
     public int getRubCode() {
@@ -70,6 +72,10 @@ public class RubriqueModel {
     public String getRubDateCreation() {
         return rub_date_creation;
     }
+
+    public Integer getClaCode() {
+        return cla_code;
+    }
     
     // setters
     public void setRubCode(int rub_code) {
@@ -102,6 +108,10 @@ public class RubriqueModel {
 
     public void setRubDateCreation(String rub_date_creation) {
         this.rub_date_creation = rub_date_creation;
+    }
+
+    public void setClaCode(Integer cla_code) {
+        this.cla_code = cla_code;
     }
 
 }

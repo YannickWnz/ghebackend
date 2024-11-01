@@ -74,4 +74,8 @@ public class EmploiModel {
         this.emp_version = emp_version;
     }
 
+    public void setEmpDateCreation(String emp_date_creation) {
+        this.emp_data_creation = emp_date_creation;
+    }
+
 }

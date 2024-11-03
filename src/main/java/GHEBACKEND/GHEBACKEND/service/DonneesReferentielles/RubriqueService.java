@@ -83,4 +83,11 @@ public class RubriqueService {
         return utilityMethods.getTotalNumberOfDonneesRef(tableName);
     }
 
+
+    public List<RubriqueModel> recupererRubriquePourUneClasse(Integer code) {
+
+        return rubriqueRepo.recupererRubriquePourUneClasse(code);
+
+    }
+
 }

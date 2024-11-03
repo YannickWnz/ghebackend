@@ -114,6 +114,34 @@ public class UtilityMethods {
         return true;
     }
 
+    // methode de validation des codes avant de faire une requete dans la database
+    public static boolean validateInputCode(String code) {
+
+        /**
+         * Validation de l'input sur les bases suivantes:
+         * - Not null
+         * - Ne doit contenir  chiffres
+         *
+         * @param code le code a valider
+         * @return true if valid, false otherwise
+         */
+
+        // Check if the input is null
+        if (code == null) {
+            System.out.println("Code cannot be null");
+            return false;
+        }
+        
+        // Check if input has a maximum length of 5 and is numeric
+        if (!code.matches("^\\d{1,5}$")) {
+            System.out.println("Input must contain only letters and numbers.");
+            return false;
+        }
+
+        // return true si aucune validation return false 
+        return true;
+    }
+
     public Integer getTotalNumberOfDonneesRef(String tableName) {
 
                 // requete qui recupere le total count des donnees dans la table passee en param

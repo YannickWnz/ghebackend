@@ -38,6 +38,14 @@ public class RubriqueController {
         return rubriqueService.getAllRubrique();
     }
 
+    @GetMapping("/api/rubrique/{claCode}")
+    public List<RubriqueModel> getRubriqueInSelectedClass(@PathVariable("claCode") Integer claCode) {
+
+        // List<RubriqueModel> fetchedRubrique = rubriqueService.recupererRubriquePourUneClasse(claCode); 
+
+        return rubriqueService.recupererRubriquePourUneClasse(claCode);
+    }
+
     @PostMapping("/api/rubrique")
     public ResponseEntity<String> addNewRubrique(@RequestBody RubriqueModel rubriqueModel) {
         

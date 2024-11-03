@@ -1,10 +1,14 @@
 package GHEBACKEND.GHEBACKEND.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
+
 
 @Entity
 @Table(name="T_UTILISATEURS")
-public class User {
+public class User implements UserDetails{
 
     @Id
     // @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +56,39 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // UserDetails methods
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Implement roles/authorities if needed
+        return null;
+    }
+
+
+    @Override
+    public String getUsername() {
+        return this.code;  // Use UTI_CODE as the username field
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 

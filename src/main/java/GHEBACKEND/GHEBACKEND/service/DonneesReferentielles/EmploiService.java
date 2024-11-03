@@ -78,6 +78,10 @@ public class EmploiService {
 
     }
 
+    public Integer getTotalDataNumber(String tableName) {   
+        return utilityMethods.getTotalNumberOfDonneesRef(tableName);
+    }
+
 
 
 }

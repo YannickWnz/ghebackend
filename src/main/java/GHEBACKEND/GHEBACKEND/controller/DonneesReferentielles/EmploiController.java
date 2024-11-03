@@ -27,6 +27,11 @@ public class EmploiController {
     @Autowired
     private EmploiService emploiService;
 
+    @GetMapping("/api/emploi/totalCount") 
+    public Integer getEmploiTotalCount() {
+        return emploiService.getTotalDataNumber("T_EMPLOI");
+    }
+
     @GetMapping("/api/emploi")
     public List<EmploiModel> getAllEmploiData() {
         return emploiService.getAllEmploiData();
@@ -47,7 +52,6 @@ public class EmploiController {
             emploiService.addNewEmploi(emploiModel);
 
             return ResponseEntity.ok("Emploi succesfully created");
-            // return ResponseEntity.ok("workiing");
             
         } catch (Exception e) {
             logger.error("Error while creating emploi: ", e);
@@ -62,6 +66,10 @@ public class EmploiController {
 
         try {
          
+            if(!UtilityMethods.validateInputCode(Integer.toString(code))) {
+                return new ResponseEntity<>("Invalid Emploi Code format", HttpStatus.BAD_REQUEST);
+            }
+
             if(!UtilityMethods.validateInputString(emploiModel.getEmpLib(), 2, 100)) {
                 return new ResponseEntity<>("Invalid Emploi Lib format", HttpStatus.BAD_REQUEST);
             }
@@ -83,11 +91,11 @@ public class EmploiController {
         Logger logger = LoggerFactory.getLogger(this.getClass());
 
         try {
-         
-            // if(!UtilityMethods.validateInputString(emploiModel.getEmpLib(), 2, 100)) {
-            //     return new ResponseEntity<>("Invalid Emploi Lib format", HttpStatus.BAD_REQUEST);
-            // }
 
+            if(!UtilityMethods.validateInputCode(Integer.toString(code))) {
+                return new ResponseEntity<>("Invalid Emploi Code format", HttpStatus.BAD_REQUEST);
+            }
+            
             emploiService.deleteEmploiData(code);
 
             return ResponseEntity.ok("Emploi succesfully deleted");

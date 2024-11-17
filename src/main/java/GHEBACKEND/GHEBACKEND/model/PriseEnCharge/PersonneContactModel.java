@@ -3,6 +3,7 @@ package GHEBACKEND.GHEBACKEND.model.PriseEnCharge;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +41,12 @@ public class PersonneContactModel {
 
     @Column(name = "LIE_CODE")
     private Integer lie_code;
+
+    @ManyToOne
+    // @JoinColumn(name = "student_code", nullable = false)
+    private EtudiantModel etudiantModel; // Foreign key to T_ETUDIANT
+
+
 
     // getters
     public Integer getConCode() {

@@ -38,6 +38,49 @@ public class UtilityMethods {
         return (maxCode != null) ? (maxCode + 1) : defaultCode;
     }
 
+    // Method generatrice de codes
+    public Integer studentCodeGenerator() { 
+        // code par default si aucune valeur n'existe dans la base de donnees
+        int defaultCode = 1001;
+
+        LocalDateTime now = LocalDateTime.now();
+
+        /**
+            I am working on method to generate unique student code in my spring boot app 
+            the code need to be a combination of the current year eg: 2024 and a default number 1001
+            so both number concatenated should give something like 20241001 for the very first student
+            if another student is added we make select max sql query on the student table ... fetch the max then increment by to get 20241002 for the second student ... so on and so forth
+            now if the current year change ... say we go from 2024 to 2025 ... i want the default number to go back to 1001
+
+        */
+
+        // int year = Calendar.getInstance().get(Calendar.YEAR);
+        int year = now.getYear();
+
+        int defaultNumber = 1001;
+
+        // String number = Integer.toString(defaultNumber);
+
+        // int a = Integer.parseInt(Integer.toString(9) + Integer.toString(10));
+
+
+        int defaultStudentCode = Integer.parseInt(Integer.toString(year) + Integer.toString(defaultNumber)); 
+
+        int defaultStudentCode1 = Integer.parseInt(Integer.toString(year) + Integer.toString(defaultNumber)) + 1; 
+        
+
+        // requete qui recupere la valeur max existante dans la base
+        // String query = "SELECT MAX(" + codeName + ") FROM " + tableName;
+    
+        // Querying db
+        // Integer maxCode = jdbcTemplate.queryForObject(query, Integer.class);
+    
+        // si aucune valeur n'est trouver ... defaultCode is returned ... else le max est returned apres incrementation by 1 
+        // return (maxCode != null) ? (maxCode + 1) : defaultCode;
+        // return defaultStudentCode;
+        return defaultStudentCode;
+    }
+
     // method qui se charge de la recuperation de la date et heure actuelle
     public String getCurrentDateTime() {
         // Get the current date and time

@@ -1,8 +1,11 @@
 package GHEBACKEND.GHEBACKEND.controller.PriseEnCharge;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,23 +29,23 @@ public class EtudiantController {
     @Autowired
     private PersonneContactRepo personneContactRepo;
 
+
+    @GetMapping("/api/etudiant")
+    public List<EtudiantModel> getAllStudents() {
+        
+        return etudiantService.getAllStudents();
+    }
+
     @PostMapping("/api/etudiant")
-    public ResponseEntity<String> addNewStudent(@RequestBody EtudiantModel etudiantModel) {
+    public ResponseEntity<Integer> addNewStudent(@RequestBody EtudiantModel etudiantModel) {
 
         int code = utilityMethods.studentCodeGenerator();
 
-        EtudiantModel etudiant = new EtudiantModel();
+        etudiantModel.setEtdCode(code);
 
-        etudiant.setEtdCode(code);
-        etudiant.setEtdNom(etudiantModel.getEtdNom());
-        etudiant.setEtdPrenom(etudiantModel.getEtdPrenom());
-        etudiant.setEtdPhone(etudiantModel.getEtdPhone());
-        etudiant.setEtdSexe(etudiantModel.getEtdSexe());
-        etudiant.setEtdVersion(1);
-        etudiant.setEtdAddresse(etudiantModel.getEtdAddresse());
-        etudiant.setNatCode(etudiantModel.getNatCode());
+        // System.out.println(etudiantModel.getEtdCreerPar());
 
-        etudiantService.addNewStudent(etudiant);
+        etudiantService.addNewStudent(etudiantModel);
 
         // for(PersonneContactModel contact : etudiantModel.getContacts()) {
         //     System.out.println(contact.getConPrenom());
@@ -60,7 +63,7 @@ public class EtudiantController {
 
         // }
 
-        return ResponseEntity.ok("new student successfully added " + code);
+        return ResponseEntity.ok(code);
     }
 
 }

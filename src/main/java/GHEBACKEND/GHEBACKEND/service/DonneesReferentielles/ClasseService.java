@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.ClasseRepo;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
@@ -18,6 +19,13 @@ public class ClasseService {
 
     @Autowired
     private UtilityMethods utilityMethods;
+
+    public List<ClasseDataProjection> getClassesData() {
+        return classeRepo.getClassesData();
+    }
+    // public List<ClasseModel> getClassesData() {
+    //     return classeRepo.getClassesData();
+    // }
 
     public List<ClasseModel> getAllCLasse() {
         return classeRepo.findAll();

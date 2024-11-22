@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseMatiereProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.VolumeHoraire;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.VolumeHoraireRepo;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.VolumeHoraireService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -26,6 +28,9 @@ public class VolumeHoraireController {
 
     @Autowired
     private VolumeHoraireService volumeHoraireService;
+
+    @Autowired
+    private VolumeHoraireRepo volumeHoraireRepo;
 
     @GetMapping("/api/volumeHoraire/totalCount")
     public Integer getTotalDataNumber() {
@@ -36,6 +41,26 @@ public class VolumeHoraireController {
     // public List<VolumeHoraire> getAllVolumeHoraire() {
     //     return volumeHoraireService.getAllVolumeHoraires();
     // }
+
+    @GetMapping("/api/volumeHoraire/data")
+    public ResponseEntity<List<ClasseMatiereProjection>> getVolumeHoraireData() {
+
+        // List<ClasseModel> classes = classeService.getClasseInNiveauAndFiliere(nivCode, filCode);
+        List<ClasseMatiereProjection> volumeHoraireData = volumeHoraireService.getVolumeHoraireata();
+
+        return ResponseEntity.ok(volumeHoraireData);
+
+    }
+
+    @GetMapping("/api/volumeHoraire/getAll")
+    public ResponseEntity<List<VolumeHoraire>> getClasse() {
+
+        // List<ClasseModel> classes = classeService.getClasseInNiveauAndFiliere(nivCode, filCode);
+        List<VolumeHoraire> volumeHoraireList = volumeHoraireRepo.findAll();
+
+        return ResponseEntity.ok(volumeHoraireList);
+
+    }
 
     @GetMapping("/api/volumeHoraire")
     public ResponseEntity<List<VolumeHoraire>> getClasse(@RequestParam Integer claCode, @RequestParam Integer matCode) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
@@ -18,6 +19,10 @@ public class RubriqueService {
 
     @Autowired
     private UtilityMethods utilityMethods;
+
+    public List<RubriqueDataProjection> getRubriqueData() {
+        return rubriqueRepo.getRubriqueAndClasseData();
+    }
 
     public List<RubriqueModel> getAllRubrique() {
         return rubriqueRepo.findAll();

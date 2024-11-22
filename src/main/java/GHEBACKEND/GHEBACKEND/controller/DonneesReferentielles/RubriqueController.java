@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.RubriqueService;
-import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -26,10 +27,30 @@ public class RubriqueController {
 
     @Autowired
     private RubriqueService rubriqueService;
+    
+    @Autowired
+    private RubriqueRepo rubriqueRepo;
+
 
     @GetMapping("/api/rubrique/totalCount")
     public Integer getTotalDataNumber() {
         return rubriqueService.getTotalDataNumber("T_RUBRIQUE");
+    }
+
+    @GetMapping("/api/rubrique/getRubriqueData")
+    public List<RubriqueDataProjection> getRubriqueData() {
+
+        List<RubriqueDataProjection> rubriqueData = rubriqueService.getRubriqueData();
+
+        return rubriqueData;
+    }
+
+    @GetMapping("/api/rubrique/getAllRubrique")
+    public List<RubriqueModel> getAllRubriqueData() {
+
+        List<RubriqueModel> rubriqueData = rubriqueRepo.findAll();
+
+        return rubriqueData;
     }
 
     @GetMapping("/api/rubrique")
@@ -54,9 +75,13 @@ public class RubriqueController {
         try {
             
             // validation du libelle en utilisant la methode definie dans la classe utilityMethods
-            if(!UtilityMethods.validateInputString(rubriqueModel.getRubLib(), 4, 100)) {
-                return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(rubriqueModel.getRubLib(), 4, 100)) {
+            //     return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
+            // }
+
+            // cla_code shouldnt be null
+            // rub montant shouldnt be null
+            // rub lib shouldnt be null
 
             // run service function addNewNiveau if no error from validation
             rubriqueService.addNewRubrique(rubriqueModel);

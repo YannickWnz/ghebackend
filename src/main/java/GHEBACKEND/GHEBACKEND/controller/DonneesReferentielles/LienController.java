@@ -47,9 +47,9 @@ public class LienController {
 
         try {
             
-            if(!UtilityMethods.validateInputCode(Integer.toString(code))) {
-                return new ResponseEntity<>("Invalid Lien Code format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputCode(Integer.toString(code))) {
+            //     return new ResponseEntity<>("Invalid Lien Code format", HttpStatus.BAD_REQUEST);
+            // }
 
             String lienLib = lienService.fetchLienLibUsingLienCode(code);
 
@@ -70,9 +70,9 @@ public class LienController {
         try {
 
          
-            if(!UtilityMethods.validateInputString(lienModel.getLieLib(), 2, 255)) {
-                return new ResponseEntity<>("Invalid Lien Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(lienModel.getLieLib(), 2, 255)) {
+            //     return new ResponseEntity<>("Invalid Lien Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             lienService.addNewLien(lienModel);
 
@@ -97,9 +97,9 @@ public class LienController {
                 return new ResponseEntity<>("Invalid Lien Code format", HttpStatus.BAD_REQUEST);
             }
          
-            if(!UtilityMethods.validateInputString(lienModel.getLieLib(), 2, 255)) {
-                return new ResponseEntity<>("Invalid Lien Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(lienModel.getLieLib(), 2, 255)) {
+            //     return new ResponseEntity<>("Invalid Lien Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             lienService.updateLienData(code, lienModel);
 

@@ -1,13 +1,8 @@
 package GHEBACKEND.GHEBACKEND.model.PriseEnCharge;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -52,15 +47,15 @@ public class EtudiantModel {
     @Column(name = "NAT_CODE")
     private Integer nat_code;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    // private List<PersonneContactModel> contacts;
-    private List<PersonneContactModel> contacts = new ArrayList<>();
+    // @OneToMany(cascade = CascadeType.ALL)
+    // // private List<PersonneContactModel> contacts;
+    // private List<PersonneContactModel> contacts = new ArrayList<>();
 
     
     // getters
-    public List<PersonneContactModel> getContacts() {
-        return contacts;
-    }
+    // public List<PersonneContactModel> getContacts() {
+    //     return contacts;
+    // }
 
     public Integer getEtdCode() {
         return etd_code;
@@ -113,9 +108,9 @@ public class EtudiantModel {
 
     // setters
 
-    public void setContacts(List<PersonneContactModel> personneContactModel) {
-        this.contacts = personneContactModel;
-    }
+    // public void setContacts(List<PersonneContactModel> personneContactModel) {
+    //     this.contacts = personneContactModel;
+    // }
 
     public void setEtdCode(Integer etd_code) {
         this.etd_code = etd_code;

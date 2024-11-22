@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ServiceDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ServiceModel;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.ServiceRepo;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.ServiceService;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
@@ -30,9 +32,26 @@ public class ServiceController {
     @Autowired
     private UtilityMethods utilityMethods;
 
+    @Autowired
+    private ServiceRepo serviceRepo;
+
     @GetMapping("/api/service/totalCount")
     public Integer getServiceTotalCount() {
         return serviceService.getTotalDataNumber("T_SERVICE");
+    }
+
+    @GetMapping("/api/service/data")
+    public List<ServiceDataProjection> getServiceData() {
+
+        return serviceService.getServiceData();
+
+    }
+
+    @GetMapping("/api/service")
+    public List<ServiceModel> getAllServiceData() {
+
+        return serviceRepo.findAll();
+
     }
 
     @GetMapping("/api/service/{dirCode}")
@@ -59,9 +78,9 @@ public class ServiceController {
                 return new ResponseEntity<>("Invalid Service Code format", HttpStatus.BAD_REQUEST);
             }
             
-            if(!UtilityMethods.validateInputString(serviceModel.getSceLib(), 2, 255)) {
-                return new ResponseEntity<>("Invalid Service Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(serviceModel.getSceLib(), 2, 255)) {
+            //     return new ResponseEntity<>("Invalid Service Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             serviceService.addNewService(serviceModel.getDirCode(), serviceModel);
 
@@ -88,9 +107,9 @@ public class ServiceController {
                 return new ResponseEntity<>("Invalid Code format", HttpStatus.BAD_REQUEST);
             }
             
-            if(!UtilityMethods.validateInputString(serviceModel.getSceLib(), 2, 255)) {
-                return new ResponseEntity<>("Invalid Service Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(serviceModel.getSceLib(), 2, 255)) {
+            //     return new ResponseEntity<>("Invalid Service Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             serviceService.updateServiceData(code, serviceModel);
 

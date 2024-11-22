@@ -3,7 +3,6 @@ package GHEBACKEND.GHEBACKEND.model.PriseEnCharge;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,11 +29,11 @@ public class PersonneContactModel {
     @Column(name = "CON_PHONE")
     private String con_phone;
 
-    @Column(name = "CON_CREER_PAR")
-    private String con_creer_par;
+    // @Column(name = "CON_CREER_PAR")
+    // private String con_creer_par;
 
-    @Column(name = "CON_MODIFIER_PAR")
-    private String con_modifier_par;
+    // @Column(name = "CON_MODIFIER_PAR")
+    // private String con_modifier_par;
 
     @Column(name = "CON_VERSION")
     private Integer con_version;
@@ -42,9 +41,12 @@ public class PersonneContactModel {
     @Column(name = "LIE_CODE")
     private Integer lie_code;
 
-    @ManyToOne
-    // @JoinColumn(name = "student_code", nullable = false)
-    private EtudiantModel etudiantModel; // Foreign key to T_ETUDIANT
+    @Column(name = "ETD_CODE")
+    private Integer etd_code;
+
+    // @ManyToOne
+    // // @JoinColumn(name = "student_code", nullable = false)
+    // private EtudiantModel etudiantModel; // Foreign key to T_ETUDIANT
 
 
 
@@ -65,6 +67,10 @@ public class PersonneContactModel {
         return con_email;
     }
 
+    // public String getConCreerPar() {
+    //     return con_creer_par;
+    // }
+
     public String getConAddresse() {
         return con_addresse;
     }
@@ -75,6 +81,10 @@ public class PersonneContactModel {
 
     public Integer getLieCode() {
         return lie_code;
+    }
+
+    public Integer getEtdCode() {
+        return etd_code;
     }
 
     public Integer getConVersion() {
@@ -107,8 +117,16 @@ public class PersonneContactModel {
         this.con_phone = con_phone;
     }
 
+    // public void setConCreerPar(String con_creer_par) {
+    //     this.con_creer_par = con_creer_par;
+    // }
+
     public void setLieCode(Integer lie_code) {
         this.lie_code = lie_code;
+    }
+
+    public void setEtdCode(Integer etd_code) {
+        this.etd_code = etd_code;
     }
 
     public void setConVersion(Integer con_version) {

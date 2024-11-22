@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ServiceDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ServiceModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.ServiceRepo;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
@@ -21,6 +22,10 @@ public class ServiceService {
     
     public Integer getTotalDataNumber(String tableName) {   
         return utilityMethods.getTotalNumberOfDonneesRef(tableName);
+    }
+
+    public List<ServiceDataProjection> getServiceData() {
+        return serviceRepo.getServiceAndDirectionData();
     }
 
     public List<ServiceModel> getAllServiceData() {

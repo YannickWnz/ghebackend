@@ -47,9 +47,9 @@ public class MatiereController {
 
         try {
             
-            if(!UtilityMethods.validateInputString(matiereData.getMatLib(), 4, 100)) {
-                return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(matiereData.getMatLib(), 4, 100)) {
+            //     return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             matiereService.addNewMatiere(matiereData);
 

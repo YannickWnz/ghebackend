@@ -38,6 +38,45 @@ public class UtilityMethods {
         return (maxCode != null) ? (maxCode + 1) : defaultCode;
     }
 
+    // Method generatrice de codes
+    public Integer studentCodeGenerator() { 
+        // code par default si aucune valeur n'existe dans la base de donnees
+        int defaultCode = 1001;
+
+        LocalDateTime now = LocalDateTime.now();
+
+        // int year = Calendar.getInstance().get(Calendar.YEAR);
+        int year = now.getYear();
+
+        int defaultNumber = 1001;
+
+        // String number = Integer.toString(defaultNumber);
+
+        // int a = Integer.parseInt(Integer.toString(9) + Integer.toString(10));
+
+
+        int defaultStudentCode = Integer.parseInt(Integer.toString(year) + Integer.toString(defaultNumber)); 
+
+        int defaultStudentCode1 = Integer.parseInt(Integer.toString(year) + Integer.toString(defaultNumber)) + 1; 
+
+        String query = "SELECT MAX(ETD_CODE) FROM T_ETUDIANT";
+       
+        Integer maxCode = jdbcTemplate.queryForObject(query, Integer.class);
+
+        return (maxCode != null) ? (maxCode + 1) : defaultStudentCode;
+
+
+        // requete qui recupere la valeur max existante dans la base
+        // String query = "SELECT MAX(" + codeName + ") FROM " + tableName;
+
+        // Querying db
+        // Integer maxCode = jdbcTemplate.queryForObject(query, Integer.class);
+    
+        // si aucune valeur n'est trouver ... defaultCode is returned ... else le max est returned apres incrementation by 1 
+        // return (maxCode != null) ? (maxCode + 1) : defaultCode;
+        // return defaultStudentCode;
+    }
+
     // method qui se charge de la recuperation de la date et heure actuelle
     public String getCurrentDateTime() {
         // Get the current date and time

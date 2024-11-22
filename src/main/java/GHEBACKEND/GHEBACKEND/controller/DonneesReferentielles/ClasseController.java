@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.ClasseRepo;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.ClasseService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -27,6 +29,18 @@ public class ClasseController {
     @Autowired
     private ClasseService classeService;
 
+    @Autowired
+    private ClasseRepo classeRepo;
+
+    @GetMapping("/api/getClassesData")
+    public ResponseEntity<List<ClasseDataProjection>> getClassesData() {
+
+        List<ClasseDataProjection> classes = classeService.getClassesData();
+
+        return ResponseEntity.ok(classes);
+
+    }
+
     @GetMapping("/api/getAllClasse")
     public ResponseEntity<List<ClasseModel>> getAllClasse() {
 
@@ -35,10 +49,20 @@ public class ClasseController {
         return ResponseEntity.ok(classes);
 
     }
+
     @GetMapping("/api/classe/totalCount") 
     public Integer getClasseTotalCount() {
 
         return classeService.getTotalDataNumber("T_CLASSE");
+
+    }
+
+    @GetMapping("/api/classe/getAllClasses")
+    public ResponseEntity<List<ClasseModel>> getAllClasses() {
+
+        List<ClasseModel> classes = classeRepo.findAll();
+
+        return ResponseEntity.ok(classes);
 
     }
 

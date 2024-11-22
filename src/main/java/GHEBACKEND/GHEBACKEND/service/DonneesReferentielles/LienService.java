@@ -3,6 +3,7 @@ package GHEBACKEND.GHEBACKEND.service.DonneesReferentielles;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.LienModel;
@@ -17,6 +18,9 @@ public class LienService {
 
     @Autowired
     private UtilityMethods utilityMethods;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public List<LienModel> getAllLienData() {
 
@@ -75,6 +79,25 @@ public class LienService {
             lienRepo.deleteById(code);
         } else {
             throw new IllegalArgumentException("Cound not find data with provided code ...");
+        }
+
+    }
+
+    @SuppressWarnings("deprecation")
+    public String fetchLienLibUsingLienCode(Integer code) {
+        
+        String getLibUsingCodeQuery = "SELECT LIE_LIB FROM T_LIEN WHERE LIE_CODE = ?";
+        
+        try {
+            return jdbcTemplate.queryForObject(
+                getLibUsingCodeQuery,
+                new Object[]{code},
+                String.class               
+            );
+        } catch (Exception e) {
+            // Handle any exceptions (e.g., if no record found)
+            System.err.println("Error fetching LIE_LIB for LIE_CODE " + code + ": " + e.getMessage());
+            return null; // Or handle with custom error message
         }
 
     }

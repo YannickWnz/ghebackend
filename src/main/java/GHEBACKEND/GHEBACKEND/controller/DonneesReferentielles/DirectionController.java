@@ -45,9 +45,9 @@ public class DirectionController {
 
         try {
 
-            if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
-                return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
+            //     return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
+            // }
             
             directionService.addNewDirectionData(directionModel);
 
@@ -74,9 +74,9 @@ public class DirectionController {
                 return new ResponseEntity<>("Invalid Direction Code format", HttpStatus.BAD_REQUEST);
             }
 
-            if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
-                return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
+            //     return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
+            // }
             
             directionService.updateDirectionData(code, directionModel);
 

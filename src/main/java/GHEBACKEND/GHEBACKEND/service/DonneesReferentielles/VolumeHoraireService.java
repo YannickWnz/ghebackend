@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseMatiereProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.VolumeHoraire;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.VolumeHoraireRepo;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
@@ -18,6 +19,10 @@ public class VolumeHoraireService {
     @Autowired
     private UtilityMethods utilityMethods;
 
+
+    public List<ClasseMatiereProjection> getVolumeHoraireata() {
+        return volumeHoraireRepo.getVolumeHoraireData();
+    }
 
     public List<VolumeHoraire> getAllVolumeHoraires() {
         return volumeHoraireRepo.findAll();

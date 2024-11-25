@@ -188,9 +188,7 @@ public class UtilityMethods {
     
                 // Querying db
                 Integer totalCount = jdbcTemplate.queryForObject(query, Integer.class);
-
                 return totalCount;
-                
     }
 
 

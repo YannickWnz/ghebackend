@@ -29,7 +29,7 @@ public class PromotionController {
 
     @GetMapping("/api/promotion/totalCount")
     public Integer getTotalDataNumber() {
-        return promotionService.getTotalDataNumber("T_PROMOTIONS");
+        return promotionService.getTotalDataNumber("T_PROMOTION");
     }
 
     // function s'occupant de la sauvegarde des promotions

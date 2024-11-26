@@ -1,5 +1,10 @@
 package GHEBACKEND.GHEBACKEND.utils;
 
+/* 
+ * Cette classe abstraite est créée afin d'implementer toutes les méthodes aux quelles 
+ * les développeurs ont besoin pour utiliser dans le programme
+ * @GaiusYan
+ */
 public abstract class Utils {
 
     /* Cette méthode permet de concatener avec

@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RestController;
 
 import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.DirectionRepository;
+import GHEBACKEND.GHEBACKEND.utils.Utils;
 
 
 @SpringBootApplication
@@ -24,6 +25,8 @@ public class GhebackendApplication {
 		
 		SpringApplication.run(GhebackendApplication.class, args); 
 		
+		/* Test de la méthode @GaiusYan */
+		Utils.concatWithSpace("Gaius Ocklefort", "Yan-bena");
 	}
 
 }

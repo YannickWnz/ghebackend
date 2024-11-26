@@ -46,11 +46,13 @@ public abstract class Utils {
       * Cette fonction permet de determiner si les deux dates sont équals
       @GaiusYan
       */
-    public static boolean dateEquales(LocalDate localDate1, LocalDate localDate2){ return localDate1.equals(localDate2);}
+    public static boolean isEqual(LocalDate localDate1, LocalDate localDate2){ return localDate1.equals(localDate2);}
     /* 
      * Aucune description le nom de la fonction est déjà intituive
      * @GaiusYan
      */
     public static boolean isInferieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isAfter(localDate2);}
     public static boolean isSuperieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isBefore(localDate2);}
+
+
 }

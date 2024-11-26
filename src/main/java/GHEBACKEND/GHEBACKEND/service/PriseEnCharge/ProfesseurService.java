@@ -28,7 +28,7 @@ public class ProfesseurService {
          * et retourner une boolean si et trouvé ou nom
          * @GaiusYan
          */
-        boolean existsProfesseur = professeurRepository.existsByName(professeurModel.getName());
+        boolean existsProfesseur = professeurRepository.existsByProNomAndProPrenom(professeurModel.getProNom(),professeurModel.getProPrenom());
         if (!existsProfesseur) {
             /* 
              * Si ce professeur n'existe pas alors on l'enregistre

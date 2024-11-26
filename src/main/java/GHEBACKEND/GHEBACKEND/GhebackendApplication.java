@@ -26,7 +26,7 @@ public class GhebackendApplication {
 		SpringApplication.run(GhebackendApplication.class, args); 
 		
 		/* Test de la méthode @GaiusYan */
-		Utils.concatWithSpace("Gaius Ocklefort", "Yan-bena");
+		/* Utils.concatWithSpace("Gaius Ocklefort", "Yan-bena"); */
 	}
 
 }

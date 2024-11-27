@@ -1,7 +1,9 @@
 package GHEBACKEND.GHEBACKEND.service.PriseEnCharge;
 
+import java.lang.StackWalker.Option;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -32,9 +34,25 @@ public class PersonnelService {
         }
     }
 
+    /* 
+     * Retourner la liste des personnel
+     */
+    public List<PersonnelModel> getAllPersonnel(){
+        return this.personnelRepository.findAll();
+    }
+
+    /* 
+    * Cette fonction permet de retourner une personne 
+    * @GaiusYan
+    */
+    public Optional<PersonnelModel> getPersonnelById(int code){
+        return Optional.ofNullable(personnelRepository.findById(code)).orElseThrow(() -> new IllegalStateException("Cette personne n'existe pas"));
+    }
+
+
     /* imcrement personnel code 
      * @GaiusYan
-     * 
+     * Cette fonction retourne un type de code de forme 202400001
     */
     public Integer getPersonnelCode(){
         try {

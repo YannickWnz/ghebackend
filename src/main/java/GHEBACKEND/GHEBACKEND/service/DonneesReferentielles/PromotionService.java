@@ -65,7 +65,6 @@ public class PromotionService {
         // recherche de la donnee ... throw err si non trouvee 
         Promotion existingPromoData = promotionRepo.findById(proCode)
         .orElseThrow(() -> new IllegalArgumentException("Could not find data with given code"));
-        
         // set new data then save ...
         existingPromoData.setProLib(proLib);
         existingPromoData.setProModifierPar(proModifierPar);

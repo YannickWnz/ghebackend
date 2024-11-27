@@ -22,11 +22,15 @@ public class PersonnelService {
      * @GaiusYan
      */
     public PersonnelModel createPersonnel(PersonnelModel personnelModel){
-        personnelModel.setPerCode(getPersonnelCode());
-        personnelModel.setPerDateCreation(LocalDateTime.now());
-        return personnelModel;
+        boolean existsPersonnel = personnelRepository.existsByPerNomAndPerPrenom(personnelModel.getPerNom(), personnelModel.getPerPrenom());
+        if(!existsPersonnel){
+            personnelModel.setPerCode(getPersonnelCode());
+            personnelModel.setPerDateCreation(LocalDateTime.now());
+            return personnelModel;
+        }else{
+            throw new IllegalStateException("Cette personnel existe déjà...");
+        }
     }
-
 
     /* imcrement personnel code 
      * @GaiusYan

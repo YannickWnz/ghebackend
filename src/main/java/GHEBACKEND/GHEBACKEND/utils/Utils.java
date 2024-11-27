@@ -52,7 +52,15 @@ public abstract class Utils {
      * @GaiusYan
      */
     public static boolean isInferieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isAfter(localDate2);}
+    
     public static boolean isSuperieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isBefore(localDate2);}
 
-
+    public static Integer incrementValue(String code){
+        Integer value = 0;
+        if(code != null && !code.isEmpty()){
+            value = Integer.parseInt(code) + 1;
+        }else
+            value = 1;
+        return value;
+    }
 }

@@ -19,14 +19,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Entity(name = "T_PERSONNEL")
+@Entity
+@Table(name = "T_PERSONNEL")
 @AllArgsConstructor
 @NoArgsConstructor
 public class PersonnelModel {
 
     @Id
     @Column(name = "PER_CODE")
-    private int perCode;
+    private Integer perCode;
     @Column(name = "PER_NOM", nullable =  false)
     private String perNom;
     @Column(name = "PER_PRENOM", nullable =  false)
@@ -45,8 +46,6 @@ public class PersonnelModel {
     private String perCreerPar;
     @Column(name = "PER_MODIFIER_PAR", nullable =  false)
     private String perModifierPar;
- /*    @Column(name = "PER_MODIFIER_PAR", nullable =  false)
-    private LocalDateTime perDateModification; */
     @Column(name = "PER_DATE_CREATION", nullable =  false)
     private LocalDateTime perDateCreation;
     private String perVersion;

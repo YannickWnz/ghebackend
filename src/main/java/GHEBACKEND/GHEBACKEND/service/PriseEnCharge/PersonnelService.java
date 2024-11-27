@@ -18,9 +18,9 @@ public class PersonnelService {
      * Ajouter une nouvelle personne
      * @GaiusYan
      */
+    /* personnelModel.getPerCode(personnelRepository.findMaxPerCode().orElse(String.valueOf(LocalDate.now().getYear())); */
     public PersonnelModel createPersonnel(PersonnelModel personnelModel){
-        /* personnelModel.getPerCode(personnelRepository.findMaxPerCode().orElse(String.valueOf(LocalDate.now().getYear())); */
-        Integer perCode = 
+        /* Integer perCode = personnelRepository.findMaxPerCode(); */
         return personnelModel;
     }
 }

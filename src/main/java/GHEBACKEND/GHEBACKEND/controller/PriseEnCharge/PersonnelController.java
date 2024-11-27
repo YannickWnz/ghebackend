@@ -21,7 +21,11 @@ public class PersonnelController {
     private final PersonnelService personnelService;
 
     @PostMapping
+<<<<<<< HEAD
     public ResponseEntity<PersonnelModel> postMethodName(@RequestBody PersonnelModel personnelModel) {
+=======
+    public ResponseEntity<PersonnelModel> createPersonnel(@RequestBody PersonnelModel personnelModel) {
+>>>>>>> dev-gaiusYan
         return ResponseEntity.ok(personnelService.createPersonnel(personnelModel));
     }
 }

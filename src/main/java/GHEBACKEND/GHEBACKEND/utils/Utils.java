@@ -55,6 +55,12 @@ public abstract class Utils {
     
     public static boolean isSuperieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isBefore(localDate2);}
 
+    /* 
+     * Cette fonction permet d'incrementer un string 
+     * Exemple : 
+     * incrementeValue("1") == 2
+     * @GaiusYan
+     */
     public static Integer incrementValue(String code){
         Integer value = 0;
         if(code != null && !code.isEmpty()){
@@ -62,5 +68,16 @@ public abstract class Utils {
         }else
             value = 1;
         return value;
+    }
+
+
+    /* 
+     * Cette fonction permet de formatter un string
+     * Par exemple : 
+     * formatString(1) retourne 00001;
+     * @GaiusYan
+     */
+    public static String formatString(String value){
+        return String.format("%05d", Integer.parseInt(value));
     }
 }

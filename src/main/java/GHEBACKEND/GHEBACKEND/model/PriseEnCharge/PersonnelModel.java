@@ -6,12 +6,14 @@ import java.time.LocalDateTime;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.DirectionModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.EmploiModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ServiceModel;
+import GHEBACKEND.GHEBACKEND.utils.Utils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,6 +50,7 @@ public class PersonnelModel {
     private String perModifierPar;
     @Column(name = "PER_DATE_CREATION", nullable =  false)
     private LocalDateTime perDateCreation;
+    @Column(name = "PER_VERSION", nullable = true)
     private String perVersion;
     @ManyToOne
     @JoinColumn(name = "EMP_CODE",nullable = false)
@@ -58,4 +61,11 @@ public class PersonnelModel {
     @ManyToOne
     @JoinColumn(name = "DIR_CODE",nullable = false)
     private DirectionModel direction;
+
+    @Transient
+    private Integer perAge;
+
+    public Integer getAge(){
+        return Utils.getNumberYear(perDateNais, LocalDate.now());
+    }
 }

@@ -2,6 +2,7 @@ package GHEBACKEND.GHEBACKEND.utils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Period;
 
 /* 
  * Cette classe abstraite est créée afin d'implementer toutes les méthodes aux quelles 
@@ -51,9 +52,9 @@ public abstract class Utils {
      * Aucune description le nom de la fonction est déjà intituive
      * @GaiusYan
      */
-    public static boolean isInferieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isAfter(localDate2);}
+    public static boolean isDateSuperieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isAfter(localDate2);}
     
-    public static boolean isSuperieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isBefore(localDate2);}
+    public static boolean isDateInferieur(LocalDate localDate1, LocalDate localDate2){return localDate1.isBefore(localDate2);}
 
     /* 
      * Cette fonction permet d'incrementer un string 
@@ -79,5 +80,24 @@ public abstract class Utils {
      */
     public static String formatString(String value){
         return String.format("%05d", Integer.parseInt(value));
+    }
+
+
+    public static int getNumberYear(LocalDate localDate1, LocalDate localDate2)
+    {
+        Period diff = Period.between(localDate1, localDate2);
+        return diff.getYears();
+    }
+
+    public static int getNumberMonths(LocalDate localDate1, LocalDate localDate2)
+    {
+        Period diff = Period.between(localDate1, localDate2);
+        return diff.getMonths();
+    }
+
+    public static int getNumberDays(LocalDate localDate1, LocalDate localDate2)
+    {
+        Period diff = Period.between(localDate1, localDate2);
+        return diff.getDays();
     }
 }

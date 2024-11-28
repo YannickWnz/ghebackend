@@ -23,7 +23,7 @@ public class GhebackendApplication {
 	 * Test de service ajout personnel
 	 */
 
-	@Bean
+	/* @Bean
 	CommandLineRunner runner(PersonnelService service){
 		return args -> {
 			PersonnelModel personnel = new PersonnelModel();
@@ -37,5 +37,5 @@ public class GhebackendApplication {
 			personnel.setPerSexe("Masculin");
 			service.createPersonnel(personnel);
 		};
-	}
+	} */
 }

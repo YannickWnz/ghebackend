@@ -84,7 +84,8 @@ public class PersonnelService {
     * @GaiusYan
     */
     public Optional<PersonnelModel> getPersonnelById(int code){
-        return Optional.ofNullable(personnelRepository.findById(code)).orElseThrow(() -> new IllegalStateException("Cette personne n'existe pas"));
+        return Optional.ofNullable(personnelRepository.findById(code))
+        .orElseThrow(() -> new IllegalStateException("Cette personne n'existe pas"));
     }
 
 

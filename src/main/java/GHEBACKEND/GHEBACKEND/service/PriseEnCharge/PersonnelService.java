@@ -27,15 +27,38 @@ public class PersonnelService {
      * @GaiusYan
      */
     public PersonnelModel createPersonnel(PersonnelModel personnelModel){
+
+        /* 
+         * Vérifier si le personnel existe
+         * @GaiusYan
+         */
         boolean existsPersonnel = personnelRepository.existsByPerNomAndPerPrenom(personnelModel.getPerNom(), personnelModel.getPerPrenom());
         if(!existsPersonnel){
-            personnelModel.setPerCode(getPersonnelCode());
-            personnelModel.setPerDateCreation(LocalDateTime.now());
-            return personnelModel;
+            if(!checkPersonnelAge(personnelModel.getPerDateNais())){
+                /* *
+                 * On vérifie si son age correspond 
+                 * 
+                 */
+                personnelModel.builder()
+                    .perCode(getPersonnelCode())
+                    .perDateCreation(LocalDateTime.now())
+                    .perVersion(String.valueOf(1))
+                    .build();
+                return personnelRepository.save(personnelModel);
+            }else throw illegalStateException("La date de naissance est incorrect...");
         }else{
             throw new IllegalStateException("Cette personnel existe déjà...");
         }
     }
+
+    public Boolean checkPersonnelAge(LocalDate localDate){
+        return Utils.isDateInferieur(localDate, LocalDate.now()) ? true : false;
+    }
+
+    public IllegalStateException illegalStateException(String message){
+        return new IllegalStateException(message);
+    }
+
 
     /* 
      * Retourner la liste des personnel
@@ -59,10 +82,17 @@ public class PersonnelService {
     */
     public Integer getPersonnelCode(){
         try {
+            /* 
+             * Cette fonction permet d'incrémenter le code du personnel 
+             * Exemple : si le dernier code est 20240004 cette fonction retourne 20240005
+             */
            return Integer.parseInt(String.valueOf(LocalDate.now().getYear()).concat(String.valueOf(Utils.incrementValue(String.valueOf(personnelRepository.findMaxPerCode()).substring(5, 9)))));  
         } 
         catch (Exception e) {
             System.out.println("Erreur"+ e);
+            /* 
+             * Dans le cas où aucune valeur n'est retrouvé dans la base de données 
+             */
             return Integer.parseInt( String.valueOf(LocalDate.now().getYear()).concat("00001"));
         }
     }

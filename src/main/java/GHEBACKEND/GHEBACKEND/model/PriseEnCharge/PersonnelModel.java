@@ -53,13 +53,13 @@ public class PersonnelModel {
     @Column(name = "PER_VERSION", nullable = true)
     private String perVersion;
     @ManyToOne
-    @JoinColumn(name = "EMP_CODE",nullable = false)
+    @JoinColumn(name = "EMP_CODE",nullable = true)
     private EmploiModel emploi;
     @ManyToOne
-    @JoinColumn(name = "SCE_CODE",nullable = false)
+    @JoinColumn(name = "SCE_CODE",nullable = true)
     private ServiceModel service;
     @ManyToOne
-    @JoinColumn(name = "DIR_CODE",nullable = false)
+    @JoinColumn(name = "DIR_CODE",nullable = true)
     private DirectionModel direction;
 
     @Transient

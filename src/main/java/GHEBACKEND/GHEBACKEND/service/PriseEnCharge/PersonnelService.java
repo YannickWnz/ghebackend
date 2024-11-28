@@ -11,6 +11,9 @@ import org.hibernate.query.IllegalSelectQueryException;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.PersonnelModel;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.EmploiRepo;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.ServiceRepo;
+import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.DirectionRepository;
 import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.PersonnelRepository;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import io.micrometer.common.lang.NonNull;
@@ -21,7 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class PersonnelService {
 
     private final PersonnelRepository personnelRepository;
-    
+    private final DirectionRepository directionRepository;
+    private final ServiceRepo serviceRepository;
+    private final EmploiRepo emploiRepository;
     /* 
      * Ajouter une nouvelle personne
      * @GaiusYan
@@ -34,21 +39,24 @@ public class PersonnelService {
          */
         boolean existsPersonnel = personnelRepository.existsByPerNomAndPerPrenom(personnelModel.getPerNom(), personnelModel.getPerPrenom());
         if(!existsPersonnel){
-            if(!checkPersonnelAge(personnelModel.getPerDateNais())){
+            if(checkPersonnelAge(personnelModel.getPerDateNais())){
                 /* *
                  * On vérifie si son age correspond 
                  * 
                  */
-                personnelModel.builder()
-                    .perCode(getPersonnelCode())
-                    .perDateCreation(LocalDateTime.now())
-                    .perVersion(String.valueOf(1))
-                    .build();
-                return personnelRepository.save(personnelModel);
+                personnelModel.setPerCode(getPersonnelCode());
+                personnelModel.setPerDateCreation(LocalDateTime.now());
+                personnelModel.setPerVersion(String.valueOf(1));
+                personnelModel.setDirection(directionRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Cette direction n'existe pas")));
+                personnelModel.setService(serviceRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Ce service n'existe pas")));
+                personnelModel.setEmploi(emploiRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Cet emploi n'existe pas")));
+                if (Utils.getNumberYear(personnelModel.getPerDateNais(), LocalDate.now()) >= 18) {    
+                    return personnelRepository.save(personnelModel);
+                }else throw illegalStateException("Le personnel doit avoir au minimum 18 ans");
             }else throw illegalStateException("La date de naissance est incorrect...");
-        }else{
+        }else
             throw new IllegalStateException("Cette personnel existe déjà...");
-        }
+        
     }
 
     public Boolean checkPersonnelAge(LocalDate localDate){

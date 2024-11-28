@@ -38,17 +38,17 @@ public class PersonnelModel {
     private String perSexe;
     @Column(name = "PER_DATE_DE_NAISSANCE", nullable =  false)
     private LocalDate perDateNais;
-    @Column(name = "PER_ADDRESSE", nullable =  false)
+    @Column(name = "PER_ADDRESSE", nullable =  true)
     private String perAdresse;
-    @Column(name = "PER_EMAIL", nullable =  false)
+    @Column(name = "PER_EMAIL", nullable =  true)
     private String perEmail;
-    @Column(name = "PER_TELEPHONE", nullable =  false)
+    @Column(name = "PER_TELEPHONE", nullable =  true)
     private String perTelephone;
-    @Column(name = "PER_CREER_PAR", nullable =  false)
+    @Column(name = "PER_CREER_PAR", nullable =  true )
     private String perCreerPar;
-    @Column(name = "PER_MODIFIER_PAR", nullable =  false)
+    @Column(name = "PER_MODIFIER_PAR", nullable =  true)
     private String perModifierPar;
-    @Column(name = "PER_DATE_CREATION", nullable =  false)
+    @Column(name = "PER_DATE_CREATION", nullable =  true)
     private LocalDateTime perDateCreation;
     @Column(name = "PER_VERSION", nullable = true)
     private String perVersion;

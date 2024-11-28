@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.PersonnelModel;
-import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.PersonnelRepository;
 import GHEBACKEND.GHEBACKEND.service.PriseEnCharge.PersonnelService;
 
 
@@ -19,13 +18,20 @@ public class GhebackendApplication {
 		SpringApplication.run(GhebackendApplication.class, args); 
 	}
 
+	/* 
+	 * 
+	 * Test de service ajout personnel
+	 */
+
 	@Bean
 	CommandLineRunner runner(PersonnelService service){
 		return args -> {
 			PersonnelModel personnel = new PersonnelModel();
-			personnel.setPerNom("Gaius Ocklefort");
-			personnel.setPerEmail("gaiusyanbena11@gmail.com");
-			personnel.setPerDateNais(LocalDate.of(2015,06,12));
+			personnel.setPerPrenom("Wenz");
+			personnel.setPerNom("Yannick");
+			personnel.setPerEmail("yannick@gmail.com");
+			personnel.setPerAdresse("3ème arrondissement, République centrafricaine-Bangui");
+			personnel.setPerDateNais(LocalDate.of(1999,06,12));
 			personnel.setPerCreerPar(null);
 			personnel.setPerDateCreation(LocalDateTime.now());
 			personnel.setPerSexe("Masculin");

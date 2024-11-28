@@ -8,8 +8,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.hibernate.query.IllegalSelectQueryException;
+import org.springframework.beans.factory.annotation.CustomAutowireConfigurer;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.Exception.CustomException;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.PersonnelModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.EmploiRepo;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.ServiceRepo;
@@ -83,9 +86,8 @@ public class PersonnelService {
     * Cette fonction permet de retourner une personne 
     * @GaiusYan
     */
-    public Optional<PersonnelModel> getPersonnelById(int code){
-        return Optional.ofNullable(personnelRepository.findById(code))
-        .orElseThrow(() -> new IllegalStateException("Cette personne n'existe pas"));
+    public PersonnelModel getPersonnelById(int code){
+        return personnelRepository.findById(code).orElseThrow(() -> new IllegalStateException("Cette personne n'existe pas"));
     }
 
 
@@ -145,15 +147,15 @@ public class PersonnelService {
         if (personnelModel.getPerDateNais() != null && !personnelModelExist.getPerDateNais().toString().isEmpty() && !Objects.equals(personnelModel.getPerDateNais(), personnelModelExist.getPerDateNais())) {
             personnelModelExist.setPerDateNais(personnelModel.getPerDateNais());   
         }
-
+        
         if(Utils.isDateSuperieur(LocalDate.now(), personnelModel.getPerDateNais()))
             personnelModelExist.setPerDateNais(personnelModel.getPerDateNais());
         else
             throw new IllegalStateException("La date de naissance non conforme...");
-            
+
         personnelModelExist.setPerVersion(Utils.incrementValue(personnelModelExist.getPerVersion()).toString());
         if (Utils.getNumberYear(personnelModel.getPerDateNais(), LocalDate.now()) >= 18) {    
-            return personnelRepository.save(personnelModel);
+            return personnelRepository.save(personnelModelExist);
         }else throw illegalStateException("Le personnel doit avoir au minimum 18 ans");
     }
 
@@ -163,9 +165,10 @@ public class PersonnelService {
      */
     public void deletePersonnel(@NonNull Integer code){
         boolean personnelExist = personnelRepository.existsById(code);
-        if (personnelExist) {
-            personnelRepository.deleteById(code);
+        if (!personnelExist) {
+            throw new IllegalStateException("Cette personne n'existe pas");
         }
-            throw new IllegalStateException("Ce personnel n'existe pas ...");
+        personnelRepository.deleteById(code);
     }
 }
+

@@ -71,7 +71,6 @@ public class ClasseService {
     }
 
     public List<ClasseModel> getClasseInNiveauAndFiliere(Integer nivCode, Integer filCode) {
-
         return classeRepo.getClasse(nivCode, filCode);
 
     }

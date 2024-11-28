@@ -24,10 +24,10 @@ import lombok.RequiredArgsConstructor;
 public class PersonnelService {
 
     private final PersonnelRepository personnelRepository;
+    /* 
     private final DirectionRepository directionRepository;
     private final ServiceRepo serviceRepository;
     private final EmploiRepo emploiRepository;
-    /* 
      * Ajouter une nouvelle personne
      * @GaiusYan
      */
@@ -47,9 +47,13 @@ public class PersonnelService {
                 personnelModel.setPerCode(getPersonnelCode());
                 personnelModel.setPerDateCreation(LocalDateTime.now());
                 personnelModel.setPerVersion(String.valueOf(1));
-                personnelModel.setDirection(directionRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Cette direction n'existe pas")));
+                /* 
+                 * Juste pour les test unitaires
+                 * @GaiusYan
+                 */
+                /* personnelModel.setDirection(directionRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Cette direction n'existe pas")));
                 personnelModel.setService(serviceRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Ce service n'existe pas")));
-                personnelModel.setEmploi(emploiRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Cet emploi n'existe pas")));
+                personnelModel.setEmploi(emploiRepository.findById(1001).orElseThrow(()-> new IllegalStateException("Cet emploi n'existe pas"))); */
                 if (Utils.getNumberYear(personnelModel.getPerDateNais(), LocalDate.now()) >= 18) {    
                     return personnelRepository.save(personnelModel);
                 }else throw illegalStateException("Le personnel doit avoir au minimum 18 ans");
@@ -145,5 +149,17 @@ public class PersonnelService {
             
         personnelModelExist.setPerVersion(Utils.incrementValue(personnelModelExist.getPerVersion()).toString());
         return personnelRepository.save(personnelModelExist);
+    }
+
+    /* 
+     * Suppression d'un personnel 
+     * @GaiusYan
+     */
+    public void deletePersonnel(@NonNull Integer code){
+        boolean personnelExist = personnelRepository.existsById(code);
+        if (personnelExist) {
+            personnelRepository.deleteById(code);
+        }else
+            illegalStateException("Ce personnel n'existe pas ...");
     }
 }

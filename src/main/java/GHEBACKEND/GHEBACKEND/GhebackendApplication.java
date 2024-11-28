@@ -23,19 +23,19 @@ public class GhebackendApplication {
 	 * Test de service ajout personnel
 	 */
 
-	/* @Bean
+	@Bean
 	CommandLineRunner runner(PersonnelService service){
 		return args -> {
 			PersonnelModel personnel = new PersonnelModel();
-			personnel.setPerPrenom("Jean-jacques");
-			personnel.setPerNom("Madiabola");
-			personnel.setPerEmail("allah@gmail.com");
-			personnel.setPerAdresse("9ème arrondissement, République centrafricaine-Bangui");
-			personnel.setPerDateNais(LocalDate.of(1999,06,12));
+			personnel.setPerPrenom("User");
+			personnel.setPerNom("oni");
+			personnel.setPerEmail("devoni@gmail.com");
+			personnel.setPerAdresse("1er arrondissement, République centrafricaine-Bangui");
+			personnel.setPerDateNais(LocalDate.of(2003,06,12));
 			personnel.setPerCreerPar(null);
 			personnel.setPerDateCreation(LocalDateTime.now());
 			personnel.setPerSexe("Masculin");
 			service.createPersonnel(personnel);
 		};
-	} */
+	}
 }

@@ -57,7 +57,7 @@ public class PersonnelService {
                 if (Utils.getNumberYear(personnelModel.getPerDateNais(), LocalDate.now()) >= 18) {    
                     return personnelRepository.save(personnelModel);
                 }else throw illegalStateException("Le personnel doit avoir au minimum 18 ans");
-            }else throw illegalStateException("La date de naissance est incorrect...");
+            }else throw illegalStateException("La date de naissance non conforme...");
         }else
             throw new IllegalStateException("Cette personnel existe déjà...");
         
@@ -98,14 +98,17 @@ public class PersonnelService {
              * Cette fonction permet d'incrémenter le code du personnel 
              * Exemple : si le dernier code est 20240004 cette fonction retourne 20240005
              */
-           return Integer.parseInt(String.valueOf(LocalDate.now().getYear()).concat(Utils.formatString(String.valueOf(Utils.incrementValue(String.valueOf(personnelRepository.findMaxPerCode()).substring(5, 9))))));  
-        } 
+            if(Objects.equals(String.valueOf(personnelRepository.findMaxPerCode()).substring(0, 4),String.valueOf(LocalDate.now().getYear()))){
+               return Integer.parseInt(String.valueOf(LocalDate.now().getYear()).concat(Utils.formatString(String.valueOf(Utils.incrementValue(String.valueOf(personnelRepository.findMaxPerCode()).substring(5, 9))))));  
+           }return  Integer.parseInt(String.valueOf(LocalDate.now().getYear()).concat("00001"));
+        }
         catch (Exception e) {
             System.out.println("Erreur"+ e);
             /* 
              * Dans le cas où aucune valeur n'est retrouvé dans la base de données 
+             * @GaiusYan
              */
-            return Integer.parseInt( String.valueOf(LocalDate.now().getYear()).concat("00001"));
+            return Integer.parseInt(String.valueOf(LocalDate.now().getYear()).concat("00001"));
         }
     }
 
@@ -148,7 +151,9 @@ public class PersonnelService {
             throw new IllegalStateException("La date de naissance non conforme...");
             
         personnelModelExist.setPerVersion(Utils.incrementValue(personnelModelExist.getPerVersion()).toString());
-        return personnelRepository.save(personnelModelExist);
+        if (Utils.getNumberYear(personnelModel.getPerDateNais(), LocalDate.now()) >= 18) {    
+            return personnelRepository.save(personnelModel);
+        }else throw illegalStateException("Le personnel doit avoir au minimum 18 ans");
     }
 
     /* 

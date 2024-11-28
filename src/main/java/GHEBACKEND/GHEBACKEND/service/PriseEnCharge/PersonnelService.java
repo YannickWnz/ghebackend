@@ -165,7 +165,7 @@ public class PersonnelService {
         boolean personnelExist = personnelRepository.existsById(code);
         if (personnelExist) {
             personnelRepository.deleteById(code);
-        }else
-            illegalStateException("Ce personnel n'existe pas ...");
+        }
+            throw new IllegalStateException("Ce personnel n'existe pas ...");
     }
 }

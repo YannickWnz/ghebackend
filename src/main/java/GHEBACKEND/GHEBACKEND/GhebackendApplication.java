@@ -27,10 +27,10 @@ public class GhebackendApplication {
 	CommandLineRunner runner(PersonnelService service){
 		return args -> {
 			PersonnelModel personnel = new PersonnelModel();
-			personnel.setPerPrenom("Wenz");
-			personnel.setPerNom("Yannick");
-			personnel.setPerEmail("yannick@gmail.com");
-			personnel.setPerAdresse("3ème arrondissement, République centrafricaine-Bangui");
+			personnel.setPerPrenom("Jean-jacques");
+			personnel.setPerNom("Madiabola");
+			personnel.setPerEmail("allah@gmail.com");
+			personnel.setPerAdresse("9ème arrondissement, République centrafricaine-Bangui");
 			personnel.setPerDateNais(LocalDate.of(1999,06,12));
 			personnel.setPerCreerPar(null);
 			personnel.setPerDateCreation(LocalDateTime.now());

@@ -94,7 +94,7 @@ public class PersonnelService {
              * Cette fonction permet d'incrémenter le code du personnel 
              * Exemple : si le dernier code est 20240004 cette fonction retourne 20240005
              */
-           return Integer.parseInt(String.valueOf(LocalDate.now().getYear()).concat(String.valueOf(Utils.incrementValue(String.valueOf(personnelRepository.findMaxPerCode()).substring(5, 9)))));  
+           return Integer.parseInt(String.valueOf(LocalDate.now().getYear()).concat(Utils.formatString(String.valueOf(Utils.incrementValue(String.valueOf(personnelRepository.findMaxPerCode()).substring(5, 9))))));  
         } 
         catch (Exception e) {
             System.out.println("Erreur"+ e);

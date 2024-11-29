@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class Inscription {
     @Id
     @Column(name = "INS_CODE",nullable = false)
-    private int insCode;
+    private Integer insCode;
     @Column(name = "INS_DATE",nullable = false)
     private LocalDate insDate;
     @Column(name = "INS_NIVEAU_VALIDATION",nullable = false) 

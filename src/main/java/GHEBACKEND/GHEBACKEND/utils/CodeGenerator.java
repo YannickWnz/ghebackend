@@ -18,7 +18,7 @@ public class CodeGenerator {
         switch (tableName.toLowerCase()) {
             case "promotion":
             
-            int pro_code = 1001; // Default starting promotion code
+           /*  int pro_code = 1001; */ // Default starting promotion code
 
             // Query to check if the promotion code exists
             // String checkCodeQuery = "SELECT COUNT(*) FROM T_PROMOTION WHERE PRO_CODE = ?";

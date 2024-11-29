@@ -26,9 +26,7 @@ public class EtudiantService {
     }
 
     public void addNewStudent(EtudiantModel etudiantModel) {
-
         etudiantRepo.save(etudiantModel);
-
     }
 
 }

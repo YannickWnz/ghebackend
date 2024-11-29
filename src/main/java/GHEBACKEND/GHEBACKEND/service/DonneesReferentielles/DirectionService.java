@@ -52,8 +52,6 @@ public class DirectionService {
     }
 
     public void updateDirectionData(Integer code, DirectionModel directionModel) {
-
-        
         // get current promotion version from repo function
         Integer currentVersion = utilityMethods.getCurrentVersion(code, "DIR_CODE", "T_DIRECTION", "DIR_VERSION");
         

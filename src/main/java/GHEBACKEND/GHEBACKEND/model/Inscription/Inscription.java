@@ -32,7 +32,7 @@ public class Inscription {
     @Column(name = "INS_DATE",nullable = false)
     private LocalDate insDate;
     @Column(name = "INS_NIVEAU_VALIDATION",nullable = false) 
-    private int insNiveauValidation;
+    private Integer insNiveauValidation;
     @Column(name = "INS_CREER_PAR",nullable = true) 
     private String insCreerPar;
     @Column(name = "INS_MODIFIER_PAR",nullable = true) 
@@ -40,7 +40,7 @@ public class Inscription {
     @Column(name = "INS_VERSION",nullable = false) 
     private int insVersion;
     @ManyToOne
-    @JoinColumn(name = "ETD_CODE",nullable = false) 
+    @JoinColumn(name = "ETD_CODE",nullable = true) 
     private EtudiantModel etudiant;
     @ManyToOne
     @JoinColumn(name = "PRO_CODE",nullable = true) 

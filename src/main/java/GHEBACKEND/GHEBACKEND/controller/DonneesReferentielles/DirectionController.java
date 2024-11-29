@@ -112,7 +112,6 @@ public class DirectionController {
             
             logger.error("Error while deleting direction: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting direction.");
-        
         }
 
     }

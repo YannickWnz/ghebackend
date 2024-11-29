@@ -12,6 +12,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,26 +29,26 @@ public class Inscription {
     @Id
     @Column(name = "INS_CODE",nullable = false)
     private int insCode;
-    @Column(name = "INS_CODE",nullable = false)
+    @Column(name = "INS_DATE",nullable = false)
     private LocalDate insDate;
-    @Column(name = "INS_CODE",nullable = false) 
+    @Column(name = "INS_NIVEAU_VALIDATION",nullable = false) 
     private int insNiveauValidation;
-    @Column(name = "INS_CODE",nullable = true) 
+    @Column(name = "INS_CREER_PAR",nullable = true) 
     private String insCreerPar;
-    @Column(name = "INS_CODE",nullable = true) 
+    @Column(name = "INS_MODIFIER_PAR",nullable = true) 
     private String insModifierPar;
-    @Column(name = "INS_CODE",nullable = false) 
+    @Column(name = "INS_VERSION",nullable = false) 
     private int insVersion;
-    @ManyToAny
+    @ManyToOne
     @JoinColumn(name = "ETD_CODE",nullable = false) 
     private EtudiantModel etudiant;
-    @ManyToAny
-    @Column(name = "PRO_CODE",nullable = true) 
+    @ManyToOne
+    @JoinColumn(name = "PRO_CODE",nullable = true) 
     private Promotion promotion;
-    @ManyToAny
-    @Column(name = "AAC_CODE",nullable = true) 
+    @ManyToOne
+    @JoinColumn(name = "AAC_CODE",nullable = true) 
     private AnneeAcademique anneeAcademique;
-    @ManyToAny
-    @Column(name = "CLA_CODE",nullable = true) 
+    @ManyToOne
+    @JoinColumn(name = "CLA_CODE",nullable = true) 
     private ClasseModel classe;
 }

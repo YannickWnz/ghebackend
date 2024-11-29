@@ -67,13 +67,12 @@ public class ProfesseurController {
     
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProfesseur(@PathVariable String id){
-        try {
-            
+        try { 
             professeurService.deleteProfesseur(id);
             return ResponseEntity.ok("Succès");
         } catch (IllegalStateException ex) {
             // TODO: handle exception
-            throw new IllegalStateException("Cette personne n'existe pas");
+             return ResponseEntity.ok("Erreur lors de la suppression de ce professeur");
         }
         
     }

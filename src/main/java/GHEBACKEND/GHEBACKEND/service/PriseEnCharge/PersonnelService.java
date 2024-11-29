@@ -60,7 +60,7 @@ public class PersonnelService {
                 if (Utils.getNumberYear(personnelModel.getPerDateNais(), LocalDate.now()) >= 18) {    
                     return personnelRepository.save(personnelModel);
                 }else throw illegalStateException("Le personnel doit avoir au minimum 18 ans");
-            }else throw illegalStateException("La date de naissance non conforme...");
+            }else throw illegalStateException("La date de naissance incorrect...");
         }else
             throw new IllegalStateException("Cette personnel existe déjà...");
         
@@ -170,5 +170,8 @@ public class PersonnelService {
         }
         personnelRepository.deleteById(code);
     }
+    
+
+    
 }
 

@@ -18,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -42,7 +44,7 @@ public class InscriptionController {
         return ResponseEntity.ok(inscriptionService.getAllInscription());
     }
 
-    @GetMapping("{code}")
+    @GetMapping("/{code}")
     public ResponseEntity<?> getInscriptionById(@PathVariable Integer code) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.getInscriptionById(code));
@@ -51,6 +53,10 @@ public class InscriptionController {
         }
     }
     
-    
-
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateInscription(
+        @PathVariable String id,
+        @RequestBody Inscription inscription) {
+            return inscriptionService.updateInscription(id, inscription);
+    }
 }

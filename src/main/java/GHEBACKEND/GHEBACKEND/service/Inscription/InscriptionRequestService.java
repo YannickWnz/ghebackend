@@ -35,4 +35,26 @@ public class InscriptionRequestService {
             "Inscription effectuée avec succès",
             "Succès");
     }
+
+    public InscriptionResponse modifierInscription(InscriptionRequest request){
+        Inscription inscription = new Inscription();
+        inscription.setAnneeAcademique(request.getAnnee());
+        inscription.setInsNiveauValidation(0);
+        inscription.setClasse(request.getClasse());
+        inscription.setEtudiant(request.getEtudiant());
+        /* inscription.setInsCode(service.generateInscriptionCode()); */
+        inscription.setInsDate(LocalDate.now());
+        inscription.setInsCreerPar(request.getInsCreerPar());
+        inscription.setInsModifierPar(request.getInsModifierPar());
+        inscription.setInsVersion(1);
+        inscription.setEtudiant(request.getEtudiant());
+        inscription.setAnneeAcademique(request.getAnnee());
+        inscription.setClasse(request.getClasse());
+        inscription.setPromotion(request.getPromotion());
+       /*  inscription.setEtudiant(repository.findById(1).get()); */
+        service.updateInscription(inscription.getInsCode(),inscription);
+        return new InscriptionResponse(
+            "Modification effectuée avec succès",
+            "Succès");
+    }
 }

@@ -31,6 +31,8 @@ public class InscriptionRequestService {
         inscription.setPromotion(request.getPromotion());
        /*  inscription.setEtudiant(repository.findById(1).get()); */
         service.createInscription(inscription);
-        return new InscriptionResponse("Inscription effectuée avec succès","Succès");
+        return new InscriptionResponse(
+            "Inscription effectuée avec succès",
+            "Succès");
     }
 }

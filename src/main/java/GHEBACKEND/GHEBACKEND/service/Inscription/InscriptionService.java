@@ -1,6 +1,6 @@
 package GHEBACKEND.GHEBACKEND.service.Inscription;
 
-import java.time.LocalDate;
+import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,13 +19,13 @@ public class InscriptionService {
 
     private final InscriptionRepository inscriptionRepository;
 
-    public Inscription 
-createInscription(Inscription inscription){
+    public Inscription createInscription(Inscription inscription){
         
         if(!checkInscription(inscription))
             return inscriptionRepository.save(inscription);
         else
-            throw new IllegalStateException("Attention, Cette inscription existe déjà");
+            throw new 
+            IllegalStateException("Attention, Cette inscription existe déjà");
     }
 
     /* 
@@ -33,7 +33,11 @@ createInscription(Inscription inscription){
      */
     private boolean checkInscription(Inscription inscription){
         Integer existsInscription =  getInscription(inscription);
-        return inscriptionRepository.existsById(existsInscription);
+        try {
+            return inscriptionRepository.existsById(existsInscription);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Integer getInscription(Inscription inscription){
@@ -49,14 +53,23 @@ createInscription(Inscription inscription){
         return inscriptionRepository.findAll();
     }
 
-    public Optional<List<Inscription>> getInscriptionByNiveauValidation(@NonNull int insNiveauValidation){
+    public Optional<Inscription> getInscriptionById(
+        @NonNull Integer code){
+            return Optional.ofNullable(inscriptionRepository.findById(code))
+            .orElseThrow(
+                () -> new IllegalStateException("Cette numero d'inscription "+ code +" n'existe pas"));
+    }
+/*     public Optional<List<Inscription>> 
+    getInscriptionByNiveauValidation(@NonNull int
+     insNiveauValidation){
         return Optional
             .ofNullable(inscriptionRepository.findByInsNiveauValidation(insNiveauValidation))
                 .orElseThrow(
-                    () ->  new IllegalStateException("Aucune inscription à ce niveau...")
+                    () ->  new 
+                    IllegalStateException("Aucune inscription à ce niveau...")
                 );
     }
-
+ */
     public void deleteInscriptionById(@NonNull Integer code){
         boolean exists = inscriptionRepository.existsById(code);
         if(!exists){
@@ -76,14 +89,15 @@ createInscription(Inscription inscription){
             Optional<Integer> optional = inscriptionRepository.findMaxInsCode();
             if(optional.isPresent() && 
                 Objects.equals(
-                    String.valueOf(
-                        optional.get()).substring(0,4),
-                        Utils.concatCurrentYearAndMonth().toString()) ){
+                    String.valueOf(optional.get()).substring(0,4),
+                    Utils.concatCurrentYearAndMonth().toString()) ){
 
                            Integer code = optional.get();
-                           code = Utils.incrementValue(String.valueOf(code).substring(5,9));
+                           code = Utils.incrementValue(String.valueOf(code)
+                            .substring(5,9));
                            return Integer.parseInt(
-                            Utils.concatCurrentYearAndMonth().toString().concat(Utils.formatString(code.toString())));
+                            Utils.concatCurrentYearAndMonth().toString()
+                            .concat(Utils.formatString(code.toString())));
             }
             else
                 return Integer.parseInt(Utils.formatValueString(
@@ -96,6 +110,7 @@ createInscription(Inscription inscription){
 
     /* 
      * Modifier une inscription
+     * @GaiusYan
      */
     public Inscription updateInscription(
         @NonNull Integer code,
@@ -141,7 +156,7 @@ createInscription(Inscription inscription){
 
             if(checkInscription(inscription))
                 return inscriptionRepository.save(existInscription);
-            else 
+            else
                throw new IllegalStateException("Attention, Cette inscription existe déjà");
     }
 }

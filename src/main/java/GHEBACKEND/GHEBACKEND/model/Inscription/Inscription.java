@@ -1,9 +1,6 @@
 package GHEBACKEND.GHEBACKEND.model.Inscription;
 
 import java.time.LocalDate;
-
-import org.hibernate.annotations.ManyToAny;
-
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Promotion;

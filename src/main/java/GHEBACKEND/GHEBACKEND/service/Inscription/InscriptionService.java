@@ -28,7 +28,7 @@ public class InscriptionService {
             IllegalStateException("Attention, Cette inscription existe déjà");
     }
 
-    /* 
+/* 
      * Cette méthode retourrne true si cette inscription existe
      */
     private boolean checkInscription(Inscription inscription){
@@ -53,27 +53,17 @@ public class InscriptionService {
         return inscriptionRepository.findAll();
     }
 
-    public Optional<Inscription> getInscriptionById(
+    public Inscription getInscriptionById(
         @NonNull Integer code){
-            return Optional.ofNullable(inscriptionRepository.findById(code))
+            return inscriptionRepository.findById(code)
             .orElseThrow(
-                () -> new IllegalStateException("Cette numero d'inscription "+ code +" n'existe pas"));
+                () -> new IllegalStateException("Ce numéro d'inscription "+ code +" n'existe pas"));
     }
-/*     public Optional<List<Inscription>> 
-    getInscriptionByNiveauValidation(@NonNull int
-     insNiveauValidation){
-        return Optional
-            .ofNullable(inscriptionRepository.findByInsNiveauValidation(insNiveauValidation))
-                .orElseThrow(
-                    () ->  new 
-                    IllegalStateException("Aucune inscription à ce niveau...")
-                );
-    }
- */
+
     public void deleteInscriptionById(@NonNull Integer code){
         boolean exists = inscriptionRepository.existsById(code);
         if(!exists){
-            throw new IllegalStateException("Cette inscription n'existe pas");
+            throw new IllegalStateException("Ce numéro d'inscription "+ code +" n'existe pas");
         }
         inscriptionRepository.deleteById(code);
     }
@@ -153,10 +143,6 @@ public class InscriptionService {
 
             existInscription.setInsVersion(
                 Utils.incrementValue(String.valueOf(inscription.getInsVersion())));
-
-            if(checkInscription(inscription))
-                return inscriptionRepository.save(existInscription);
-            else
-               throw new IllegalStateException("Attention, Cette inscription existe déjà");
+            return inscriptionRepository.save(existInscription);
     }
 }

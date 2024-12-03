@@ -36,14 +36,14 @@ public class InscriptionRequestService {
             "Succès");
     }
 
-    public InscriptionResponse modifierInscription(InscriptionRequest request){
+    public InscriptionResponse modifierInscription(Integer code,InscriptionRequest request){
         Inscription inscription = new Inscription();
+        inscription.setInsCode(code);
         inscription.setAnneeAcademique(request.getAnnee());
         inscription.setInsNiveauValidation(0);
         inscription.setClasse(request.getClasse());
         inscription.setEtudiant(request.getEtudiant());
-        /* inscription.setInsCode(service.generateInscriptionCode()); */
-        inscription.setInsDate(LocalDate.now());
+        /* inscription.setInsDate(LocalDate.now()); */
         inscription.setInsCreerPar(request.getInsCreerPar());
         inscription.setInsModifierPar(request.getInsModifierPar());
         inscription.setInsVersion(1);
@@ -51,10 +51,25 @@ public class InscriptionRequestService {
         inscription.setAnneeAcademique(request.getAnnee());
         inscription.setClasse(request.getClasse());
         inscription.setPromotion(request.getPromotion());
-       /*  inscription.setEtudiant(repository.findById(1).get()); */
-        service.updateInscription(inscription.getInsCode(),inscription);
-        return new InscriptionResponse(
-            "Modification effectuée avec succès",
-            "Succès");
+
+        if (!inscription.getEtudiant().equals(null)) {
+            service.updateInscription(inscription.getInsCode(),inscription);
+            return new InscriptionResponse(
+                "Modification effectuée avec succès",
+                "Succès");
+        } else 
+            return new InscriptionResponse(
+            "Aucun etudiant...",
+            "Attention");
+    }
+
+
+    public InscriptionResponse supprimerInscription(Integer code){
+        if (!String.valueOf(code).toString().isEmpty()) {
+            service.deleteInscriptionById(code);
+            return new InscriptionResponse("Suppression effectuée avec succès","Succès");
+
+        }else
+            return new InscriptionResponse("Aucune inscription ...","Attention");
     }
 }

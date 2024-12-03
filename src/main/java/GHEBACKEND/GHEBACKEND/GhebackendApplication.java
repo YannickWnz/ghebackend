@@ -14,9 +14,9 @@ import GHEBACKEND.GHEBACKEND.utils.Utils;
 @SpringBootApplication
 public class GhebackendApplication {
 	
-		public static void main(String[] args) {
+	public static void main(String[] args) {
 		SpringApplication.run(GhebackendApplication.class, args); 
-		System.out.println(Utils.concatCurrentYearAndMonth());
+		/* System.out.println(Utils.concatCurrentYearAndMonth()); */
 	}
 
 	/* 

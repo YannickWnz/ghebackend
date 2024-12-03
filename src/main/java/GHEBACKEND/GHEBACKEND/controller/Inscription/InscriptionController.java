@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,10 +54,25 @@ public class InscriptionController {
         }
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("/{code}")
     public ResponseEntity<?> updateInscription(
-        @PathVariable String id,
-        @RequestBody Inscription inscription) {
-            return inscriptionService.updateInscription(id, inscription);
+        @PathVariable Integer code,
+        @RequestBody InscriptionRequest request){
+            try {
+                return ResponseEntity.status(HttpStatus.OK)
+                    .body(service.modifierInscription(code,request));
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+            }
+    }
+
+    @DeleteMapping("/{code}")
+    public ResponseEntity<?> deleteInscription(@PathVariable Integer code){
+        try {
+            return ResponseEntity.ok(service.supprimerInscription(code));
+        } catch (Exception e) {
+            // TODO: handle exception
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+        }
     }
 }

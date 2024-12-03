@@ -1,7 +1,6 @@
 package GHEBACKEND.GHEBACKEND.service.PriseEnCharge;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +27,6 @@ public class EtudiantService {
 
     public void addNewStudent(EtudiantModel etudiantModel) {
         etudiantRepo.save(etudiantModel);
-    }
-
-    public Optional<EtudiantModel> getEtudiantByCode(Integer code){
-        return Optional.ofNullable(etudiantRepo.findById(code))
-            .orElseThrow(() ->  
-                new IllegalStateException("Cet etudiant l'identifiant "+ code +" n'existe pas"));
     }
 
 }

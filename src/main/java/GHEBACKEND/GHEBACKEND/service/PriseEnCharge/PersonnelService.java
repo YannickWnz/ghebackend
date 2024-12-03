@@ -87,8 +87,7 @@ public class PersonnelService {
     * @GaiusYan
     */
     public PersonnelModel getPersonnelById(int code){
-        return personnelRepository.findById(code)
-        .orElseThrow(() -> new IllegalStateException("Cette personne n'existe pas"));
+        return personnelRepository.findById(code).orElseThrow(() -> new IllegalStateException("Cette personne n'existe pas"));
     }
 
 

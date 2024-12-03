@@ -82,9 +82,6 @@ public abstract class Utils {
         return String.format("%05d", Integer.parseInt(value));
     }
 
-    public static String formatValueString(Object value){
-        return String.format("%s", value);
-    }
 
     public static int getNumberYear(LocalDate localDate1, LocalDate localDate2)
     {
@@ -102,23 +99,5 @@ public abstract class Utils {
     {
         Period diff = Period.between(localDate1, localDate2);
         return diff.getDays();
-    }
-
-    /* 
-     * 
-     * Others function dev needs to generate inscription code
-     * Ces trois fonctions permettent
-     */
-
-    public static Integer getCurrentMonth(){
-        return Integer.parseInt(formatValueString(LocalDate.now().getMonth().getValue()));
-    }
-    
-    public static Integer getCurrentYear(){
-        return Integer.parseInt(formatValueString(LocalDate.now().getYear()));
-    }
-
-    public static Integer concatCurrentYearAndMonth(){
-        return Integer.parseInt(String.valueOf(getCurrentYear()).substring(2, 4).concat(getCurrentMonth().toString()));
     }
 }

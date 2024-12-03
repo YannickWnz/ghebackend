@@ -107,6 +107,7 @@ public abstract class Utils {
     /* 
      * 
      * Others function dev needs to generate inscription code
+     * Ces trois fonctions permettent
      */
 
     public static Integer getCurrentMonth(){

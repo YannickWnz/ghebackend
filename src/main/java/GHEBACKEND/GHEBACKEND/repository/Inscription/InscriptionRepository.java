@@ -17,8 +17,8 @@ public interface InscriptionRepository extends  JpaRepository<Inscription,Intege
     @Query("select max(i.insCode) from Inscription i")
     Optional<Integer> findMaxInsCode();
 
-    @Query("select i from Inscription i where i.etudiant.etd_code = :etuCode and i.promotion.pro_code = :proCode and i.classe.cla_code = :claCode and i.anneeAcademique.aac_code = :anneeCode")
-    Optional<Inscription> findByInscription(
+    @Query("select i.insCode from Inscription i where i.etudiant.etd_code = :etuCode and i.promotion.pro_code = :proCode and i.classe.cla_code = :claCode and i.anneeAcademique.aac_code = :anneeCode")
+    Integer existsInscription(
         @Param("etuCode") Integer etuCode,
         @Param("proCode") int proCode,
         @Param("claCode") int claCode,

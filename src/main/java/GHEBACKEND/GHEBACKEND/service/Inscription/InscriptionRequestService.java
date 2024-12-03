@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InscriptionRequestService {
     private final InscriptionService service;
-    private final EtudiantRepo repository;
 
     public InscriptionResponse inscrire(InscriptionRequest request){
         Inscription inscription = new Inscription();
@@ -30,9 +29,6 @@ public class InscriptionRequestService {
         inscription.setAnneeAcademique(request.getAnnee());
         inscription.setClasse(request.getClasse());
         inscription.setPromotion(request.getPromotion());
-        /* 
-         * Test
-         */
        /*  inscription.setEtudiant(repository.findById(1).get()); */
         service.createInscription(inscription);
         return new InscriptionResponse("Inscription effectuée avec succès","Succès");

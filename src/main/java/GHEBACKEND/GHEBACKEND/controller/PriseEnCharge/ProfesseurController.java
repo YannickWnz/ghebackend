@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,6 @@ public class ProfesseurController {
 
     /* 
      * On n'aura pas besoin d'une injection de dépendance pour les services
-     * 
      */
     private final ProfesseurService professeurService;
 
@@ -66,8 +66,14 @@ public class ProfesseurController {
     
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProfesseur(@PathVariable String id){
-        professeurService.deleteProfesseur(id);
-        return ResponseEntity.ok("Succèss");
+        try { 
+            professeurService.deleteProfesseur(id);
+            return ResponseEntity.ok("Succès");
+        } catch (IllegalStateException ex) {
+            // TODO: handle exception
+             return ResponseEntity.ok("Erreur lors de la suppression de ce professeur");
+        }
+        
     }
     
 }

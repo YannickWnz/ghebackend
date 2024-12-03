@@ -13,4 +13,7 @@ public interface AnneeAcademiqueRepo extends JpaRepository<AnneeAcademique, Inte
     @Query(value = "SELECT t.AAC_VERSION FROM T_ANNEE_ACADEMIQUE t WHERE t.AAC_CODE = ?1", nativeQuery = true)
     Integer findProVersion(Integer aac_code);
 
+    @Query(value = "SELECT AAC_LIB FROM T_ANNEE_ACADEMIQUE WHERE AAC_STATUS = 1", nativeQuery = true)
+    String getAnneeEnCours();
+
 }

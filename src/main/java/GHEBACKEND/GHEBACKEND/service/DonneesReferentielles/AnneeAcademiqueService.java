@@ -73,7 +73,7 @@ public class AnneeAcademiqueService {
 
         if(aacLib == null) {
 
-            if(aacStatus == true) {
+            if(aacStatus) {
                 String setAllToFalse = "UPDATE T_ANNEE_ACADEMIQUE SET AAC_STATUS = ?";  
 
                 boolean status = false;
@@ -85,7 +85,7 @@ public class AnneeAcademiqueService {
 
             }
             updateQuery = "UPDATE T_ANNEE_ACADEMIQUE SET AAC_STATUS = ?, AAC_MODIFIER_PAR = ?, AAC_VERSION = ? WHERE AAC_CODE = ?";
-
+            
             // running update query
             jdbcTemplate.update(
                 updateQuery, 

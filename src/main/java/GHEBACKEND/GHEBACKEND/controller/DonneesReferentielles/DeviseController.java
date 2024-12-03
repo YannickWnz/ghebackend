@@ -17,12 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.DeviseModel;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.DeviseRepo;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.DeviseService;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
 public class DeviseController {
+
+    @Autowired
+    private DeviseRepo deviseRepo;
 
     @Autowired
     private DeviseService deviseService;
@@ -34,6 +38,11 @@ public class DeviseController {
     @GetMapping("/api/devise/totalCount")
     public Integer getTotalDataNumber() {
         return deviseService.getTotalNumberOfData("T_DEVISE");
+    }
+
+    @GetMapping("/api/devise/active")
+    public ResponseEntity<String> getActiveDevise() {
+        return new ResponseEntity<>(deviseRepo.getActiveDevise(), HttpStatus.OK);
     }
 
     @GetMapping("/api/devise")

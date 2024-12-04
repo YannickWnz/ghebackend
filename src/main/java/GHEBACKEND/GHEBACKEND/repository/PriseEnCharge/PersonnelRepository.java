@@ -4,10 +4,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.PersonnelModel;
+import java.util.List;
+import java.util.Optional;
+
 
 @Repository
 public interface PersonnelRepository extends JpaRepository<PersonnelModel,Integer> {
 
     @Query("select max(p.perCode) from PersonnelModel p")
     Integer findMaxPerCode();
+
+    boolean existsByPerNomAndPerPrenom(String perNom,String perPrenom);
+
+   Optional<PersonnelModel> findByPerCode(Integer perCode);
 }

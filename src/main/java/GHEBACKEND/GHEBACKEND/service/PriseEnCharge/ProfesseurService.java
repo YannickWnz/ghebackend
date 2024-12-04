@@ -29,15 +29,11 @@ public class ProfesseurService {
          * @GaiusYan
          */
         boolean existsProfesseur = professeurRepository.existsByProNomAndProPrenom(professeurModel.getProNom(),professeurModel.getProPrenom());
-        if (!existsProfesseur) {
-            /* 
-             * Si ce professeur n'existe pas alors on l'enregistre
-             * @GaiusYan
-             */
-           return professeurRepository.save(professeurModel);
+        if (existsProfesseur) {
+            throw new IllegalStateException("Le professeur existe déjà");
+            /* Si le professeur est retrouvé un retourne une exception, avec le message ci-dessous */
         }
-        /* Si le professeur est retrouvé un retourne une exception, avec le message ci-dessous */
-        throw new IllegalStateException("Le professeur existe déjà");
+        return professeurRepository.save(professeurModel);
     }
 
 
@@ -102,9 +98,9 @@ public class ProfesseurService {
      */
     public void deleteProfesseur(@NonNull String code){
         boolean professeurExists = professeurRepository.existsById(code);
-        if(professeurExists){
-            professeurRepository.deleteById(code);
+        if(!professeurExists){
+            throw new IllegalStateException("Ce professeur n'existe pas...");
         }
-        throw new IllegalStateException("Ce professeur n'existe pas...");
+        professeurRepository.deleteById(code);
     }
 }

@@ -23,6 +23,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Inscription {
+
+    /* 
+     * Test@GaiusYan
+     */
     @Id
     @Column(name = "INS_CODE",nullable = false)
     private Integer insCode;

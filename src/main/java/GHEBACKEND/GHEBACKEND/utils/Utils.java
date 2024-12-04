@@ -82,6 +82,9 @@ public abstract class Utils {
         return String.format("%05d", Integer.parseInt(value));
     }
 
+    /* 
+     * Format string
+     */
     public static String formatValueString(Object value){
         return String.format("%s", value);
     }

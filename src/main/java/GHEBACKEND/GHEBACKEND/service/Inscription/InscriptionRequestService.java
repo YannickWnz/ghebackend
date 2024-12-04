@@ -68,7 +68,6 @@ public class InscriptionRequestService {
         if (!String.valueOf(code).isEmpty()) {
             service.deleteInscriptionById(code);
             return new InscriptionResponse("Suppression effectuée avec succès","Succès");
-
         }else
             return new InscriptionResponse("Aucune inscription ...","Attention");
     }

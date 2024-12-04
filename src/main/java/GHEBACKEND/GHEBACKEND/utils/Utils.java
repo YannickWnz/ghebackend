@@ -82,6 +82,15 @@ public abstract class Utils {
         return String.format("%05d", Integer.parseInt(value));
     }
 
+
+    /* 
+     * Format string
+     */
+    public static String formatValueString(Object value){
+        return String.format("%s", value);
+    }
+
+
     public static int getNumberYear(LocalDate localDate1, LocalDate localDate2)
     {
         Period diff = Period.between(localDate1, localDate2);

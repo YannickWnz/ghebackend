@@ -118,6 +118,9 @@ public abstract class Utils {
         return Integer.parseInt(formatValueString(LocalDate.now().getYear()));
     }
 
+    /* 
+     * @YannickWnz
+     */
     public static Integer concatCurrentYearAndMonth(){
         return Integer.parseInt(String.valueOf(getCurrentYear()).substring(2, 4).concat(getCurrentMonth().toString()));
     }

@@ -17,6 +17,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InscriptionService {
 
+    /* 
+     * @GaiusYan
+     */
+
     private final InscriptionRepository inscriptionRepository;
 
     public Inscription createInscription(Inscription inscription){

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 
 @Repository
@@ -18,5 +19,8 @@ public interface RubriqueRepo extends JpaRepository<RubriqueModel, Integer> {
 
     @Query(value = "SELECT * FROM T_RUBRIQUE WHERE CLA_CODE = ?1 ", nativeQuery = true)
     List<RubriqueModel> recupererRubriquePourUneClasse(Integer code);
+
+    @Query(value = "SELECT RUB_CODE, RUB_LIB, RUB_MONTANT, RUB_FRAIS_UNIQUE, CLA_LIB FROM T_RUBRIQUE RUB, T_CLASSE CLA WHERE RUB.CLA_CODE = CLA.CLA_CODE", nativeQuery = true)
+    List<RubriqueDataProjection> getRubriqueAndClasseData();
 
 }

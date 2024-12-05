@@ -48,9 +48,9 @@ public class TypeDocumentController {
         try {
 
          
-            if(!UtilityMethods.validateInputString(typeDocumentModel.getTdcLib(), 2, 100)) {
-                return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(typeDocumentModel.getTdcLib(), 2, 100)) {
+            //     return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             typeDocumentService.addNewTypeDocs(typeDocumentModel);
 
@@ -73,9 +73,9 @@ public class TypeDocumentController {
                 return new ResponseEntity<>("Invalid Code format", HttpStatus.BAD_REQUEST);
             }
 
-            if(!UtilityMethods.validateInputString(typeDocumentModel.getTdcLib(), 2, 100)) {
-                return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(typeDocumentModel.getTdcLib(), 2, 100)) {
+            //     return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             typeDocumentService.updateTypeDocsData(code, typeDocumentModel);
 

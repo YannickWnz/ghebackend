@@ -51,9 +51,9 @@ public class NiveauController {
         try {
             
             // validation du libelle en utilisant la methode definie dans la classe utilityMethods
-            if(!UtilityMethods.validateInputString(niveau.getNivLib(), 4, 100)) {
-                return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(niveau.getNivLib(), 4, 100)) {
+            //     return new ResponseEntity<>("Invalid Lib format", HttpStatus.BAD_REQUEST);
+            // }
 
             // run service function addNewNiveau if no error from validation
             niveauService.addNewNiveau(niveau);
@@ -77,9 +77,9 @@ public class NiveauController {
         try {
 
             // validation en utilisant la methode definie dans la classe utilityMethods
-            if(!UtilityMethods.validateInputString(niveau.getNivLib(), 4, 100) || !UtilityMethods.validateInputString(niveau.getNivModifierPar(), 4, 100)) {
-                return new ResponseEntity<>("Invalid inputs format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(niveau.getNivLib(), 4, 100) || !UtilityMethods.validateInputString(niveau.getNivModifierPar(), 4, 100)) {
+            //     return new ResponseEntity<>("Invalid inputs format", HttpStatus.BAD_REQUEST);
+            // }
 
             // run service function updateNiveauData if no error from validation
             niveauService.updateNiveauData(nivCode, niveau);

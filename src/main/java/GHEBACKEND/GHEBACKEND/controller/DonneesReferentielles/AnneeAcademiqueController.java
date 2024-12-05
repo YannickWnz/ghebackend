@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.AnneeAcademiqueRepo;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.AnneeAcademiqueService;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
 
@@ -28,11 +29,19 @@ public class AnneeAcademiqueController {
     @Autowired
     private UtilityMethods utilityMethods;
 
+    @Autowired
+    private AnneeAcademiqueRepo anneeAcademiqueRepo;
+
     @GetMapping("/api/anneeAcademique/totalCount")
     public Integer getTotalDataNumber() {
         return anneeAcademiqueService.getTotalNumberOfData("T_ANNEE_ACADEMIQUE");
     }
 
+    @GetMapping("/api/anneeAcademique/enCours")
+    public ResponseEntity<String> getAnneeEnCours() {
+        return new ResponseEntity<>(anneeAcademiqueRepo.getAnneeEnCours(), HttpStatus.OK);
+    }
+    
     @GetMapping("/api/anneeAcademique")
     public ResponseEntity<List<AnneeAcademique>> getAllAnneeAcademique() {
         return new ResponseEntity<>(anneeAcademiqueService.getAllAnneeAcademique(), HttpStatus.OK);

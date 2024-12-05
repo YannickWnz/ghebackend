@@ -45,9 +45,9 @@ public class DirectionController {
 
         try {
 
-            if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
-                return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
+            //     return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
+            // }
             
             directionService.addNewDirectionData(directionModel);
 
@@ -74,9 +74,9 @@ public class DirectionController {
                 return new ResponseEntity<>("Invalid Direction Code format", HttpStatus.BAD_REQUEST);
             }
 
-            if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
-                return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
-            }
+            // if(!UtilityMethods.validateInputString(directionModel.getDirLib(), 2, 100)) {
+            //     return new ResponseEntity<>("Invalid Direction Lib format", HttpStatus.BAD_REQUEST);
+            // }
             
             directionService.updateDirectionData(code, directionModel);
 
@@ -112,7 +112,6 @@ public class DirectionController {
             
             logger.error("Error while deleting direction: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting direction.");
-        
         }
 
     }

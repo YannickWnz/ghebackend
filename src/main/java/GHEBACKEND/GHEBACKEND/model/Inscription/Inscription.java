@@ -57,5 +57,5 @@ public class Inscription {
     @JoinColumn(name = "CLA_CODE",nullable = true) 
     private ClasseModel classe;
     @OneToMany(mappedBy = "inscription")
-    private List<RubriquePayer> rubliquePayes;
+    private List<RubriquePayer> rubliquesPayes;
 }

@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "T_RUBRIQUE_PAYER")
 public class RubriquePayer {
     @Id
-    @GeneratedValue
     @Column(name = "RBP_CODE",nullable = false)
     private String rbpCode;
     @Column(name = "RBP_MONTANT",nullable = true)

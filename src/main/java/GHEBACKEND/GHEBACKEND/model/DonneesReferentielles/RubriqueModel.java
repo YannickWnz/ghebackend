@@ -1,10 +1,12 @@
 package GHEBACKEND.GHEBACKEND.model.DonneesReferentielles;
 
-import java.math.BigDecimal;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,13 +34,14 @@ public class RubriqueModel {
     
     @Column(name="RUB_MONTANT")
     // private DecimalFormat rub_montant;
-    private BigDecimal rub_montant;
+    private Double rub_montant;
     
     @Column(name="RUB_DATE_CREATION")
     private String rub_date_creation;
     
-    @Column(name="CLA_CODE")
-    private Integer cla_code;
+    @ManyToOne
+    @JoinColumn(name="CLA_CODE")
+    private ClasseModel classe;
 
     // getters
     public int getRubCode() {
@@ -65,7 +68,7 @@ public class RubriqueModel {
         return rub_frais_unique;
     }
 
-    public BigDecimal getRubMontant() {
+    public Double getRubMontant() {
         return rub_montant;
     }
 
@@ -73,8 +76,8 @@ public class RubriqueModel {
         return rub_date_creation;
     }
 
-    public Integer getClaCode() {
-        return cla_code;
+    public ClasseModel getClaCode() {
+        return classe;
     }
     
     // setters
@@ -102,7 +105,7 @@ public class RubriqueModel {
         this.rub_frais_unique = rub_frais_unique;
     }
 
-    public void setRubMontant(BigDecimal rub_montant) {
+    public void setRubMontant(Double rub_montant) {
         this.rub_montant = rub_montant;
     }
 
@@ -110,8 +113,8 @@ public class RubriqueModel {
         this.rub_date_creation = rub_date_creation;
     }
 
-    public void setClaCode(Integer cla_code) {
-        this.cla_code = cla_code;
+    public void setClaCode(ClasseModel cla_code) {
+        this.classe = cla_code;
     }
 
 }

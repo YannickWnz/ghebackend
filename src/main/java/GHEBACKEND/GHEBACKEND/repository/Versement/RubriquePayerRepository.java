@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
 import java.util.List;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
+
 
 
 @Repository
@@ -17,4 +19,6 @@ public interface RubriquePayerRepository extends JpaRepository<RubriquePayer, St
 
     @Query("select max(r.rbpCode) from RubriquePayer r")
     Optional<String> findMaxRbpCode();
+
+    RubriquePayer findByInscriptionAndRubrique(Inscription inscription, RubriqueModel rubrique);
 }

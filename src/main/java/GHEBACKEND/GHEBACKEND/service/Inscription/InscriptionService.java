@@ -49,7 +49,7 @@ public class InscriptionService {
             .existsInscription(
             inscription.getEtudiant().getEtdCode(),
             inscription.getPromotion().getProCode(),
-            inscription.getClasse().getClaCode(),
+            inscription.getClasse().getCla_code(),
             inscription.getAnneeAcademique().getAacCode());
     }
 
@@ -129,7 +129,7 @@ public class InscriptionService {
                 existInscription.setAnneeAcademique(inscription.getAnneeAcademique());
             }
 
-            if(inscription.getClasse().getClaCode() != 0 &&
+            if(inscription.getClasse().getCla_code() != 0 &&
             !Objects.equals(
              inscription.getClasse(),
              existInscription.getClasse()))

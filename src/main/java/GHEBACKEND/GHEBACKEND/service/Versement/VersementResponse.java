@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VersementException {
+public class VersementResponse {
     private String message;
     private String description;
 }

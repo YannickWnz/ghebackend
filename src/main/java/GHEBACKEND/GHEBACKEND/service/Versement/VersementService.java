@@ -1,6 +1,7 @@
 package GHEBACKEND.GHEBACKEND.service.Versement;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.repository.Versement.VersementRepository;
+import GHEBACKEND.GHEBACKEND.utils.Utils;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,7 @@ public class VersementService {
     private final VersementRepository versementRepository;
 
     public Versement createVersement(Versement versement){
+        versement.setVerCode(generatedCode());
         return versementRepository.save(versement);
     }
 
@@ -31,4 +34,22 @@ public class VersementService {
                     () -> new IllegalStateException(String.format("Aucun versement pour l'inscription de numero %s", 
                     inscription.getInsCode())));
     }
+
+     private String generatedCode(){
+        Optional<String> optional = versementRepository.findMaxVerCode();
+        try {      
+            if(optional.isPresent() && Objects.equals(
+                String.valueOf(optional.get()).substring(0,4),
+                Utils.concatCurrentYearAndMonth().toString())){
+                    String code = optional.get().substring(7,10);
+                return Utils.concatCurrentYearAndMonth().toString()
+                .concat("V"+ Utils.formatFoorString(Utils.incrementValue(code).toString()));
+            }else
+            return Utils.formatValueString(
+                Utils.concatCurrentYearAndMonth()).concat("V"+  Utils.formatFoorString("1"));
+        } catch (Exception e) {
+            return Utils.formatValueString(
+                Utils.concatCurrentYearAndMonth()).concat("V"+ Utils.formatFoorString("1"));
+        }
+    } 
 }

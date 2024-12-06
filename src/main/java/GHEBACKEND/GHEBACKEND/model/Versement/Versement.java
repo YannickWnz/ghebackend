@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "T_VERSEMENT")
 public class Versement {
     @Id
-    @GeneratedValue
     @Column(name = "VER_CODE",nullable = false)
     private String verCode;
     @Column(name = "VER_MONTANT",nullable = false)

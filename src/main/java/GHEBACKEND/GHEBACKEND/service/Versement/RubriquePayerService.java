@@ -70,7 +70,8 @@ public class RubriquePayerService {
             if(optional.isPresent() && Objects.equals(
                 String.valueOf(optional.get()).substring(0,4),
                 Utils.concatCurrentYearAndMonth().toString())){
-                    String code = optional.get().substring(7,11);
+
+                    String code = optional.get().substring(7,10);
                 return Utils.concatCurrentYearAndMonth().toString().concat("RP"+ Utils.formatFoorString(Utils.incrementValue(code).toString()));
             }else
             return Utils.formatValueString(

@@ -1,5 +1,6 @@
 package GHEBACKEND.GHEBACKEND.service.Versement;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,6 +22,7 @@ public class VersementService {
 
     public Versement createVersement(Versement versement){
         versement.setVerCode(generatedCode());
+        versement.setVerDate(LocalDate.now());
         return versementRepository.save(versement);
     }
 
@@ -41,7 +43,7 @@ public class VersementService {
             if(optional.isPresent() && Objects.equals(
                 String.valueOf(optional.get()).substring(0,4),
                 Utils.concatCurrentYearAndMonth().toString())){
-                    String code = optional.get().substring(7,10);
+                    String code = optional.get().substring(6,9);
                 return Utils.concatCurrentYearAndMonth().toString()
                 .concat("V"+ Utils.formatFoorString(Utils.incrementValue(code).toString()));
             }else

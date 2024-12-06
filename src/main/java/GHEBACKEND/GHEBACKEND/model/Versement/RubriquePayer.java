@@ -43,11 +43,7 @@ public class RubriquePayer {
     @JoinColumn(name = "INS_CODE",nullable = false)
     private Inscription inscription;
 
-    public Double getRbpMontantRestant(){
-        return this.rbpMontantRestant;
-    }
-
-    public void setRbpMontantRestant(Double rbpMontantRestant){
-        this.rbpMontantRestant = this.rbpPrevu - this.rbpMontant;
+    public Double getRbpMontantRestant(Double rbpMontantRestant){
+        return this.rbpPrevu - this.rbpMontant;
     }
 }

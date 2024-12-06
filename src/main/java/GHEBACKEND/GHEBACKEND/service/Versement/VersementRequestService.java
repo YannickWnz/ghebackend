@@ -39,12 +39,10 @@ public class VersementRequestService  {
         if(montant == null){
             throw new IllegalStateException("Aucun montant renseigné");
         }
-        if(!Objects.equals(rubriques, null)){
-
-            /* try { */
+        if(!Objects.equals(rubriques, null)){           
                 //Si l'etudiant à déjà payé une rubrique
                 List<RubriquePayer> payers = inscription.getRubliquesPayes();
-                
+    /*             
                         if(payers.size() > 0 ){
                             for (RubriquePayer payer : payers) {
             
@@ -68,7 +66,7 @@ public class VersementRequestService  {
                         
                                             montant -= rubrique.getRubMontant();
                                             RubriquePayer payer1 = new RubriquePayer();
-                                            payer1.setRbpMontant(rubrique.getRubMontant());
+                                            payer1.setRbpMontant(rubrique.get);
                                             payer1.setRubrique(rubrique);
                                             payer1.setRbpDate(LocalDate.now());
                                             payer1.setInscription(inscription);
@@ -113,7 +111,9 @@ public class VersementRequestService  {
                                 );
                             }
                         }
-                       
+                        */
+        
+                        
         }else{
             throw new 
             IllegalStateException(String.format("Aucune rubrique n'est disponible pour la salle %s", inscription.getClasse().getCla_lib())); 

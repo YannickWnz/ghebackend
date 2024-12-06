@@ -33,17 +33,12 @@ public class RubriquePayer {
     private LocalDate rbpDate;
     @Column(name = "RBP_PREVU",nullable = true)
     private Double rbpPrevu;
-    @Transient
+    @Column(name="RBP_MONTANT_RESTANT")
     private Double rbpMontantRestant;
     @ManyToOne
     @JoinColumn(name = "RUB_CODE",nullable = false)
     private RubriqueModel rubrique;
-
     @ManyToOne
     @JoinColumn(name = "INS_CODE",nullable = false)
     private Inscription inscription;
-
-    public Double getRbpMontantRestant(Double rbpMontantRestant){
-        return this.rbpPrevu - this.rbpMontant;
-    }
 }

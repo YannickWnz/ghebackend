@@ -165,10 +165,6 @@ public class VersementRequestService  {
        return rubriquePayerService.updateRubriquePayer(existsRubriquePayer.getRbpCode(), existsRubriquePayer);
     }
 
-    /* 
-     * Cette fonction permet de récuperer la liste des rubrique et de faire la somme
-     * @GaiusYan
-     */
     public Double sommeMontantRubrique(List<RubriqueModel> rubriqueModels){
         return rubriqueModels.stream()
                         .mapToDouble(RubriqueModel::getRubMontant)

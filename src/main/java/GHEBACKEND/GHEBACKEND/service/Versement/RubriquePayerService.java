@@ -60,7 +60,7 @@ public class RubriquePayerService {
 
     public RubriquePayer getRubriquePayer(Inscription inscription,RubriqueModel rubrique){
         return rubriquePayerRepository
-            .findByInscriptionAndRubrique(inscription, rubrique);
+            .findByInscriptionAndRubriqueOrderByRbpCodeAsc(inscription, rubrique);
     }
 
     

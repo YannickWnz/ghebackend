@@ -26,7 +26,6 @@ public class VersementRequestService  {
 
     public VersementResponse versement(VersementRequest request){
        Inscription inscription =  inscriptionService.getInscriptionById(request.getInscription().getInsCode());
-       //Recherche des rubriques pour la classe à laquelle l'Etudiant s'est inscrit
 
        //Recupération des rubriques de la classe liée à l'inscription
         List<RubriqueModel> rubriques = Optional

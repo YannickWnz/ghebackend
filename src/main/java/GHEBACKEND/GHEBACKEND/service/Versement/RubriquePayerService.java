@@ -54,13 +54,13 @@ public class RubriquePayerService {
 
     public void deleteRubriquePayer(@NonNull String code){
         Boolean existsById = rubriquePayerRepository.existsById(code);
-        if(!existsById) rubriquePayerRepository.deleteById(code);
+        if(existsById) rubriquePayerRepository.deleteById(code);
         throw new IllegalStateException("Cette rubrique n'existe pas");
     }
 
     public RubriquePayer getRubriquePayer(Inscription inscription,RubriqueModel rubrique){
         return rubriquePayerRepository
-            .findByInscriptionAndRubrique(inscription, rubrique);
+            .findByInscriptionAndRubriqueOrderByRbpCodeAsc(inscription, rubrique);
     }
 
     

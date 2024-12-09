@@ -30,11 +30,14 @@ public class RubriqueModel {
     private int rub_version;
     
     @Column(name="RUB_FRAIS_UNIQUE")
-    private boolean rub_frais_unique;
+    private boolean rubFraisUnique;
     
     @Column(name="RUB_MONTANT")
     // private DecimalFormat rub_montant;
     private Double rub_montant;
+
+    @Column(name = "RUB_ORDRE",nullable = false)
+    private Integer rubOrdre;
     
     @Column(name="RUB_DATE_CREATION")
     private String rub_date_creation;
@@ -65,7 +68,7 @@ public class RubriqueModel {
     }
 
     public boolean getRubFraisUnique() {
-        return rub_frais_unique;
+        return rubFraisUnique;
     }
 
     public Double getRubMontant() {
@@ -78,6 +81,10 @@ public class RubriqueModel {
 
     public ClasseModel getClaCode() {
         return classe;
+    }
+
+    public Integer getRubOrdre() {
+        return rubOrdre;
     }
     
     // setters
@@ -102,7 +109,7 @@ public class RubriqueModel {
     }
 
     public void setRubFraisUnique(boolean rub_frais_unique) {
-        this.rub_frais_unique = rub_frais_unique;
+        this.rubFraisUnique = rub_frais_unique;
     }
 
     public void setRubMontant(Double rub_montant) {
@@ -115,6 +122,10 @@ public class RubriqueModel {
 
     public void setClaCode(ClasseModel cla_code) {
         this.classe = cla_code;
+    }
+
+    public void SetRubOrdre(Integer rubOrdre){
+        this.rubOrdre = rubOrdre;
     }
 
 }

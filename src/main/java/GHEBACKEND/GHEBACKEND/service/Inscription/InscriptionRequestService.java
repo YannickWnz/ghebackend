@@ -50,7 +50,7 @@ public class InscriptionRequestService {
         Inscription inscription = new Inscription();
         inscription.setInsCode(code);
         inscription.setAnneeAcademique(request.getAnnee());
-        inscription.setInsNiveauValidation(0 );
+        inscription.setInsNiveauValidation(0);
         inscription.setClasse(request.getClasse());
         inscription.setEtudiant(request.getEtudiant());
         /* inscription.setInsDate(LocalDate.now()); */
@@ -62,14 +62,11 @@ public class InscriptionRequestService {
         inscription.setClasse(request.getClasse());
         inscription.setPromotion(request.getPromotion());
 
-        if (!inscription.getEtudiant().equals(null)) {
+       
             service.updateInscription(inscription.getInsCode(),inscription);
             return new InscriptionResponse(
                 "Modification effectuée avec succès",
                 "Succès");
-        } else 
-            throw new IllegalStateException(
-            "Aucun etudiant...");
     }
 
 

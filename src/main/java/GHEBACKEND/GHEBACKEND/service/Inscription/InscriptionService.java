@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.InscriptionRepository;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
+import ch.qos.logback.core.status.ErrorStatus;
 import io.micrometer.common.lang.NonNull;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -59,11 +62,23 @@ public class InscriptionService {
         return inscriptionRepository.findAll();
     }
 
+    public List<Inscription> getInscriptionByNiveauValidation(@NonNull Integer niveauValidation){
+       if(niveauValidation == null) throw new RuntimeException("Attention, le niveau de validation est null");
+        return inscriptionRepository
+                .findByInsNiveauValidationOrderByInsCodeAsc(niveauValidation)
+                .orElseThrow(() -> new IllegalStateException(
+                    String.format(
+                        "Aucune donnée au niveau %s",
+                        niveauValidation)
+                    )
+                );
+    }
+
     public Inscription getInscriptionById(
         @NonNull Integer code){
             return inscriptionRepository.findById(code)
             .orElseThrow(
-                () -> new IllegalStateException("Ce numéro d'inscription "+ code +" n'existe pas"));
+                () -> new IllegalStateException("L'inscription de numéro "+ code +" n'existe pas"));
     }
 
     public void deleteInscriptionById(@NonNull Integer code){
@@ -84,7 +99,15 @@ public class InscriptionService {
     }
 
     public boolean getMaximumNiveauValidation(Inscription inscription){
-        return inscription.getInsNiveauValidation() >= 3;
+        return inscription.getInsNiveauValidation() >= 3 ;
+    }
+
+    public boolean getMinimunNiveauValidation(Inscription inscription){
+        return inscription.getInsNiveauValidation() > 0 ;
+    }
+
+    public boolean getMaximumAndMinimunNiveauValidation(Inscription inscription){
+        return inscription.getInsNiveauValidation() < 3 && inscription.getInsNiveauValidation() >= 0;
     }
 
     /* 
@@ -164,17 +187,22 @@ public class InscriptionService {
             return inscriptionRepository.save(existInscription);
     }
 
-    public Inscription validateInscription(Inscription inscription){
-        Inscription existInscription = inscriptionRepository
-        .findById(inscription.getInsCode())
-        .orElseThrow(
-            () -> new IllegalStateException(
-                String.format("Cette inscription de numero %s n'existe pas",inscription.getInsCode())));
+    public Inscription validateInscription(Integer code){
+        //Vérifier si cette inscription
+        Inscription existInscription = getInscriptionById(code);
+        //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
+        if(getMaximumAndMinimunNiveauValidation(existInscription)) 
+            existInscription.setInsNiveauValidation(Utils.incrementValue(String.valueOf(existInscription.getInsNiveauValidation()))); 
+        else throw new RuntimeException("Cette inscription est déjà validée...");
+        return inscriptionRepository.save(existInscription);
+    }
 
-        if(!Objects.equals(inscription.getInsNiveauValidation(),
-         existInscription.getInsNiveauValidation())){
-            inscription.setInsNiveauValidation(Utils.incrementValue(String.valueOf(inscription.getInsNiveauValidation()))); 
-        }
+    public Inscription rejeterInscription(Integer code){
+        Inscription existInscription = getInscriptionById(code);
+        //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
+        if(getMinimunNiveauValidation(existInscription))
+            existInscription.setInsNiveauValidation(Utils.decrementValue(String.valueOf(existInscription.getInsNiveauValidation()))); 
+        else throw new RuntimeException("Cette inscription ne peut plus être rejetée...");
         return inscriptionRepository.save(existInscription);
     }
 }

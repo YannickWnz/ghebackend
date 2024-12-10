@@ -11,6 +11,7 @@ import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.InscriptionRepository;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import io.micrometer.common.lang.NonNull;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -40,6 +41,7 @@ public class InscriptionService {
         try {
             return inscriptionRepository.existsById(existsInscription);
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
     }
@@ -68,13 +70,24 @@ public class InscriptionService {
         boolean exists = inscriptionRepository.existsById(code);
         if(!exists){
             throw new IllegalStateException("Ce numéro d'inscription "+ code +" n'existe pas");
+        }else{
+            Inscription inscription = getInscriptionById(code);
+            //Vérifier le niveau de validation de cette inscription avant la suppression
+            if(getMaximumNiveauValidation(inscription))
+                throw new IllegalStateException(
+                    String.format(
+                        "L'inscription numéro %s est déjà validée aucune suppression n'est possible",
+                        inscription.getInsCode()));
+            else inscriptionRepository.deleteById(code);
+            
         }
-        inscriptionRepository.deleteById(code);
     }
 
+    public boolean getMaximumNiveauValidation(Inscription inscription){
+        return inscription.getInsNiveauValidation() >= 3;
+    }
 
     /* 
-     * 
      * Cette fonction permet de générer automatiquement le code d'une inscsription
      * @GaiusYan
      */
@@ -106,6 +119,7 @@ public class InscriptionService {
      * Modifier une inscription
      * @GaiusYan
      */
+    @Transactional
     public Inscription updateInscription(
         @NonNull Integer code,
         Inscription inscription){
@@ -148,5 +162,19 @@ public class InscriptionService {
             existInscription.setInsVersion(
                 Utils.incrementValue(String.valueOf(inscription.getInsVersion())));
             return inscriptionRepository.save(existInscription);
+    }
+
+    public Inscription validateInscription(Inscription inscription){
+        Inscription existInscription = inscriptionRepository
+        .findById(inscription.getInsCode())
+        .orElseThrow(
+            () -> new IllegalStateException(
+                String.format("Cette inscription de numero %s n'existe pas",inscription.getInsCode())));
+
+        if(!Objects.equals(inscription.getInsNiveauValidation(),
+         existInscription.getInsNiveauValidation())){
+            inscription.setInsNiveauValidation(Utils.incrementValue(String.valueOf(inscription.getInsNiveauValidation()))); 
+        }
+        return inscriptionRepository.save(existInscription);
     }
 }

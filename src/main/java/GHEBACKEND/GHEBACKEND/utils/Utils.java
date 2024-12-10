@@ -72,6 +72,14 @@ public abstract class Utils {
     }
 
 
+    public static Integer decrementValue(String code){
+        Integer value = 0;
+        if(code != null && !code.isEmpty()){
+            value = Integer.parseInt(code) - 1;
+        }else
+            value = 0;
+        return value;
+    }
     /* 
      * Cette fonction permet de formatter un string
      * Par exemple : 

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
@@ -63,6 +64,10 @@ public class RubriquePayerService {
             .findByInscriptionAndRubriqueOrderByRbpCodeAsc(inscription, rubrique);
     }
 
+    public List<RubriquePayer> getRubriquePayerByInscriptionAndClasse(Inscription inscription, ClasseModel classe){
+        return rubriquePayerRepository
+        .findByInscriptionAndClasseOrderByRubCode(inscription.getInsCode(),classe.getCla_code());
+    }
     
     private String generatedCode(){
         Optional<String> optional = rubriquePayerRepository.findMaxRbpCode();

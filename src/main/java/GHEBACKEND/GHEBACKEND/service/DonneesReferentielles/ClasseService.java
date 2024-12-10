@@ -76,9 +76,17 @@ public class ClasseService {
     }
 
     public Integer getTotalDataNumber(String tableName) {
-        
         return utilityMethods.getTotalNumberOfDonneesRef(tableName);
     }
 
+    public ClasseModel getClasseModelByClaCode(int code){
+        return classeRepo
+            .findById(code)
+            .orElseThrow(() ->
+                new IllegalStateException(
+                    String.format(
+                        "La classe de numéro %s n'existe pas",
+                        code)));
+    }
 
 }

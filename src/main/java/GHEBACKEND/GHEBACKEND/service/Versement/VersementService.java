@@ -7,8 +7,10 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
+import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.ClasseRepo;
 import GHEBACKEND.GHEBACKEND.repository.Versement.VersementRepository;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import lombok.AllArgsConstructor;
@@ -36,6 +38,8 @@ public class VersementService {
                     () -> new IllegalStateException(String.format("Aucun versement pour l'inscription de numero %s", 
                     inscription.getInsCode())));
     }
+
+    
 
      private String generatedCode(){
         Optional<String> optional = versementRepository.findMaxVerCode();

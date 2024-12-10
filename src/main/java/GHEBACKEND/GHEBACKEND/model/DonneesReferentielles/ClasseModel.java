@@ -2,8 +2,11 @@ package GHEBACKEND.GHEBACKEND.model.DonneesReferentielles;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -18,9 +21,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name="T_CLASSE")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="T_CLASSE")
 public class ClasseModel {
 
     @Id
@@ -48,7 +51,8 @@ public class ClasseModel {
     @Column(name="NIV_CODE")
     private int cla_niv_code;
 
-    @OneToMany(mappedBy = "classe")
+    @OneToMany(mappedBy = "classe", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<RubriqueModel> rubrique;
 
 /*     // getters

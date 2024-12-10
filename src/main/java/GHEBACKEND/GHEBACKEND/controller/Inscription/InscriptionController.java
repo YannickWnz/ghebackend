@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-import org.springframework.web.bind.annotation.RequestParam;
-import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionRequest;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionRequestService;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionService;
@@ -36,7 +33,7 @@ public class InscriptionController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.inscrire(request)) ;
         } catch (Exception ex) {
-            return ResponseEntity.ok(ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex);
         }
     }
 
@@ -49,8 +46,8 @@ public class InscriptionController {
     public ResponseEntity<?> getInscriptionById(@PathVariable Integer code) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.getInscriptionById(code));
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }
     }
     

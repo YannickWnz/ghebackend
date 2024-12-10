@@ -77,7 +77,7 @@ public class InscriptionController {
         return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.validateInscription(code));
     }
 
-    @PutMapping("/rejetter/{code}")
+    @PutMapping("/rejeter/{code}")
     public ResponseEntity<?> rejetterInscription(@PathVariable Integer code) { 
         return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.rejeterInscription(code));
     }

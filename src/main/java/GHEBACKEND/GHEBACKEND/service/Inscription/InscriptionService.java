@@ -1,6 +1,5 @@
 package GHEBACKEND.GHEBACKEND.service.Inscription;
 
-import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -8,6 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
+import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.StudentInscriptionDetailsProjection;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.InscriptionRepository;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import io.micrometer.common.lang.NonNull;
@@ -149,4 +149,16 @@ public class InscriptionService {
                 Utils.incrementValue(String.valueOf(inscription.getInsVersion())));
             return inscriptionRepository.save(existInscription);
     }
+
+    
+    // public Integer getStudentInscriptionDetails(Integer code) {
+    public List<StudentInscriptionDetailsProjection> getStudentInscriptionDetails(Integer code) {
+
+        if(code == null) {
+            throw new IllegalArgumentException("Invalid student code");
+        }
+        return inscriptionRepository.getStudentInscriptionDetails(code);
+
+    }
+
 }

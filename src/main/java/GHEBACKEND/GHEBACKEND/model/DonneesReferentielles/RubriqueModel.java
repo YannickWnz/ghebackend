@@ -39,6 +39,9 @@ public class RubriqueModel {
     
     @Column(name="CLA_CODE")
     private Integer cla_code;
+    
+    @Column(name="RUB_ORDRE_PAIEMENT")
+    private Integer rub_ordre_payment;
 
     // getters
     public int getRubCode() {
@@ -76,6 +79,10 @@ public class RubriqueModel {
     public Integer getClaCode() {
         return cla_code;
     }
+
+    public Integer getRubOrdrePaiement() {
+        return rub_ordre_payment;
+    }
     
     // setters
     public void setRubCode(int rub_code) {
@@ -112,6 +119,10 @@ public class RubriqueModel {
 
     public void setClaCode(Integer cla_code) {
         this.cla_code = cla_code;
+    }
+
+    public void setRubOrdrePaiement(Integer rub_order_payment) {
+        this.rub_ordre_payment = rub_order_payment;
     }
 
 }

@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.PersonneContactModel;
+import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.StudentContactDataProjection;
 import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.PersonneContactRepo;
 import GHEBACKEND.GHEBACKEND.service.PriseEnCharge.PersonneContactService;
 import GHEBACKEND.GHEBACKEND.utils.UtilityMethods;
@@ -27,6 +29,20 @@ public class PersonneContactController {
 
     @Autowired
     private PersonneContactRepo personneContactRepo;
+    
+    @GetMapping("api/personneContact/{studentCode}")
+    private ResponseEntity<?> getStudentContacts(@PathVariable Integer studentCode) {
+        try {
+
+            List<StudentContactDataProjection> studentContacts = personneContactService.getStudentContacts(studentCode);
+
+            return ResponseEntity.ok(studentContacts);
+
+        } catch (IllegalArgumentException e) {  
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
 
     @PostMapping("api/personneContact/{studentCode}")
     private ResponseEntity<String> addNewContacts(@PathVariable Integer studentCode, @RequestBody List<PersonneContactModel> personneContactModel) {

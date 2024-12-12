@@ -1,11 +1,14 @@
 package GHEBACKEND.GHEBACKEND.controller.PriseEnCharge;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +33,20 @@ public class EtudiantController {
     private PersonneContactRepo personneContactRepo;
 
 
+    @GetMapping("/api/etudiant/{code}")
+    public ResponseEntity<?> getStudentByCode(@PathVariable Integer code) {
+        
+        try {
+        
+            Optional<EtudiantModel> etudiant = etudiantService.getStudentByCode(code);
+            return new ResponseEntity<>(etudiant, HttpStatus.OK);
+        
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+            // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/api/etudiant")
     public List<EtudiantModel> getAllStudents() {
         
@@ -37,33 +54,24 @@ public class EtudiantController {
     }
 
     @PostMapping("/api/etudiant")
-    public ResponseEntity<Integer> addNewStudent(@RequestBody EtudiantModel etudiantModel) {
+    public ResponseEntity<?> addNewStudent(@RequestBody EtudiantModel etudiantModel) {
 
-        int code = utilityMethods.studentCodeGenerator();
+        
+        try {
+            int code = utilityMethods.studentCodeGenerator();
+    
+            etudiantModel.setEtdCode(code);
+            
+            etudiantService.addNewStudent(etudiantModel);
 
-        etudiantModel.setEtdCode(code);
+            return ResponseEntity.ok(code);
 
-        // System.out.println(etudiantModel.getEtdCreerPar());
+            // return ResponseEntity.ok("Data successfully updated");
 
-        etudiantService.addNewStudent(etudiantModel);
+        } catch (IllegalArgumentException e) {  
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
-        // for(PersonneContactModel contact : etudiantModel.getContacts()) {
-        //     System.out.println(contact.getConPrenom());
-        //     PersonneContactModel personneContactModel = new PersonneContactModel();
-
-        //     personneContactModel.seConCode(1001);
-        //     personneContactModel.setConAddresse(contact.getConAddresse());
-        //     personneContactModel.setConEmail(contact.getConEmail());
-        //     personneContactModel.setConNom(contact.getConNom());
-        //     personneContactModel.setConPrenom(contact.getConPrenom());
-        //     personneContactModel.setConVersion(1);
-        //     personneContactModel.setLieCode(code);
-
-        //     personneContactRepo.save(personneContactModel);
-
-        // }
-
-        return ResponseEntity.ok(code);
     }
 
 }

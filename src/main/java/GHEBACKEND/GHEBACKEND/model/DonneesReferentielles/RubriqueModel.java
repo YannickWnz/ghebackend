@@ -40,7 +40,7 @@ public class RubriqueModel {
     @Column(name="CLA_CODE")
     private Integer cla_code;
     
-    @Column(name="RUB_ORDRE_PAIEMENT")
+    @Column(name="RUB_ORDRE_PAYMENT")
     private Integer rub_ordre_payment;
 
     // getters

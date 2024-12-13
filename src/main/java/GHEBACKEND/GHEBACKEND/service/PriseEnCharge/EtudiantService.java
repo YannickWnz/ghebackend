@@ -29,4 +29,10 @@ public class EtudiantService {
         etudiantRepo.save(etudiantModel);
     }
 
+    public EtudiantModel getEtudiantByEtuCode(Integer code){
+        return etudiantRepo
+            .findById(code)
+            .orElseThrow(() -> new IllegalStateException(String.format("Le numéro %s n'existe pas", code)));
+    }
+
 }

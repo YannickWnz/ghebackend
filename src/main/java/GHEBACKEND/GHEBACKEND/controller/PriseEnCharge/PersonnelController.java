@@ -69,7 +69,7 @@ public class PersonnelController {
             personnelService.deletePersonnel(code);
             return ResponseEntity.status(HttpStatus.OK).body("Succès");
         }catch(Exception ex){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Erreur survenue lors de la suppression");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur survenue lors de la suppression");
         }
     }
 }

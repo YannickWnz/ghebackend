@@ -5,14 +5,23 @@ import java.time.LocalDate;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.EtudiantRepo;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.AnneeAcademiqueService;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.ClasseService;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.PromotionService;
+import GHEBACKEND.GHEBACKEND.service.PriseEnCharge.EtudiantService;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class InscriptionRequestService {
     private final InscriptionService service;
+    private final EtudiantService etudiantService;
+    private final PromotionService promotionService;
+    private final ClasseService classeService;
+    private final AnneeAcademiqueService anneeAcademiqueService;
 
     public InscriptionResponse inscrire(InscriptionRequest request){
         Inscription inscription = new Inscription();
@@ -25,11 +34,12 @@ public class InscriptionRequestService {
         inscription.setInsCreerPar(request.getInsCreerPar());
         inscription.setInsModifierPar(request.getInsModifierPar());
         inscription.setInsVersion(1);
-        inscription.setEtudiant(request.getEtudiant());
-        inscription.setAnneeAcademique(request.getAnnee());
-        inscription.setClasse(request.getClasse());
-        inscription.setPromotion(request.getPromotion());
-       /*  inscription.setEtudiant(repository.findById(1).get()); */
+        //Controle d'existence de ces objets dans la base des données
+        inscription.setEtudiant(etudiantService.getEtudiantByEtuCode(request.getEtudiant().getEtdCode()));
+        inscription.setClasse(classeService.getClasseModelByClaCode(request.getClasse().getCla_code()));
+        inscription.setPromotion(promotionService.getPromotionByProCode(request.getPromotion().getProCode()));
+        inscription.setAnneeAcademique(anneeAcademiqueService.getAnneeAcademiqueByAaCode(request.getAnnee().getAacCode()));
+        
         service.createInscription(inscription);
         return new InscriptionResponse(
             "Inscription effectuée avec succès",
@@ -52,23 +62,19 @@ public class InscriptionRequestService {
         inscription.setClasse(request.getClasse());
         inscription.setPromotion(request.getPromotion());
 
-        if (!inscription.getEtudiant().equals(null)) {
+       
             service.updateInscription(inscription.getInsCode(),inscription);
             return new InscriptionResponse(
                 "Modification effectuée avec succès",
                 "Succès");
-        } else 
-            return new InscriptionResponse(
-            "Aucun etudiant...",
-            "Attention");
     }
 
 
     public InscriptionResponse supprimerInscription(Integer code){
-        if (!String.valueOf(code).isEmpty()) {
             service.deleteInscriptionById(code);
-            return new InscriptionResponse("Suppression effectuée avec succès","Succès");
-        }else
-            return new InscriptionResponse("Aucune inscription ...","Attention");
+            return new InscriptionResponse(
+                "Suppression effectuée avec succès",
+                "Succès"
+            );
     }
 }

@@ -23,7 +23,7 @@ public interface VersementRepository extends JpaRepository<Versement,String> {
     Optional<String> findMaxVerCode();
     
     /* 
-     * Afficher les versements entre intervalle de date
+     * Afficher les versements entre intervalle de date ok
      */
     List<Versement> findByVerDateBetween(LocalDate startDate,LocalDate endDate);
 

@@ -54,7 +54,6 @@ public class UtilityMethods {
 
         // int a = Integer.parseInt(Integer.toString(9) + Integer.toString(10));
 
-
         int defaultStudentCode = Integer.parseInt(Integer.toString(year) + Integer.toString(defaultNumber)); 
 
         int defaultStudentCode1 = Integer.parseInt(Integer.toString(year) + Integer.toString(defaultNumber)) + 1; 

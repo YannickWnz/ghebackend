@@ -6,6 +6,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,6 +25,7 @@ import static org.springframework.http.HttpMethod.GET;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtFilter;
@@ -34,8 +37,9 @@ public class SecurityConfiguration {
                     .csrf(csrf -> csrf.disable())
                     .authorizeHttpRequests(
                         authorize ->
-                            authorize.requestMatchers(POST, "/inscription").permitAll()
-                            .requestMatchers(POST, "/connexion").permitAll()
+                            authorize.requestMatchers(POST, "/api/creer-compte").permitAll()
+                            .requestMatchers(POST, "/api/connexion").permitAll()
+                            /* .requestMatchers(GET, "/api/inscription").hasRole("ADMINISTRATEUR") */
                             .anyRequest().authenticated()
                     )
 

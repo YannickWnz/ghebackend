@@ -40,7 +40,6 @@ public class VersementRequestService  {
             throw new IllegalStateException("Aucun montant renseigné");
         }
         if(!Objects.equals(rubriques, null)){           
-             
                 List<RubriqueModel> rubriqueModels = rubriqueRepository.findByClasseOrderByRubFraisUniqueDescRubOrdreAsc(
                     inscription.getClasse());
                 List<RubriquePayer> rubriquePayers = inscription.getRubliquesPayes();

@@ -7,10 +7,12 @@ import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.InscriptionRepository;
+import GHEBACKEND.GHEBACKEND.security.Utilisateur.Utilisateur;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import ch.qos.logback.core.status.ErrorStatus;
 import io.micrometer.common.lang.NonNull;

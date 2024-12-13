@@ -49,6 +49,11 @@ public class VersementService {
         return versementRepository.findVersementsByAnneeInscription(currentYear);
     }
 
+    public List<Versement> getVersementsByAnneeAcademiqueBetween(LocalDate startDate,LocalDate endDate){
+        return versementRepository.findByVerDateBetween(startDate, endDate);
+    }
+
+
      private String generatedCode(){
         Optional<String> optional = versementRepository.findMaxVerCode();
         try {      

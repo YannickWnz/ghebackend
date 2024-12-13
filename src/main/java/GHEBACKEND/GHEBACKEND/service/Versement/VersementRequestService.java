@@ -13,6 +13,7 @@ import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionService;
+import GHEBACKEND.GHEBACKEND.utils.Utils;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -168,5 +169,24 @@ public class VersementRequestService  {
         return rubriqueModels.stream()
                         .mapToDouble(RubriqueModel::getRubMontant)
                         .sum();
+    }
+
+
+    public List<Versement> getVersementsByAnneeInscription(int currentYear){
+        return versementService.getVersementsByAnneeInscription(currentYear);
+    }
+
+    public List<Versement> getVersementsByAnneeInscription(){
+        return versementService.getVersementsByAnneeInscription();
+    }
+
+    /* 
+     * Example : 
+     * GET : http://localhost:8080/api/versement/between?startDate=2024-01-03&endDate=2025-01-03
+     */
+    public List<Versement> getVersementsByAnneeAcademiqueBetween(LocalDate startDate,LocalDate endDate){
+        if(!Utils.isDateInferieur(startDate, endDate))
+            throw new RuntimeException(String.format("La date %s doit venir avant la date %s",endDate,startDate));
+        return versementService.getVersementsByAnneeAcademiqueBetween(startDate, endDate);
     }
 }

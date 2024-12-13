@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
@@ -39,7 +40,14 @@ public class VersementService {
                     inscription.getInsCode())));
     }
 
-    
+    public List<Versement> getVersementsByAnneeInscription(){
+        int currentYear = LocalDate.now().getYear();
+        return versementRepository.findVersementsByAnneeInscription(currentYear);
+    }
+
+    public List<Versement> getVersementsByAnneeInscription(int currentYear){
+        return versementRepository.findVersementsByAnneeInscription(currentYear);
+    }
 
      private String generatedCode(){
         Optional<String> optional = versementRepository.findMaxVerCode();

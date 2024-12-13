@@ -9,10 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
-
+/* 
+ * 
+ */
 @Repository
 public interface InscriptionRepository extends  JpaRepository<Inscription,Integer>{
-    Optional<List<Inscription>> findByInsNiveauValidation(int insNiveauValidation);
+    Optional<List<Inscription>> findByInsNiveauValidationOrderByInsCodeAsc(int insNiveauValidation);
 
     @Query("select max(i.insCode) from Inscription i")
     Optional<Integer> findMaxInsCode();

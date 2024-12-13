@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
+
+/* 
+ * For any exception 
+ * @GaiusYan
+ */
 public class InscriptionResponse {
     private String description;
     private String message;

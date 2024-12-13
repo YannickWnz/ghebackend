@@ -42,9 +42,9 @@ public class ClasseService {
          String currentDateTime = utilityMethods.getCurrentDateTime();
  
  
-         classeModel.setClaCode(code);
-         classeModel.setClaVersion(version);
-         classeModel.setClaDateCreation(currentDateTime);
+         classeModel.setCla_code(code);
+         classeModel.setCla_version(version);
+         classeModel.setCla_date_creation(currentDateTime);
 
          classeRepo.save(classeModel);
 
@@ -55,7 +55,7 @@ public class ClasseService {
 
         Integer newVersion = utilityMethods.getCurrentVersion(code, "CLA_CODE", "T_CLASSE", "CLA_VERSION") + 1;
 
-        classeRepo.updateClasseData(code, classeModel.getClaLib(), classeModel.getClaModifierPar(), newVersion);
+        classeRepo.updateClasseData(code, classeModel.getCla_lib(), classeModel.getCla_modifier_par(), newVersion);
 
     }
 
@@ -76,9 +76,17 @@ public class ClasseService {
     }
 
     public Integer getTotalDataNumber(String tableName) {
-        
         return utilityMethods.getTotalNumberOfDonneesRef(tableName);
     }
 
+    public ClasseModel getClasseModelByClaCode(int code){
+        return classeRepo
+            .findById(code)
+            .orElseThrow(() ->
+                new IllegalStateException(
+                    String.format(
+                        "La classe de numéro %s n'existe pas",
+                        code)));
+    }
 
 }

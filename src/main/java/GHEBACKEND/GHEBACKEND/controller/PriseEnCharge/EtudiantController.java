@@ -2,13 +2,10 @@ package GHEBACKEND.GHEBACKEND.controller.PriseEnCharge;
 
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,15 +34,6 @@ public class EtudiantController {
     public List<EtudiantModel> getAllStudents() {
         
         return etudiantService.getAllStudents();
-    }
-
-    @GetMapping("/api/etudiant/{code}")
-    public ResponseEntity<?> getEtudiantById(@PathVariable Integer code){
-        try {
-            return ResponseEntity.ok(etudiantService.getEtudiantByCode(code));
-        } catch (IllegalStateException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-        }
     }
 
     @PostMapping("/api/etudiant")

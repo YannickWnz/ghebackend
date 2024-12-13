@@ -1,11 +1,28 @@
 package GHEBACKEND.GHEBACKEND.model.DonneesReferentielles;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="T_CLASSE")
 public class ClasseModel {
 
@@ -34,7 +51,11 @@ public class ClasseModel {
     @Column(name="NIV_CODE")
     private int cla_niv_code;
 
-    // getters
+    @OneToMany(mappedBy = "classe", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<RubriqueModel> rubrique;
+
+/*     // getters
     public int getClaCode() {
         return cla_code;
     }
@@ -98,6 +119,6 @@ public class ClasseModel {
 
     public void setClaNivCode(int cla_niv_code) {
         this.cla_niv_code = cla_niv_code;
-    }
+    } */
 
 }

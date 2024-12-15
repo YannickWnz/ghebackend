@@ -9,6 +9,7 @@ import java.util.function.Function;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.security.Jwt.JwtRepository;
 import GHEBACKEND.GHEBACKEND.security.Utilisateur.Utilisateur;
 import GHEBACKEND.GHEBACKEND.security.Utilisateur.UtilisateurService;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
@@ -17,6 +18,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,10 +27,23 @@ public class JwtService {
     private final UtilisateurService utilisateurService;
     private final String ENCRYPTION_KEY = "dd5e9770f0a84810f98cdf97b96c99fc9c928643b3a46394ce0a02ef6dd7df9f";
     private final String BEARER = "bearer";
+    private final JwtRepository jwtRepository;
 
     public Map<String, String> generateJwt(String username){
         Utilisateur utilisateur = this.utilisateurService.loadUserByUsername(username);
-        return  this.generateJwt(utilisateur);
+        Map<String,String> jwtMap =   this.generateJwt(utilisateur);
+    
+        return jwtMap;
+    }
+    
+    public GHEBACKEND.GHEBACKEND.security.Jwt.Jwt tokenByValue(String value){
+        return jwtRepository.findByValueAndDesactiveAndExpire(
+                    value,
+                    false,
+                    false)
+                .orElseThrow(
+                    () -> new  EntityNotFoundException("Ce token n'est pas valide")
+                );
     }
 
     public Map<String,String> generateJwt(Utilisateur utilisateur){

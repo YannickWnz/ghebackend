@@ -1,7 +1,8 @@
 package GHEBACKEND.GHEBACKEND.security.Validation;
 
-public class NotificationService {
+import org.springframework.mail.javamail.JavaMailSender;
 
+public class NotificationService {
     /* 
      * Implémentation des fonctionnalités liées à l'envoie des messages par mail
      */

@@ -13,12 +13,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.security.Authentication.Register.AuthenticationRequest;
 import GHEBACKEND.GHEBACKEND.security.Authentication.Register.RegisterRequest;
 import GHEBACKEND.GHEBACKEND.security.Authentication.Register.RegisterResponse;
 import GHEBACKEND.GHEBACKEND.security.Config.JwtService;
+import GHEBACKEND.GHEBACKEND.security.Jwt.Jwt;
+import GHEBACKEND.GHEBACKEND.security.Jwt.JwtRepository;
 import GHEBACKEND.GHEBACKEND.security.Permission.Permission;
 import GHEBACKEND.GHEBACKEND.security.Permission.PermissionService;
 import GHEBACKEND.GHEBACKEND.security.Role.Role;
@@ -34,8 +37,8 @@ public class AuthenticationService {
     private final RoleService roleService;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final PermissionService permissionService;
-
+    private final JwtRepository jwtRepository;
+    
     public Utilisateur inscrire(AuthenticationRequest authenticationRequest){
         Utilisateur utilisateur = Utilisateur.builder()
                     .role(roleService.getRoleById(2))
@@ -50,31 +53,41 @@ public class AuthenticationService {
 
     public RegisterResponse connexion(RegisterRequest registerRequest){
         Utilisateur utilisateur = this.utilisateurService.loadUserByUsername(registerRequest.getUsername());
-        Role role = roleService.getRoleById(utilisateur.getRole().getRolId());
-        role.setPermissions(getSetPermissionAuthorities(utilisateur.getRole()));
-        utilisateur.setRole(role);
+        utilisateur = this.utilisateurService.updateAuthorities(utilisateur);
         RegisterResponse registerResponse = new RegisterResponse();
-        if (utilisateur.isUtiActif()){
-            /* List<GrantedAuthority> authorities = getAuthorities(utilisateur.getRole()); */
+        if (utilisateur.isEnabled()){
             final Authentication authentication = this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                    registerRequest.getUsername(), registerRequest.getPassword(), utilisateur.getAuthorities())
+                    registerRequest.getUsername(),
+                    registerRequest.getPassword(), 
+                    utilisateur.getAuthorities()
+                )
             );
             if (authentication.isAuthenticated()) {
                 Map<String, String> token = this.jwtService.generateJwt(registerRequest.getUsername());
                 registerResponse = RegisterResponse.builder().token(token.get("bearer")).build();
-            }else throw new RuntimeException("Non authorisé");
+                /* saveToken(utilisateur, registerResponse.getToken()); */
+            }else 
+                throw new RuntimeException("Vous n'êtes pas authorisé");
         }else 
-            throw new RuntimeException("Vous ne disposer pas des droits nécessaires pour vous authentifiés, ne compte est inactif");
+            throw new RuntimeException(
+                "Vous ne disposer pas des droits nécessaires pour vous authentifiés, ce compte est inactif"
+            );
         return registerResponse;
     }
 
-    public Set<Permission> getSetPermissionAuthorities(Role role){
-        final List<Permission> permissions = this.permissionService.getPermissions(role);
-        Set<Permission> permissionSet = new HashSet<>();
-        for (Permission permission : permissions) {
-            permissionSet.add(permission);
-        }
-        return permissionSet;
+
+    public Jwt createJwt(Utilisateur utilisateur){
+        return Jwt.builder()
+                .desactive(false)
+                .expire(false)
+                .utilisateur(utilisateur)
+                .build();
+    }
+
+    public void saveToken(Utilisateur utilisateur,String token){
+        Jwt jwt = createJwt(utilisateur);
+        jwt.setValue(token);
+        this.jwtRepository.save(jwt);
     }
 }

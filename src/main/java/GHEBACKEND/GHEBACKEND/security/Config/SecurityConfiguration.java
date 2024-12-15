@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                     .authorizeHttpRequests(
                         authorize ->
                             authorize.requestMatchers(POST, "/api/creer-compte").permitAll()
-                            .requestMatchers(POST, "/api/connexion").permitAll()
+                            .requestMatchers(POST,"/api/connexion").permitAll()
                             /* .requestMatchers(GET, "/api/inscription").hasRole("ADMINISTRATEUR") */
                             .anyRequest().authenticated()
                     )

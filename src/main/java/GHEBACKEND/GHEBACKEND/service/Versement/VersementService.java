@@ -54,7 +54,7 @@ public class VersementService {
     }
 
 
-     private String generatedCode(){
+    private String generatedCode(){
         Optional<String> optional = versementRepository.findMaxVerCode();
         try {      
             if(optional.isPresent() && Objects.equals(

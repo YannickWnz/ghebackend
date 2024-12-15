@@ -73,6 +73,10 @@ public abstract class Utils {
         return value;
     }
 
+    public static Integer incrementValue(Integer code){
+       return incrementValue(code.toString());
+    }
+
 
     public static Integer decrementValue(String code){
         Integer value = 0;
@@ -81,6 +85,10 @@ public abstract class Utils {
         }else
             value = 0;
         return value;
+    }
+
+    public static Integer decrementValue(Integer code){
+        return decrementValue(code.toString());
     }
     /* 
      * Cette fonction permet de formatter un string

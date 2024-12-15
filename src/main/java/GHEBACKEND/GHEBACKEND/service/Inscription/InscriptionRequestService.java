@@ -1,13 +1,18 @@
 package GHEBACKEND.GHEBACKEND.service.Inscription;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.cglib.core.Local;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.EtudiantRepo;
+import GHEBACKEND.GHEBACKEND.security.Utilisateur.Utilisateur;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.AnneeAcademiqueService;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.ClasseService;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.PromotionService;
@@ -76,5 +81,60 @@ public class InscriptionRequestService {
                 "Suppression effectuée avec succès",
                 "Succès"
             );
+    }
+
+    public List<Inscription> getInscriptionByNiveauValidation(Integer niveauValidation){
+        Utilisateur utilisateur =(Utilisateur) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(
+            utilisateur != null &&
+            utilisateur.getRole().getRolNiveauValidation().equals(niveauValidation)
+        ){
+            return service.getInscriptionByNiveauValidation(niveauValidation);
+        }else 
+            throw new IllegalStateException(
+                "Vous disposez pas de l'accès"
+            );
+    }
+
+    public InscriptionResponse validerInscription(Integer code){
+        Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
+                                .getContext().getAuthentication().getPrincipal();
+        Inscription inscription = service.getInscriptionById(code);
+        if(
+            utilisateur.getRole().getRolNiveauValidation().equals(inscription.getInsNiveauValidation())
+        ){
+            service.validateInscription(
+                code,
+                utilisateur.getRole().getRolNiveauValidation()
+            );
+        }else 
+        throw new RuntimeException(
+            "Vous ne disposer pas de droit nécéssaire pour effectuer la validation de cette inscription"
+            );
+        return InscriptionResponse.builder()
+                .message("Succès")
+                .description("Validation efffectuée avec succès")
+                .build();
+    }
+
+    public InscriptionResponse rejeterInscription(Integer code){
+        Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
+                                .getContext().getAuthentication().getPrincipal();
+        Inscription inscription = service.getInscriptionById(code);
+        if(
+            utilisateur.getRole().getRolNiveauValidation().equals(inscription.getInsNiveauValidation())
+        ){
+            service.rejeterInscription(
+                code,
+                utilisateur.getRole().getRolNiveauValidation()
+            );
+        }else 
+        throw new RuntimeException(
+            "Vous ne disposer pas de droit nécéssaire pour effectuer la validation de cette inscription"
+            );
+        return InscriptionResponse.builder()
+                .message("Succès")
+                .description("Validation efffectuée avec succès")
+                .build();
     }
 }

@@ -27,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class VersementController {
 
     private final VersementRequestService service;
+    
     @PostMapping
     public ResponseEntity<?> versement(@RequestBody VersementRequest request){
         try {

@@ -189,21 +189,21 @@ public class InscriptionService {
             return inscriptionRepository.save(existInscription);
     }
 
-    public Inscription validateInscription(Integer code){
+    public Inscription validateInscription(Integer code,Integer niveauValidation){
         //Vérifier si cette inscription
         Inscription existInscription = getInscriptionById(code);
         //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
         if(getMaximumAndMinimunNiveauValidation(existInscription)) 
-            existInscription.setInsNiveauValidation(Utils.incrementValue(String.valueOf(existInscription.getInsNiveauValidation()))); 
+            existInscription.setInsNiveauValidation(Utils.incrementValue(niveauValidation)); 
         else throw new RuntimeException("Cette inscription est déjà validée...");
         return inscriptionRepository.save(existInscription);
     }
 
-    public Inscription rejeterInscription(Integer code){
+    public Inscription rejeterInscription(Integer code,Integer niveauValidation){
         Inscription existInscription = getInscriptionById(code);
         //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
         if(getMinimunNiveauValidation(existInscription))
-            existInscription.setInsNiveauValidation(Utils.decrementValue(String.valueOf(existInscription.getInsNiveauValidation()))); 
+            existInscription.setInsNiveauValidation(niveauValidation); 
         else throw new RuntimeException("Cette inscription ne peut plus être rejetée...");
         return inscriptionRepository.save(existInscription);
     }

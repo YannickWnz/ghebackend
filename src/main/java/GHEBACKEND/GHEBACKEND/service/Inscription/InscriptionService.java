@@ -10,7 +10,9 @@ import javax.management.RuntimeErrorException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.controller.PriseEnCharge.EtudiantController;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
+import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.InscriptionRepository;
 import GHEBACKEND.GHEBACKEND.security.Utilisateur.Utilisateur;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
@@ -74,6 +76,10 @@ public class InscriptionService {
                         niveauValidation)
                     )
                 );
+    }
+
+    public List<Inscription> getInscriptionByEtudiant(EtudiantModel etudiantModel){
+        return this.inscriptionRepository.findByEtudiantOrderByInsCodeAscInsDateAsc(etudiantModel);
     }
 
     public Inscription getInscriptionById(

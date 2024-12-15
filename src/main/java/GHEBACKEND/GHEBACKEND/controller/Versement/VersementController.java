@@ -7,6 +7,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,8 @@ import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequest;
 import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequestService;
 import GHEBACKEND.GHEBACKEND.service.Versement.VersementService;
+import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementRequest;
+import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementService;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
@@ -27,14 +30,13 @@ import lombok.RequiredArgsConstructor;
 public class VersementController {
 
     private final VersementRequestService service;
-    
+    private final EncaissementService encaissementService;
+
+    @PreAuthorize("hasAuthority('VERSEMENT_CREATE')")
     @PostMapping
-    public ResponseEntity<?> versement(@RequestBody VersementRequest request){
-        try {
-            return ResponseEntity.ok(service.versement(request));
-        } catch (Exception e) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
-        }
+    public ResponseEntity<?> versement(@RequestBody EncaissementRequest request){
+        return ResponseEntity.ok(encaissementService.encaissement(request));
+        
     }
 
     @GetMapping

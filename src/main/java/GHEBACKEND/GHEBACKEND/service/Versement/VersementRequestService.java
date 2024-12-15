@@ -77,11 +77,19 @@ public class VersementRequestService  {
                         }
                         //Effectuer un versement
                         if(flag){
-                            verser(inscription, request.getMontantVerse());
+                            /* verser(inscription, request.getMontantVerse()); */
                             response.setDescription("Versement effectué avec succès");
                             response.setMessage("Succès");
+                            response.setMontantRestant(montantRestant);
                             return response;
-                        }else throw new IllegalStateException("Toutes les rubriques sont soldées");   
+                        }
+                        else{
+                            response.setDescription("Toutes les rubriques sont déjà soldées");
+                            response.setMessage("Information");
+                            response.setMontantRestant(montantRestant);
+                            return response;
+                        }
+                          
                 }else{
                     //Première inscription
 
@@ -98,9 +106,10 @@ public class VersementRequestService  {
                             montantRestant -= rubriqueModel.getRubMontant();
                         }
                         //Effectuer un versement
-                        verser(inscription, request.getMontantVerse());
+                        /* verser(inscription, request.getMontantVerse()); */
                         response.setDescription("Versement effectué avec succès");
                         response.setMessage("Succès");
+                        response.setMontantRestant(montantRestant);
                     }else
                         throw new IllegalStateException(
                             String.format(

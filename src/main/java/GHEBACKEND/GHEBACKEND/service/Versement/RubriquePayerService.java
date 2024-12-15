@@ -44,12 +44,23 @@ public class RubriquePayerService {
     }
 
     public RubriquePayer updateRubriquePayer(@NonNull String code, RubriquePayer rubriquePayer){
-        RubriquePayer existsRubriquePayer = rubriquePayerRepository.findById(code)
-        .orElseThrow(
-            () -> new IllegalStateException(String.format("Cette rubrique de code %s n'existe pas", code)));
+        RubriquePayer existsRubriquePayer = rubriquePayerRepository
+            .findById(code)
+            .orElseThrow(
+                () -> new IllegalStateException(
+                    String.format(
+                        "Cette rubrique de code %s n'existe pas",
+                        code
+                    )
+                ));
+
         if(!rubriquePayer.getRbpMontant().isNaN() && 
-        !Objects.equals(rubriquePayer.getRbpMontant(), existsRubriquePayer.getRbpMontant()))
+           !Objects.equals(
+                rubriquePayer.getRbpMontant(),
+                existsRubriquePayer.getRbpMontant()
+            ))
             existsRubriquePayer.setRbpMontant(rubriquePayer.getRbpMontant());
+
         return rubriquePayerRepository.save(existsRubriquePayer);
     }
 

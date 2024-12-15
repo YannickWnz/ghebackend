@@ -29,7 +29,7 @@ public class ApplicationAdviceController {
     @ExceptionHandler(
         value = {RuntimeException.class,AccessDeniedException.class})
     public @ResponseBody ProblemDetail handleRuntimeException(final Exception exception){
-        return ProblemDetail.forStatusAndDetail(BAD_REQUEST,"Vous ne disposez pas des droits");
+        return ProblemDetail.forStatusAndDetail(BAD_REQUEST,exception.getMessage());
     }
 
 

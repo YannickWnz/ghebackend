@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
+import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
+
 /* 
  * 
  */
@@ -26,4 +28,6 @@ public interface InscriptionRepository extends  JpaRepository<Inscription,Intege
         @Param("claCode") int claCode,
         @Param("anneeCode") int anneeCode
         );
+    
+    List<Inscription> findByEtudiantOrderByInsCodeAscInsDateAsc(EtudiantModel etudiant);
 }

@@ -32,6 +32,23 @@ public class RubriqueController {
     private RubriqueRepo rubriqueRepo;
 
 
+            
+    @GetMapping("/api/rubrique/rubTest")    
+    public List<RubriqueModel> rubTest() {
+
+        List<RubriqueModel> rubriqueData = rubriqueRepo.getRubriqueNonObligatoire();
+
+        int index = 1;
+        for (RubriqueModel i : rubriqueData) {
+            rubriqueRepo.save(i);
+            i.setRubOrdrePaiement(index);
+            System.out.println(index++);
+            System.out.println(i.getRubLib());
+        }
+
+        return rubriqueData;
+    }
+
     @GetMapping("/api/rubrique/totalCount")
     public Integer getTotalDataNumber() {
         return rubriqueService.getTotalDataNumber("T_RUBRIQUE");

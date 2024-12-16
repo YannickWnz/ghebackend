@@ -1,8 +1,12 @@
 package GHEBACKEND.GHEBACKEND.model.DonneesReferentielles;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +31,9 @@ public class TypeDocumentModel {
 
     @Column(name="TDC_DATE_CREATION")
     private String tdc_date_creation;
+
+    @OneToMany(mappedBy = "typeDocumentModel", cascade = CascadeType.ALL)
+    private List<Documents> documents;
 
     // getters & setters
     public int getTdcCode() {

@@ -77,7 +77,11 @@ public class RubriquePayerService {
                 rubrique);
     }
 
-    public List<RubriquePayer> getRubriquePayerByInscriptionAndClasse(Inscription inscription, ClasseModel classe){
+    public List<RubriquePayer> getRubriquePayerByInscriptionAndClasse
+    (
+        Inscription inscription,
+        ClasseModel classe
+    ){
         return rubriquePayerRepository
         .findByInscriptionAndClasseOrderByRubCode(
             inscription.getInsCode(),

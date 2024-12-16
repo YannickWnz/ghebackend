@@ -196,7 +196,7 @@ public class InscriptionService {
             return inscriptionRepository.save(existInscription);
     }
 
-    public Inscription validateInscription(Integer code,Integer niveauValidation){
+   /*  public Inscription validateInscription(Integer code,Integer niveauValidation){
     
     // public Integer getStudentInscriptionDetails(Integer code) {
     public List<StudentInscriptionDetailsProjection> getStudentInscriptionDetails(Integer code) {
@@ -206,9 +206,9 @@ public class InscriptionService {
         }
         return inscriptionRepository.getStudentInscriptionDetails(code);
 
-    }
+    } */
 
-    public Inscription validateInscription(Integer code){
+    public Inscription validateInscription(Integer code, Integer niveauValidation){
         //Vérifier si cette inscription
         Inscription existInscription = getInscriptionById(code);
         //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "jwt")
+@Table(name = "T_JWT")
 public class Jwt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

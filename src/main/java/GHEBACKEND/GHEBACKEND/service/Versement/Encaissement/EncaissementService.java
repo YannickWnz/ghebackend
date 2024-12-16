@@ -68,3 +68,4 @@ public class EncaissementService {
         else throw new EntityNotFoundException("Aucune inscription liée à cet etudiant");
     }
 }
+

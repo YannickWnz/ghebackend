@@ -1,22 +1,23 @@
 package GHEBACKEND.GHEBACKEND.service.Inscription;
 
-import java.lang.StackWalker.Option;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+
 import javax.management.RuntimeErrorException;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.controller.PriseEnCharge.EtudiantController;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
+import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.StudentInscriptionDetailsProjection;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.InscriptionRepository;
 import GHEBACKEND.GHEBACKEND.security.Utilisateur.Utilisateur;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
-import ch.qos.logback.core.status.ErrorStatus;
 import io.micrometer.common.lang.NonNull;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -196,6 +197,18 @@ public class InscriptionService {
     }
 
     public Inscription validateInscription(Integer code,Integer niveauValidation){
+    
+    // public Integer getStudentInscriptionDetails(Integer code) {
+    public List<StudentInscriptionDetailsProjection> getStudentInscriptionDetails(Integer code) {
+
+        if(code == null) {
+            throw new IllegalArgumentException("Invalid student code");
+        }
+        return inscriptionRepository.getStudentInscriptionDetails(code);
+
+    }
+
+    public Inscription validateInscription(Integer code){
         //Vérifier si cette inscription
         Inscription existInscription = getInscriptionById(code);
         //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum

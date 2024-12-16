@@ -19,6 +19,7 @@ import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.StudentInscriptionDetailsProjec
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionRequest;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionRequestService;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionService;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 
@@ -37,6 +38,7 @@ public class InscriptionController {
             return ResponseEntity.status(HttpStatus.OK).body(service.inscrire(request)) ;
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+
         }
     }
 
@@ -49,8 +51,17 @@ public class InscriptionController {
     public ResponseEntity<?> getInscriptionById(@PathVariable Integer code) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.getInscriptionById(code));
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+        }
+    }
+
+    @GetMapping("/niveau-validation")
+    public ResponseEntity<?> getInscriptionByNiveauValidation(@PathParam("niveau") Integer niveau){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.getInscriptionByNiveauValidation(niveau));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }
     }
 
@@ -81,6 +92,16 @@ public class InscriptionController {
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
             }
+    }
+
+    @PutMapping("/valider/{code}")
+    public ResponseEntity<?> validerInscription(@PathVariable Integer code) { 
+        return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.validateInscription(code));
+    }
+
+    @PutMapping("/rejeter/{code}")
+    public ResponseEntity<?> rejetterInscription(@PathVariable Integer code) { 
+        return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.rejeterInscription(code));
     }
 
     @DeleteMapping("/{code}")

@@ -1,12 +1,14 @@
 package GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 
@@ -26,4 +28,10 @@ public interface RubriqueRepo extends JpaRepository<RubriqueModel, Integer> {
     @Query(value = "SELECT RUB_CODE, RUB_LIB, RUB_MONTANT, RUB_FRAIS_UNIQUE, RUB_ORDRE_PAYMENT, CLA_LIB FROM T_RUBRIQUE RUB, T_CLASSE CLA WHERE RUB.CLA_CODE = CLA.CLA_CODE", nativeQuery = true)
     List<RubriqueDataProjection> getRubriqueAndClasseData();
 
+    //Cette méthode est tout simplement 'select * from t_rubrique_payer order by rub_frais_unique desc,rub_ordre asc'
+    List<RubriqueModel> findByClasseOrderByRubFraisUniqueDescRubOrdreAsc(ClasseModel classe);
+
+    //Cette méthode permet d'afficher la liste des rubriques qui ne sont obligatoires
+    List<RubriqueModel> findByClasseAndRubFraisUniqueTrueOrderByRubFraisUniqueAscRubOrdreAsc(ClasseModel classe);
+    
 }

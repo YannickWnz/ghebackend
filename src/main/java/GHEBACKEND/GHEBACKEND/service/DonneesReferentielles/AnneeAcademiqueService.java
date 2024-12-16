@@ -123,5 +123,11 @@ public class AnneeAcademiqueService {
     public Integer getTotalNumberOfData(String tableName) {   
         return utilityMethods.getTotalNumberOfDonneesRef(tableName);
     }
+
+    public AnneeAcademique getAnneeAcademiqueByAaCode(int code){
+        return anneeAcademiqueRepo
+            .findById(code)
+            .orElseThrow(() -> new IllegalStateException(String.format("L'année academique de code %s n'existe pas", code)));
+    }
     
 }

@@ -181,7 +181,6 @@ public class UtilityMethods {
     }
 
     public Integer getTotalNumberOfDonneesRef(String tableName) {
-
                 // requete qui recupere le total count des donnees dans la table passee en param
                 String query = "SELECT COUNT(*) FROM " + tableName;
     

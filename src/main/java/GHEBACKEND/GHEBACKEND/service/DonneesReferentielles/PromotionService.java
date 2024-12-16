@@ -105,6 +105,9 @@ public class PromotionService {
         return utilityMethods.getTotalNumberOfDonneesRef(tableName);
     }
 
-
-
+    public Promotion getPromotionByProCode(int code){
+        return promotionRepo
+            .findById(code)
+            .orElseThrow(() -> new IllegalStateException(String.format("La promotion de code %s n'existe pas", code)));
+    }
 }

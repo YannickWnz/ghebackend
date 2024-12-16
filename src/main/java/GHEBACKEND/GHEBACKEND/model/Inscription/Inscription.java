@@ -1,15 +1,22 @@
 package GHEBACKEND.GHEBACKEND.model.Inscription;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.Promotion;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
+import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +57,9 @@ public class Inscription {
     @JoinColumn(name = "AAC_CODE",nullable = true) 
     private AnneeAcademique anneeAcademique;
     @ManyToOne
-    @JoinColumn(name = "CLA_CODE",nullable = true) 
+    @JoinColumn(name = "CLA_CODE",nullable = true)
     private ClasseModel classe;
+    @OneToMany(mappedBy = "inscription",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<RubriquePayer> rubliquesPayes;
 }

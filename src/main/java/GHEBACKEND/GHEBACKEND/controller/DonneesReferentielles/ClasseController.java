@@ -25,7 +25,7 @@ import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.ClasseService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ClasseController {
-
+    
     @Autowired
     private ClasseService classeService;
 

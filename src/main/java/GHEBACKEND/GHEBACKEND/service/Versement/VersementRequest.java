@@ -1,5 +1,6 @@
 package GHEBACKEND.GHEBACKEND.service.Versement;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
@@ -19,7 +20,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class VersementRequest {
     private Inscription inscription;
+    private LocalDate date;
     @NonNull
-    @Column(nullable = false)
     private Double montantVerse;
 }

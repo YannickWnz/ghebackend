@@ -1,18 +1,16 @@
-package GHEBACKEND.GHEBACKEND.service.Versement;
+package GHEBACKEND.GHEBACKEND.service.Versement.Encaissement;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.experimental.NonFinal;
 
 @Data
-@Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class VersementResponse {
+public class EncaissementResponse {
     private String message;
     private String description;
-    private Double montantRestant;
 }

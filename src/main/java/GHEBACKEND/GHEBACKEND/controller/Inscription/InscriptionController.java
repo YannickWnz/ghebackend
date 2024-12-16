@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class InscriptionController {
     private final InscriptionRequestService service;
     private final InscriptionService inscriptionService;
 
+    @PreAuthorize("hasAuthority('INSCRIPTION_CREATE')")
     @PostMapping
     public ResponseEntity<?> createInscription(@RequestBody InscriptionRequest request){
         try {
@@ -42,11 +44,13 @@ public class InscriptionController {
         }
     }
 
+    @PreAuthorize("hasAuthority('INSCRIPTION_READ') and hasRole('ADMINISTRATEUR')")
     @GetMapping
     public ResponseEntity<?> getInscriptions() {
         return ResponseEntity.ok(inscriptionService.getAllInscription());
     }
 
+    @PreAuthorize("hasAuthority('INSCRIPTION_READ')")
     @GetMapping("/{code}")
     public ResponseEntity<?> getInscriptionById(@PathVariable Integer code) {
         try {
@@ -56,13 +60,10 @@ public class InscriptionController {
         }
     }
 
+    @PreAuthorize("hasAuthority('INSCRIPTION_READ')")
     @GetMapping("/niveau-validation")
     public ResponseEntity<?> getInscriptionByNiveauValidation(@PathParam("niveau") Integer niveau){
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.getInscriptionByNiveauValidation(niveau));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(service.getInscriptionByNiveauValidation(niveau));
     }
 
     // Method by Wnz
@@ -82,26 +83,24 @@ public class InscriptionController {
         }
     }
     
+    @PreAuthorize("hasAuthority('INSCRIPTION_UPDATE')")
     @PutMapping("/{code}")
     public ResponseEntity<?> updateInscription(
         @PathVariable Integer code,
         @RequestBody InscriptionRequest request){
-            try {
-                return ResponseEntity.status(HttpStatus.OK)
-                    .body(service.modifierInscription(code,request));
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
-            }
+            return ResponseEntity.status(HttpStatus.OK).body(service.modifierInscription(code,request));
     }
 
+    @PreAuthorize("hasAuthority('INSCRIPTION_VALIDATE')")
     @PutMapping("/valider/{code}")
     public ResponseEntity<?> validerInscription(@PathVariable Integer code) { 
-        return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.validateInscription(code));
+        return ResponseEntity.status(HttpStatus.OK).body(service.validerInscription(code));
     }
 
+    @PreAuthorize("hasAuthority('INSCRIPTION_REJET')")
     @PutMapping("/rejeter/{code}")
     public ResponseEntity<?> rejetterInscription(@PathVariable Integer code) { 
-        return ResponseEntity.status(HttpStatus.OK).body(inscriptionService.rejeterInscription(code));
+        return ResponseEntity.status(HttpStatus.OK).body(service.rejeterInscription(code));
     }
 
     @DeleteMapping("/{code}")

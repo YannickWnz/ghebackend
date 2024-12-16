@@ -1,8 +1,10 @@
 package GHEBACKEND.GHEBACKEND.utils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 /* 
  * Cette classe abstraite est créée afin d'implementer toutes les méthodes aux quelles 
@@ -71,6 +73,10 @@ public abstract class Utils {
         return value;
     }
 
+    public static Integer incrementValue(Integer code){
+       return incrementValue(code.toString());
+    }
+
 
     public static Integer decrementValue(String code){
         Integer value = 0;
@@ -79,6 +85,10 @@ public abstract class Utils {
         }else
             value = 0;
         return value;
+    }
+
+    public static Integer decrementValue(Integer code){
+        return decrementValue(code.toString());
     }
     /* 
      * Cette fonction permet de formatter un string
@@ -138,4 +148,14 @@ public abstract class Utils {
     public static Integer concatCurrentYearAndMonth(){
         return Integer.parseInt(String.valueOf(getCurrentYear()).substring(2, 4).concat(getCurrentMonth().toString()));
     }
+
+    /* 
+     * 
+     * Formatter les dates
+     */
+
+     public static String formatterTime(LocalDateTime localDateTime){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HHmmss");
+        return localDateTime.format(dateTimeFormatter);
+     }
 }

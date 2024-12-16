@@ -53,7 +53,9 @@ public class VersementService {
         return versementRepository.findByVerDateBetween(startDate, endDate);
     }
 
-
+    public List<Versement> getVersementByDateVersement(LocalDate localDate){
+        return versementRepository.findByVerDate(localDate);
+    }
     private String generatedCode(){
         Optional<String> optional = versementRepository.findMaxVerCode();
         try {      

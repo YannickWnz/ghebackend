@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
@@ -197,5 +199,9 @@ public class VersementRequestService  {
         if(!Utils.isDateInferieur(startDate, endDate))
             throw new RuntimeException(String.format("La date %s doit venir avant la date %s",endDate,startDate));
         return versementService.getVersementsByAnneeAcademiqueBetween(startDate, endDate);
+    }
+
+    public List<Versement> getVersementByDateVersement(LocalDate localDate){
+        return versementService.getVersementByDateVersement(localDate);
     }
 }

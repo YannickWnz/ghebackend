@@ -44,6 +44,11 @@ public class VersementController {
         return service.getVersementsByAnneeInscription(annee);
     }
 
+    @GetMapping("/to")
+    public List<Versement> getVersementsByDateVersement(@PathParam("date") LocalDate date){
+        return service.getVersementByDateVersement(date);
+    }
+
     @GetMapping("/current-year")
     public List<Versement> getVersementsByAnneeInscription(){
         return service.getVersementsByAnneeInscription();

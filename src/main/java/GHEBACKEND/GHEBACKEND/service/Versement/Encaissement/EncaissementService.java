@@ -2,6 +2,7 @@ package GHEBACKEND.GHEBACKEND.service.Versement.Encaissement;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class EncaissementService {
 
     public EncaissementResponse encaissement(EncaissementRequest request){
         
+        if(Objects.equals(request.getMontant(), null)) throw new EntityNotFoundException("Attention le montant est obligatoire");
+        if(Objects.equals(request.getEtudiant(), null)) throw new RuntimeException("Aucun étudiant envoye pour cette requête...");
+
         EtudiantModel etudiant = etudiantService.getEtudiantByEtuCode(request.getEtudiant().getEtdCode());
         List<Inscription> inscriptionsEtudiant = inscriptionService.getInscriptionByEtudiant(etudiant);
         VersementResponse response = null;

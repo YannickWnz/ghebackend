@@ -33,21 +33,21 @@ public class RubriqueController {
 
 
             
-    @GetMapping("/api/rubrique/rubTest")    
-    public List<RubriqueModel> rubTest() {
+    // @GetMapping("/api/rubrique/rubTest")    
+    // public List<RubriqueModel> rubTest() {
 
-        List<RubriqueModel> rubriqueData = rubriqueRepo.getRubriqueNonObligatoire();
+    //     List<RubriqueModel> rubriqueData = rubriqueRepo.getRubriqueNonObligatoire();
 
-        int index = 1;
-        for (RubriqueModel i : rubriqueData) {
-            rubriqueRepo.save(i);
-            i.setRubOrdrePaiement(index);
-            System.out.println(index++);
-            System.out.println(i.getRubLib());
-        }
+    //     int index = 1;
+    //     for (RubriqueModel i : rubriqueData) {
+    //         rubriqueRepo.save(i);
+    //         i.setRubOrdrePaiement(index);
+    //         System.out.println(index++);
+    //         System.out.println(i.getRubLib());
+    //     }
 
-        return rubriqueData;
-    }
+    //     return rubriqueData;
+    // }
 
     @GetMapping("/api/rubrique/totalCount")
     public Integer getTotalDataNumber() {

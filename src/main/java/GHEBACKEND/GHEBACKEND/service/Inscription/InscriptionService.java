@@ -196,8 +196,8 @@ public class InscriptionService {
             return inscriptionRepository.save(existInscription);
     }
 
-    public Inscription validateInscription(Integer code,Integer niveauValidation){
-    
+    // public Inscription validateInscription(Integer code,Integer niveauValidation){
+    // return  null;
     // public Integer getStudentInscriptionDetails(Integer code) {
     public List<StudentInscriptionDetailsProjection> getStudentInscriptionDetails(Integer code) {
 
@@ -206,24 +206,24 @@ public class InscriptionService {
         }
         return inscriptionRepository.getStudentInscriptionDetails(code);
 
-    }
+     }
 
-    public Inscription validateInscription(Integer code){
-        //Vérifier si cette inscription
-        Inscription existInscription = getInscriptionById(code);
-        //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
-        if(getMaximumAndMinimunNiveauValidation(existInscription)) 
-            existInscription.setInsNiveauValidation(Utils.incrementValue(niveauValidation)); 
-        else throw new RuntimeException("Cette inscription est déjà validée...");
-        return inscriptionRepository.save(existInscription);
-    }
+    // public Inscription validateInscription(Integer code){
+    //     //Vérifier si cette inscription
+    //     Inscription existInscription = getInscriptionById(code);
+    //     //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
+    //     if(getMaximumAndMinimunNiveauValidation(existInscription)) 
+    //         existInscription.setInsNiveauValidation(Utils.incrementValue(niveauValidation)); 
+    //     else throw new RuntimeException("Cette inscription est déjà validée...");
+    //     return inscriptionRepository.save(existInscription);
+    // }
 
-    public Inscription rejeterInscription(Integer code,Integer niveauValidation){
-        Inscription existInscription = getInscriptionById(code);
-        //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
-        if(getMinimunNiveauValidation(existInscription))
-            existInscription.setInsNiveauValidation(niveauValidation); 
-        else throw new RuntimeException("Cette inscription ne peut plus être rejetée...");
-        return inscriptionRepository.save(existInscription);
-    }
+    // public Inscription rejeterInscription(Integer code,Integer niveauValidation){
+    //     Inscription existInscription = getInscriptionById(code);
+    //     //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
+    //     if(getMinimunNiveauValidation(existInscription))
+    //         existInscription.setInsNiveauValidation(niveauValidation); 
+    //     else throw new RuntimeException("Cette inscription ne peut plus être rejetée...");
+    //     return inscriptionRepository.save(existInscription);
+    // }
 }

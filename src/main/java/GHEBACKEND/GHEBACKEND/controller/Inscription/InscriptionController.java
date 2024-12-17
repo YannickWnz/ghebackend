@@ -67,7 +67,7 @@ public class InscriptionController {
     }
 
     // Method by Wnz
-    @GetMapping("/details/{code}")
+   /*  @GetMapping("/details/{code}")
     public ResponseEntity<?> getStudentInscriptionDetails(@PathVariable Integer code) {
         try {
         
@@ -81,7 +81,7 @@ public class InscriptionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
         
         }
-    }
+    } */
     
     @PreAuthorize("hasAuthority('INSCRIPTION_UPDATE')")
     @PutMapping("/{code}")

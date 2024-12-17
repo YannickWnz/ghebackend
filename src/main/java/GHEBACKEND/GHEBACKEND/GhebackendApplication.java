@@ -1,11 +1,9 @@
 package GHEBACKEND.GHEBACKEND;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 
 @SpringBootApplication
-// @EntityScan(basePackages = {"GHEBACKEND.GHEBACKEND.model"})
 public class GhebackendApplication {
 	
 		public static void main(String[] args) {

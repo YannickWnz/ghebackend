@@ -4,19 +4,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
-import javax.management.RuntimeErrorException;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.stereotype.Service;
 
-import GHEBACKEND.GHEBACKEND.controller.PriseEnCharge.EtudiantController;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
-import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.StudentInscriptionDetailsProjection;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.InscriptionRepository;
-import GHEBACKEND.GHEBACKEND.security.Utilisateur.Utilisateur;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import io.micrometer.common.lang.NonNull;
 import jakarta.transaction.Transactional;
@@ -196,8 +188,12 @@ public class InscriptionService {
             return inscriptionRepository.save(existInscription);
     }
 
+
     // public Inscription validateInscription(Integer code,Integer niveauValidation){
     // return  null;
+
+   /*  public Inscription validateInscription(Integer code,Integer niveauValidation){
+    
     // public Integer getStudentInscriptionDetails(Integer code) {
     public List<StudentInscriptionDetailsProjection> getStudentInscriptionDetails(Integer code) {
 
@@ -217,6 +213,17 @@ public class InscriptionService {
     //     else throw new RuntimeException("Cette inscription est déjà validée...");
     //     return inscriptionRepository.save(existInscription);
     // }
+    } */
+
+    public Inscription validateInscription(Integer code, Integer niveauValidation){
+        //Vérifier si cette inscription
+        Inscription existInscription = getInscriptionById(code);
+        //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
+        if(getMaximumAndMinimunNiveauValidation(existInscription)) 
+            existInscription.setInsNiveauValidation(Utils.incrementValue(niveauValidation)); 
+        else throw new RuntimeException("Cette inscription est déjà validée...");
+        return inscriptionRepository.save(existInscription);
+    }
 
     // public Inscription rejeterInscription(Integer code,Integer niveauValidation){
     //     Inscription existInscription = getInscriptionById(code);

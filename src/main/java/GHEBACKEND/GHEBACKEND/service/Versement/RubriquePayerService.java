@@ -58,8 +58,8 @@ public class RubriquePayerService {
            !Objects.equals(
                 rubriquePayer.getRbpMontant(),
                 existsRubriquePayer.getRbpMontant()
-            ))
-            existsRubriquePayer.setRbpMontant(rubriquePayer.getRbpMontant());
+        ))
+        existsRubriquePayer.setRbpMontant(rubriquePayer.getRbpMontant());
 
         return rubriquePayerRepository.save(existsRubriquePayer);
     }
@@ -72,12 +72,20 @@ public class RubriquePayerService {
 
     public RubriquePayer getRubriquePayer(Inscription inscription,RubriqueModel rubrique){
         return rubriquePayerRepository
-            .findByInscriptionAndRubriqueOrderByRbpCodeAsc(inscription, rubrique);
+            .findByInscriptionAndRubriqueOrderByRbpCodeAsc(
+                inscription, 
+                rubrique);
     }
 
-    public List<RubriquePayer> getRubriquePayerByInscriptionAndClasse(Inscription inscription, ClasseModel classe){
+    public List<RubriquePayer> getRubriquePayerByInscriptionAndClasse
+    (
+        Inscription inscription,
+        ClasseModel classe
+    ){
         return rubriquePayerRepository
-        .findByInscriptionAndClasseOrderByRubCode(inscription.getInsCode(),classe.getCla_code());
+        .findByInscriptionAndClasseOrderByRubCode(
+            inscription.getInsCode(),
+            classe.getCla_code());
     }
     
     private String generatedCode(){
@@ -88,13 +96,18 @@ public class RubriquePayerService {
                 Utils.concatCurrentYearAndMonth().toString())){
 
                     String code = optional.get().substring(7,10);
-                return Utils.concatCurrentYearAndMonth().toString().concat("RP"+ Utils.formatFoorString(Utils.incrementValue(code).toString()));
+                return Utils.concatCurrentYearAndMonth()
+                            .toString()
+                            .concat(
+                                "RP"+ Utils.formatFoorString(Utils.incrementValue(code).toString()));
             }else
             return Utils.formatValueString(
-                Utils.concatCurrentYearAndMonth()).concat("RP"+  Utils.formatFoorString("1"));
+                Utils.concatCurrentYearAndMonth())
+                    .concat("RP"+  Utils.formatFoorString("1"));
         } catch (Exception e) {
             return Utils.formatValueString(
-                Utils.concatCurrentYearAndMonth()).concat("RP"+ Utils.formatFoorString("1"));
+                Utils.concatCurrentYearAndMonth())
+                     .concat("RP"+ Utils.formatFoorString("1"));
         }
     }
 }

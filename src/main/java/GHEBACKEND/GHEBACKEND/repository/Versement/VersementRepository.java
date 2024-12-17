@@ -29,4 +29,6 @@ public interface VersementRepository extends JpaRepository<Versement,String> {
 
     @Query("select v from Versement v join v.inscription i where FUNCTION('YEAR', i.insDate) = :currentYear")
     List<Versement> findVersementsByAnneeInscription(@Param("currentYear") int currentYear);
+
+    List<Versement> findByVerDate(LocalDate verDate);
 }

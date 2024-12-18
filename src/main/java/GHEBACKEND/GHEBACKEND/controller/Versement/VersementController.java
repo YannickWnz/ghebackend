@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementRequest;
 import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementService;
+import io.swagger.v3.oas.annotations.Operation;
 import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequestService;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
@@ -29,26 +30,33 @@ public class VersementController {
 
     // @PreAuthorize("hasAuthority('VERSEMENT_CREATE')")
     @PostMapping
+    @Operation(
+        description = "Cette fonctionnalite permet d'effectuer un versement"
+    )
     public ResponseEntity<?> versement(@RequestBody EncaissementRequest request){
         return ResponseEntity.ok(encaissementService.encaissement(request));
         
     }
 
+    @PreAuthorize("hasAuthority('VERSEMENT_READ')")
     @GetMapping
     public List<Versement> getVersementsByAnneeInscription(@PathParam("annee") int annee){
         return service.getVersementsByAnneeInscription(annee);
     }
 
+    @PreAuthorize("hasAuthority('VERSEMENT_READ')")
     @GetMapping("/to")
     public List<Versement> getVersementsByDateVersement(@PathParam("date") LocalDate date){
         return service.getVersementByDateVersement(date);
     }
 
+    @PreAuthorize("hasAuthority('VERSEMENT_READ')")
     @GetMapping("/current-year")
     public List<Versement> getVersementsByAnneeInscription(){
         return service.getVersementsByAnneeInscription();
     }
 
+    @PreAuthorize("hasAuthority('VERSEMENT_READ')")
     @GetMapping("/between")
     public List<Versement> getVersementsByAnneeInscription(
         @PathParam("startDate") LocalDate startDate, 

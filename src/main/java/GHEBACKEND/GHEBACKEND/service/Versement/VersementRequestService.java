@@ -15,6 +15,7 @@ import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionService;
+import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer.RubriquePayerService;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import lombok.RequiredArgsConstructor;
 

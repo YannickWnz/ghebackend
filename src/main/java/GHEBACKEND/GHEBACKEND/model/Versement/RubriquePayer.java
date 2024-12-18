@@ -1,7 +1,9 @@
 package GHEBACKEND.GHEBACKEND.model.Versement;
 
 import java.time.LocalDate;
-import org.springframework.data.annotation.Transient;
+import java.util.Objects;
+
+
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,4 +44,10 @@ public class RubriquePayer {
     @ManyToOne
     @JoinColumn(name = "INS_CODE",nullable = false)
     private Inscription inscription;
+    @Transient
+    private boolean isSold;
+
+    public boolean isSold(){
+        return Objects.equals(rbpMontantRestant, 0.0);
+    }
 }

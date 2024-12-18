@@ -1,4 +1,4 @@
-package GHEBACKEND.GHEBACKEND.service.Versement;
+package GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer;
 
 import java.util.List;
 import java.util.Objects;
@@ -87,6 +87,17 @@ public class RubriquePayerService {
             inscription.getInsCode(),
             classe.getCla_code());
     }
+
+    public RubriquePayer getRubriquePayerByRubriqueAndInscription(
+        RubriqueModel rubriqueModel,
+        Inscription inscription
+    ){
+        return rubriquePayerRepository
+            .findByRubriqueAndInscription(
+                rubriqueModel,
+                inscription);
+    }
+
     
     private String generatedCode(){
         Optional<String> optional = rubriquePayerRepository.findMaxRbpCode();
@@ -95,11 +106,12 @@ public class RubriquePayerService {
                 String.valueOf(optional.get()).substring(0,4),
                 Utils.concatCurrentYearAndMonth().toString())){
 
-                    String code = optional.get().substring(7,10);
+                String code = optional.get().substring(7,10);
                 return Utils.concatCurrentYearAndMonth()
                             .toString()
                             .concat(
-                                "RP"+ Utils.formatFoorString(Utils.incrementValue(code).toString()));
+                                "RP"+ Utils.formatFoorString(
+                                Utils.incrementValue(code).toString()));
             }else
             return Utils.formatValueString(
                 Utils.concatCurrentYearAndMonth())
@@ -110,4 +122,6 @@ public class RubriquePayerService {
                      .concat("RP"+ Utils.formatFoorString("1"));
         }
     }
+
+    
 }

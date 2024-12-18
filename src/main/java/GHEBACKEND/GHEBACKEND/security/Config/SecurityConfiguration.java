@@ -35,21 +35,22 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         return httpSecurity
                     .csrf(csrf -> csrf.disable())
+
                     // .authorizeHttpRequests(
                     //     authorize ->
-                    //         authorize.requestMatchers(POST, "/api/creer-compte").permitAll()
+                    //         authorize
+                    //         .requestMatchers(POST, "/api/creer-compte").permitAll()
                     //         .requestMatchers(POST,"/api/connexion").permitAll()
                     //         /* .requestMatchers(GET, "/api/inscription").hasRole("ADMINISTRATEUR") */
-                    //         // .anyRequest().authenticated()
-                    //         .anyRequest().permitAll()
-                    // )
+                    //         .anyRequest().authenticated()
                     .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                     )
 
                     .sessionManagement(
                         httpSecuritySessionManagementConfigurer ->
-                            httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                            httpSecuritySessionManagementConfigurer
+                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     )
                     .authenticationProvider(this.authenticationProvider())
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

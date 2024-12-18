@@ -111,6 +111,14 @@ public class InscriptionService {
         return inscription.getInsNiveauValidation() < 3 && inscription.getInsNiveauValidation() >= 0;
     }
 
+    public Integer getMaximumInscriptionByEtudiant(EtudiantModel etudiant){
+        Integer inscriptionCode = inscriptionRepository
+            .findMaximumByEtudiant(etudiant)
+            .orElse(null);
+        return inscriptionCode;
+    }
+   
+
     /* 
      * Cette fonction permet de générer automatiquement le code d'une inscsription
      * @GaiusYan
@@ -225,12 +233,18 @@ public class InscriptionService {
         return inscriptionRepository.save(existInscription);
     }
 
-    // public Inscription rejeterInscription(Integer code,Integer niveauValidation){
-    //     Inscription existInscription = getInscriptionById(code);
-    //     //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
-    //     if(getMinimunNiveauValidation(existInscription))
-    //         existInscription.setInsNiveauValidation(niveauValidation); 
-    //     else throw new RuntimeException("Cette inscription ne peut plus être rejetée...");
-    //     return inscriptionRepository.save(existInscription);
-    // }
+    public Inscription rejeterInscription(Integer code,Integer niveauValidation){
+        Inscription existInscription = getInscriptionById(code);
+        //Vérifier si l'inscription le niveau de cette inscription n'a pas encore atteint le maximum
+        if(getMinimunNiveauValidation(existInscription))
+            existInscription.setInsNiveauValidation(niveauValidation); 
+        else throw new RuntimeException("Cette inscription ne peut plus être rejetée...");
+        return inscriptionRepository.save(existInscription);
+    }
+
+    public List<Inscription> getInscriptionByEtudiantAndInsCodeNotIn(EtudiantModel etudiantModel, List<Integer> inscriptionCodes){
+        return inscriptionRepository
+            .findByEtudiantAndInsCodeNotInOrderByInsCodeAscInsDateAsc(etudiantModel,inscriptionCodes);
+    }
+
 }

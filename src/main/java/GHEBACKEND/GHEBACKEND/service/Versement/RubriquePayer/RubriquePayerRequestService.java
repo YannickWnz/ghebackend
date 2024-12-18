@@ -11,6 +11,7 @@ import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
 import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionService;
+import GHEBACKEND.GHEBACKEND.service.PriseEnCharge.EtudiantService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,7 @@ public class RubriquePayerRequestService {
 
     private final RubriquePayerService rubriquePayerService;
     private final InscriptionService inscriptionService;
+    private final EtudiantService etudiantService;
 
     public List<RubriquePayerResponse> getRubriquesByInscription(Integer code){
 
@@ -67,17 +69,31 @@ public class RubriquePayerRequestService {
     }
 
 
-    public List<RestePayerResponse> getRubriqueisSoldFalseByEtudiant(EtudiantModel etudiant){
+    public List<RestePayerResponse> afficherRubriqueNonSolde(Integer etudiantCode){
 
-        List<Inscription> inscriptions = inscriptionService.getInscriptionByEtudiant(etudiant);
+        EtudiantModel etudiant = etudiantService.getEtudiantByEtuCode(etudiantCode);
+        List<Integer> inscriptionCodes = new ArrayList<>();
+        Integer inscriptionCode = inscriptionService.getMaximumInscriptionByEtudiant(etudiant);
+
+        if (Objects.equals(inscriptionCode, null)) throw new EntityNotFoundException("Aucune inscription antérieurement effectuée...");
+        
+        inscriptionCodes.add(
+            inscriptionService
+                .getInscriptionById(inscriptionCode).getInsCode()
+        );
+
+
+        List<Inscription> inscriptions = inscriptionService
+            .getInscriptionByEtudiantAndInsCodeNotIn(etudiant, inscriptionCodes);
+
         List<RestePayerResponse> responses = new ArrayList<>();
 
         for (Inscription inscription : inscriptions) {
-            //TO DO: Retourner la liste des rubriques n'ayant qui ne sont pas encore soldé
+            
             List<RubriquePayerResponse> rubriquePayerResponses = getRubriquesByInscription(inscription.getInsCode());
             for (RubriquePayerResponse rubriquePayerResponse : rubriquePayerResponses) {
+                
                 if (!rubriquePayerResponse.isSold()) {
-
                     responses.add(
                         RestePayerResponse.builder()
                             .rubriquePayerResponse(rubriquePayerResponse)
@@ -87,7 +103,7 @@ public class RubriquePayerRequestService {
                 }
             }
         }
-        return null;
+        return responses;
     }
 
 

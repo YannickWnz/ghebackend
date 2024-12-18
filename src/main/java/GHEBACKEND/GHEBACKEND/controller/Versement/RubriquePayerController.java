@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer.RestePayerResponse;
 import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer.RubriquePayerRequest;
 import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer.RubriquePayerRequestService;
 import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer.RubriquePayerResponse;
@@ -19,7 +20,7 @@ import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/rubrique")
+@RequestMapping("/api/rubriques")
 @RequiredArgsConstructor
 public class RubriquePayerController {
 
@@ -31,7 +32,7 @@ public class RubriquePayerController {
     }
 
     @GetMapping("reste-a-payer")
-    public ResponseEntity<List<RubriquePayerResponse>> getRubriqueByEtudiant(@PathParam("etudiantId") Integer etudiantId){
-        return ResponseEntity.ok(service.getRubriquesByInscription(etudiantId));
+    public ResponseEntity<List<RestePayerResponse>> getRubriqueByEtudiant(@PathParam("etudiantId") Integer etudiantId){
+        return ResponseEntity.ok(service.afficherRubriqueNonSolde(etudiantId));
     }
 }

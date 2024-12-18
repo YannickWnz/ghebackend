@@ -15,5 +15,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RubriquePayerRequest {
     private Inscription inscription;
-    private Inscription inscriptionValue;
 }

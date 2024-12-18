@@ -97,6 +97,7 @@ public class RubriquePayerService {
                 rubriqueModel,
                 inscription);
     }
+
     
     private String generatedCode(){
         Optional<String> optional = rubriquePayerRepository.findMaxRbpCode();

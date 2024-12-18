@@ -26,5 +26,7 @@ public interface RubriquePayerRepository extends JpaRepository<RubriquePayer, St
     List<RubriquePayer> findByInscriptionAndClasseOrderByRubCode(Integer insCode,Integer claCode);
 
     RubriquePayer findByRubriqueAndInscription(RubriqueModel rubrique,Inscription inscription);
+
+
 }
 

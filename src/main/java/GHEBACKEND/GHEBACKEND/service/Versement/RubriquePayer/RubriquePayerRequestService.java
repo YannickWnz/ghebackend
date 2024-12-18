@@ -67,8 +67,26 @@ public class RubriquePayerRequestService {
     }
 
 
-    public List<RubriquePayerResponse> getRubriqueisSoldFalseByEtudiant(EtudiantModel etudiant){
-        //TO DO: Recupérer toutes les rubriques
+    public List<RestePayerResponse> getRubriqueisSoldFalseByEtudiant(EtudiantModel etudiant){
+
+        List<Inscription> inscriptions = inscriptionService.getInscriptionByEtudiant(etudiant);
+        List<RestePayerResponse> responses = new ArrayList<>();
+
+        for (Inscription inscription : inscriptions) {
+            //TO DO: Retourner la liste des rubriques n'ayant qui ne sont pas encore soldé
+            List<RubriquePayerResponse> rubriquePayerResponses = getRubriquesByInscription(inscription.getInsCode());
+            for (RubriquePayerResponse rubriquePayerResponse : rubriquePayerResponses) {
+                if (!rubriquePayerResponse.isSold()) {
+
+                    responses.add(
+                        RestePayerResponse.builder()
+                            .rubriquePayerResponse(rubriquePayerResponse)
+                            .inscription(inscription)
+                            .build()
+                    );
+                }
+            }
+        }
         return null;
     }
 

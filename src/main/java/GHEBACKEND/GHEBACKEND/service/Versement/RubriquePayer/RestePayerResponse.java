@@ -9,10 +9,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+@Builder
 @Data 
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class RestePayerResponse extends RubriquePayerResponse{
+
+public class RestePayerResponse{
+    private RubriquePayerResponse rubriquePayerResponse;
     private Inscription inscription;
 }

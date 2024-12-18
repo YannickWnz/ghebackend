@@ -51,11 +51,11 @@ public class JwtService {
         final long currentTimeExpiration = currentTime + 30 * 60 * 1000;
         Map<String,Object> claims = new HashMap<>();
         claims.put("nom",Utils.concatWithSpace(utilisateur.getUtiNom(),utilisateur.getUtiPrenom()));
-        claims.put("email", utilisateur.getUtiEmail());
         claims.put("username", utilisateur.getUsername());
         claims.put(Claims.EXPIRATION, currentTimeExpiration);
         claims.put(Claims.ISSUED_AT, currentTime);
         claims.put(Claims.SUBJECT, utilisateur.getUtiEmail());
+
         return Map.of(
             BEARER,
             Jwts.builder()

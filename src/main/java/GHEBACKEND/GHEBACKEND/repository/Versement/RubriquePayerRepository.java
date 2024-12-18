@@ -25,5 +25,6 @@ public interface RubriquePayerRepository extends JpaRepository<RubriquePayer, St
     @Query(value = "SELECT * FROM T_RUBRIQUE_PAYER WHERE INS_CODE = ?1 AND CLA_CODE = ?2 ORDER BY RUB_CODE ASC", nativeQuery = true)
     List<RubriquePayer> findByInscriptionAndClasseOrderByRubCode(Integer insCode,Integer claCode);
 
+    RubriquePayer findByRubriqueAndInscription(RubriqueModel rubrique,Inscription inscription);
 }
 

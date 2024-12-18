@@ -14,10 +14,10 @@ import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.RubriqueService;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionService;
 import GHEBACKEND.GHEBACKEND.service.PriseEnCharge.EtudiantService;
-import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayerService;
 import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequest;
 import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequestService;
 import GHEBACKEND.GHEBACKEND.service.Versement.VersementResponse;
+import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer.RubriquePayerService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 

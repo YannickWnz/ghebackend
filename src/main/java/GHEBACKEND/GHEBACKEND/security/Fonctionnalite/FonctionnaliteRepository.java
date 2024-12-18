@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FonctionnaliteRepository extends JpaRepository<Fonctionnalite,Integer>{
+public interface FonctionnaliteRepository 
+    extends JpaRepository<Fonctionnalite,Integer>{
     
 }

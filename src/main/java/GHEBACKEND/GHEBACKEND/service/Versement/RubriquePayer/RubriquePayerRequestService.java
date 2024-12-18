@@ -75,7 +75,7 @@ public class RubriquePayerRequestService {
         List<Integer> inscriptionCodes = new ArrayList<>();
         Integer inscriptionCode = inscriptionService.getMaximumInscriptionByEtudiant(etudiant);
 
-        if (Objects.equals(inscriptionCode, null)) throw new EntityNotFoundException("Aucune inscription antérieurement effectuée...");
+        if (Objects.equals(inscriptionCode, null)) return new ArrayList<>();
         
         inscriptionCodes.add(
             inscriptionService

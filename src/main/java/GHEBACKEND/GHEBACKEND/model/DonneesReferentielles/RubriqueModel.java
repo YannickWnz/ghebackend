@@ -43,8 +43,8 @@ public class RubriqueModel {
     private String rub_date_creation;
     
     
-    @Column(name="RUB_ORDRE_PAYMENT")
-    private Integer rub_ordre_payment;
+    // @Column(name="RUB_ORDRE")
+    // private Integer rub_ordre_payment;
 
     @ManyToOne
     @JoinColumn(name="CLA_CODE")
@@ -91,9 +91,9 @@ public class RubriqueModel {
         return rubOrdre;
     }
 
-    public Integer getRubOrdrePaiement() {
-        return rub_ordre_payment;
-    }
+    // public Integer getRubOrdrePaiement() {
+    //     return rub_ordre_payment;
+    // }
     
     // setters
     public void setRubCode(int rub_code) {
@@ -136,8 +136,8 @@ public class RubriqueModel {
         this.rubOrdre = rubOrdre;
     }
 
-    public void setRubOrdrePaiement(Integer rub_order_payment) {
-        this.rub_ordre_payment = rub_order_payment;
-    }
+    // public void setRubOrdrePaiement(Integer rub_order_payment) {
+    //     this.rub_ordre_payment = rub_order_payment;
+    // }
 
 }

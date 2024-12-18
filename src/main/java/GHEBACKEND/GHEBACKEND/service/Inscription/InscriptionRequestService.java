@@ -96,45 +96,45 @@ public class InscriptionRequestService {
             );
     }
 
-    public InscriptionResponse validerInscription(Integer code){
-        Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
-                                .getContext().getAuthentication().getPrincipal();
-        Inscription inscription = service.getInscriptionById(code);
-        if(
-            utilisateur.getRole().getRolNiveauValidation().equals(inscription.getInsNiveauValidation())
-        ){
-            service.validateInscription(
-                code,
-                utilisateur.getRole().getRolNiveauValidation()
-            );
-        }else 
-        throw new RuntimeException(
-            "Vous ne disposer pas de droit nécéssaire pour effectuer la validation de cette inscription"
-            );
-        return InscriptionResponse.builder()
-                .message("Succès")
-                .description("Validation efffectuée avec succès")
-                .build();
-    }
+    // public InscriptionResponse validerInscription(Integer code){
+    //     Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
+    //                             .getContext().getAuthentication().getPrincipal();
+    //     Inscription inscription = service.getInscriptionById(code);
+    //     if(
+    //         utilisateur.getRole().getRolNiveauValidation().equals(inscription.getInsNiveauValidation())
+    //     ){
+    //         service.validateInscription(
+    //             code,
+    //             utilisateur.getRole().getRolNiveauValidation()
+    //         );
+    //     }else 
+    //     throw new RuntimeException(
+    //         "Vous ne disposer pas de droit nécéssaire pour effectuer la validation de cette inscription"
+    //         );
+    //     return InscriptionResponse.builder()
+    //             .message("Succès")
+    //             .description("Validation efffectuée avec succès")
+    //             .build();
+    // }
 
-    public InscriptionResponse rejeterInscription(Integer code){
-        Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
-                                .getContext().getAuthentication().getPrincipal();
-        Inscription inscription = service.getInscriptionById(code);
-        if(
-            utilisateur.getRole().getRolNiveauValidation().equals(inscription.getInsNiveauValidation())
-        ){
-            service.rejeterInscription(
-                code,
-                utilisateur.getRole().getRolNiveauValidation()
-            );
-        }else 
-        throw new RuntimeException(
-            "Vous ne disposer pas de droit nécéssaire pour effectuer la validation de cette inscription"
-            );
-        return InscriptionResponse.builder()
-                .message("Succès")
-                .description("Validation efffectuée avec succès")
-                .build();
-    }
+    // public InscriptionResponse rejeterInscription(Integer code){
+    //     Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
+    //                             .getContext().getAuthentication().getPrincipal();
+    //     Inscription inscription = service.getInscriptionById(code);
+    //     if(
+    //         utilisateur.getRole().getRolNiveauValidation().equals(inscription.getInsNiveauValidation())
+    //     ){
+    //         service.rejeterInscription(
+    //             code,
+    //             utilisateur.getRole().getRolNiveauValidation()
+    //         );
+    //     }else 
+    //     throw new RuntimeException(
+    //         "Vous ne disposer pas de droit nécéssaire pour effectuer la validation de cette inscription"
+    //         );
+    //     return InscriptionResponse.builder()
+    //             .message("Succès")
+    //             .description("Validation efffectuée avec succès")
+    //             .build();
+    // }
 }

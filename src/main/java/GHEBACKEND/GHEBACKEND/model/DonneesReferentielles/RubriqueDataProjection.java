@@ -9,6 +9,6 @@ public interface RubriqueDataProjection {
     String getClaLib();
     BigDecimal getRubMontant();
     boolean getRubFraisUnique();
-    Integer getRubOrdrePaiement();
+    // Integer getRubOrdrePaiement();
 
 }

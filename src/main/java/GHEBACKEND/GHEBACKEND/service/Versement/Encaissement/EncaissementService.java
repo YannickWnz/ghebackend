@@ -64,11 +64,11 @@ public class EncaissementService {
                     response =  versementRequestService.versement(versementRequest);
                     montantRestant = response.getMontantRestant();
                     montantVerser = response.getMontantVerse();
-
+                   
                     if(!montantVerser.equals(0.0))
                         this.versementRequestService.verser(
                             inscription,
-                            montantVerser
+                            response.getMontantTotalVerse()
                         );
                 }
             }

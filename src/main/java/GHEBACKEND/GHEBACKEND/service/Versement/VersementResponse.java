@@ -18,4 +18,5 @@ public class VersementResponse {
     private String description;
     private Double montantRestant;
     private Double montantVerse;
+    private Double montantTotalVerse;
 }

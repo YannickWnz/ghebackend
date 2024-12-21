@@ -58,7 +58,7 @@ public class VersementRequestService  {
                 //On fait la somme des montants obligatoires
                  Double montantAverserObligatoire = sommeMontantRubrique(rubriqueObligatoire); 
                 //Montant à verser
-                Double montantRestant = request.getMontantVerse(),montantVerse = 0.0;
+                Double montantRestant = request.getMontantVerse(),montantVerse = 0.0, montantTotalVerse = 0.0 ;
                 boolean flag = false;
                
                 //Vérifier historique de paiement pour cette inscription
@@ -66,43 +66,51 @@ public class VersementRequestService  {
 
                     final Double montantTotalRubriquePayer = rubriquePayerService.getSumRubMontantByInscription(inscription);
                     final Double montantTotalHistorique = historiqueRubriqueInscriptionService.getSumHisMontantByInscription(inscription);
-                    
+                   
+
                     if (montantTotalRubriquePayer < montantTotalHistorique) {
                         
                         for (HistoriqueRubriqueInscription historiqueRubriqueInscription : historiqueRubriqueInscriptions) {
                             if(montantRestant > 0){
-                                    
+                                
                                 RubriquePayer rubriquePayer = rubriquePayerService.getRubriquePayerByRubriqueAndInscription(
                                         historiqueRubriqueInscription.getRubrique(),
                                         inscription);
-                                RubriquePayer rubriquePayer2 ;
+                                        RubriquePayer rubriquePayer2;
                                 
-                                    if(!Objects.equals(rubriquePayer, null) && 
-                                        rubriquePayer.getRbpMontantRestant() > 0 ){
-                                        rubriquePayer2 = miseAjourEncaissement(rubriquePayer, montantRestant);
-                                        montantVerse = montantVerse + (rubriquePayer2.getRbpMontant() - rubriquePayer.getRbpMontant());
-                                        montantRestant = montantRestant +(rubriquePayer2.getRbpMontantRestant() - rubriquePayer.getRbpMontantRestant());
-                                        flag = true;
+                                    if(!Objects.equals(rubriquePayer, null)){
+
+                                        if ( rubriquePayer.getRbpMontantRestant() > 0) {
+                                            Double montantAvantEncaissement = rubriquePayer.getRbpMontant();
+                                            rubriquePayer2 = miseAjourEncaissement(rubriquePayer, montantRestant);
+                                            montantVerse = rubriquePayer2.getRbpMontant() - montantAvantEncaissement;
+                                            montantRestant = montantRestant - montantVerse;
+                                            montantTotalVerse += montantVerse;
+                                            flag = true;
+                                        }
                                     }else{
                                         rubriquePayer2 =  nouvelEncaissement(inscription,historiqueRubriqueInscription,montantRestant);
-                                        montantVerse = montantVerse + (rubriquePayer2.getRbpMontant());
-                                        montantRestant = montantRestant +(rubriquePayer2.getRbpMontantRestant());
+                                        montantVerse = montantVerse + rubriquePayer2.getRbpMontant();
+                                        montantRestant = montantRestant - montantVerse;
                                         flag = true;
+                                        montantTotalVerse += montantVerse;
                                     }
-                                   
                             }
+
                         }
 
                         response.setMessage("Succès");        
                         response.setDescription("Versement effectué avec succès");
                         response.setMontantRestant(montantRestant); 
                         response.setMontantVerse(montantVerse); 
+                        response.setMontantTotalVerse(montantTotalVerse); 
                     }else{
-                        //inscriptionService.updateInsSoldInscription(inscription.getInsCode(), inscription);
+                        inscriptionService.updateInsSoldInscription(inscription.getInsCode(), inscription);
                         response.setMessage("Information");        
                         response.setDescription("Toutes les rubriques sont déjà soldées");
                         response.setMontantVerse(montantVerse);
-                        response.setMontantRestant(montantRestant);        
+                        response.setMontantRestant(montantRestant);
+                        response.setMontantTotalVerse(montantTotalVerse);         
                     }
 
                 }else{
@@ -122,6 +130,7 @@ public class VersementRequestService  {
                                     }
                                     montantVerse = montantVerse + rubriquePayer2.getRbpMontant();
                                     montantRestant = montantRestant - rubriquePayer2.getRbpMontant();
+                                    montantTotalVerse = montantVerse;
                             }
                         }
                         
@@ -132,12 +141,13 @@ public class VersementRequestService  {
                         response.setMessage("Succès");
                         response.setMontantRestant(montantRestant);
                         response.setMontantVerse(montantVerse);
-                    }else
-                        throw new IllegalStateException(
-                            String.format(
-                                "Ce montant ne peut pas couvrir toutes les rubriques obligatoires pour cette inscription, il faut atteindre %s FCFA", 
-                                montantAverserObligatoire)
-                            );
+                        response.setMontantTotalVerse(montantTotalVerse); 
+                    }else{
+                        response.setDescription("Information");
+                        response.setMessage(String.format("Attention, le montant maximum atteint pour effectuer ce paiement est : %s", montantAverserObligatoire));
+                        response.setMontantRestant(montantRestant);
+                        response.setMontantVerse(montantVerse);
+                    }
                 }
         }else{
             throw new 

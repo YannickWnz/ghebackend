@@ -62,4 +62,7 @@ public class Inscription {
     @OneToMany(mappedBy = "inscription",fetch = FetchType.LAZY)
     @JsonIgnore
     private List<RubriquePayer> rubliquesPayes;
+    //TODO: création d'une nouvelle rubrique qui spécifie si les rubriques soldées
+    @Column(name = "INS_SOLD",nullable = false)
+    private boolean insSold = false;
 }

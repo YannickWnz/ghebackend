@@ -40,7 +40,6 @@ public class VersementController {
     )
     public ResponseEntity<?> versement(@RequestBody EncaissementRequest request){
         return ResponseEntity.ok(encaissementService.encaissement(request));
-        
     }
 
     @PreAuthorize("hasAuthority('VERSEMENT_READ')")

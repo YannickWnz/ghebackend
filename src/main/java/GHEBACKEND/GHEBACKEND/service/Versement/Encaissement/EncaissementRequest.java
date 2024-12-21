@@ -3,6 +3,7 @@ package GHEBACKEND.GHEBACKEND.service.Versement.Encaissement;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,4 +18,5 @@ public class EncaissementRequest {
     private EtudiantModel etudiant;
     private LocalDate date;
     private Double montant;
+    private Inscription inscription;
 }

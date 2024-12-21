@@ -235,6 +235,7 @@ public class InscriptionService {
         return inscriptionRepository.save(existInscription);
     }
 
+    //select * from inscription where inscode not in ('23')
     public List<Inscription> getInscriptionByEtudiantAndInsCodeNotIn(EtudiantModel etudiantModel, List<Integer> inscriptionCodes){
         return inscriptionRepository
             .findByEtudiantAndInsCodeNotInOrderByInsCodeAscInsDateAsc(etudiantModel,inscriptionCodes);

@@ -1,6 +1,7 @@
 package GHEBACKEND.GHEBACKEND.service.Versement.Encaissement;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,10 +35,17 @@ public class EncaissementService {
     public EncaissementResponse encaissement(EncaissementRequest request){
         
         if(Objects.equals(request.getMontant(), null)) throw new EntityNotFoundException("Attention le montant est obligatoire");
-        if(Objects.equals(request.getEtudiant(), null)) throw new RuntimeException("Aucun étudiant envoye pour cette requête...");
+        if(Objects.equals(request.getEtudiant(), null)) throw new RuntimeException("Aucun étudiant envoyé pour cette requête...");
 
         EtudiantModel etudiant = etudiantService.getEtudiantByEtuCode(request.getEtudiant().getEtdCode());
+   
+        
+        
+        //TODO: afficher la liste des inscriptions qui ne sont pas encore soldées
         List<Inscription> inscriptionsEtudiant = inscriptionService.getInscriptionByEtudiant(etudiant);
+       
+        //TODO: Récuperation de l'inscription dont l'année est en cours
+        
         VersementResponse response = null;
         if(request.getMontant() < 0 && request.getMontant() == null) throw new RuntimeException("Aucun montant pour effectuer cet encaissement");
         Double montantRestant = request.getMontant(), montantVerser = null;

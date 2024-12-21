@@ -10,11 +10,13 @@ import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
+import GHEBACKEND.GHEBACKEND.model.Inscription.HistoriqueRubriqueInscription;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
 import GHEBACKEND.GHEBACKEND.service.Inscription.InscriptionService;
+import GHEBACKEND.GHEBACKEND.service.Inscription.HistoriqueRubriqueInscription.HistoriqueRubriqueInscriptionService;
 import GHEBACKEND.GHEBACKEND.service.Versement.RubriquePayer.RubriquePayerService;
 import GHEBACKEND.GHEBACKEND.utils.Utils;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class VersementRequestService  {
     private final RubriquePayerService rubriquePayerService;
     private final InscriptionService inscriptionService;
     private final RubriqueRepo rubriqueRepository;
+    private final HistoriqueRubriqueInscriptionService historiqueRubriqueInscriptionService;
 
     public VersementResponse versement(VersementRequest request){
        Inscription inscription =  inscriptionService.getInscriptionById(request.getInscription().getInsCode());
@@ -45,6 +48,7 @@ public class VersementRequestService  {
         if(!Objects.equals(rubriques, null)){           
                 List<RubriqueModel> rubriqueModels = rubriqueRepository.findByClasseOrderByRubFraisUniqueDescRubOrdreAsc(
                     inscription.getClasse());
+                //TODO: Récupérer les rubriques dans la table historique
                 List<RubriquePayer> rubriquePayers = inscription.getRubliquesPayes();
                 //Récuperations de toutes les rubriques obligatoires
                 List<RubriqueModel> rubriqueObligatoire = rubriqueRepository
@@ -90,11 +94,12 @@ public class VersementRequestService  {
                             response.setDescription("Toutes les rubriques sont déjà soldées");
                             response.setMessage("Information");
                             response.setMontantRestant(montantRestant);
+                            //TODO: marqué l'inscription comme soldée
                             return response;
                         }
                           
                 }else{
-                    //Première inscription
+                    //Premier versement
 
                     if(request.getMontantVerse() >= montantAverserObligatoire){
 
@@ -106,10 +111,12 @@ public class VersementRequestService  {
                                 else
                                     nouvelEncaissement(inscription, rubriqueModel, montantRestant);
                             }
-                            montantRestant -= rubriqueModel.getRubMontant();
+                            
                         }
-                        //Effectuer un versement
-                        /* verser(inscription, request.getMontantVerse()); */
+                        
+                        //TODO: Créer une historique pour les rubriques à payer de cette inscription
+                        createHistoriqueRubriqueInscription(inscription);
+
                         response.setDescription("Versement effectué avec succès");
                         response.setMessage("Succès");
                         response.setMontantRestant(montantRestant);
@@ -204,5 +211,24 @@ public class VersementRequestService  {
 
     public List<Versement> getVersementByDateVersement(LocalDate localDate){
         return versementService.getVersementByDateVersement(localDate);
+    }
+
+    public void createHistoriqueRubriqueInscription(Inscription inscription){
+        List<RubriqueModel> rubriqueModels = inscription.getClasse().getRubrique();
+
+        for (RubriqueModel rubriqueModel : rubriqueModels) {
+            HistoriqueRubriqueInscription historiqueRubriqueInscription = 
+                HistoriqueRubriqueInscription.builder()
+                    .hisDateCreation(LocalDate.now())
+                    .hisFraisUnique(rubriqueModel.getRubFraisUnique())
+                    .hisMontantPrevu(rubriqueModel.getRubMontant())
+                    .hisRubLib(rubriqueModel.getRubLib())
+                    .hisRubOrdre(rubriqueModel.getRubOrdre())
+                    .rubrique(rubriqueModel)
+                    .inscription(inscription)
+                    .build();
+            historiqueRubriqueInscriptionService
+                .createHistoriqueRubriqueInscription(historiqueRubriqueInscription);
+        }
     }
 }

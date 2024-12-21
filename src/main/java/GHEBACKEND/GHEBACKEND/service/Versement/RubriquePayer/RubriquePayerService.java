@@ -123,5 +123,15 @@ public class RubriquePayerService {
         }
     }
 
-    
+    public RubriquePayer getRubriquePayerByInscriptionAndRubCode
+    (
+        Inscription inscription,
+        String rubCode){
+        return rubriquePayerRepository
+        .findByInscriptionAndRubCode(inscription, rubCode);
+    }
+
+    public Double getSumRubMontantByInscription(Inscription inscription){
+        return rubriquePayerRepository.findSumRubMontantByInscription(inscription);
+    }
 }

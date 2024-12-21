@@ -49,55 +49,62 @@ public class VersementRequestService  {
                 List<RubriqueModel> rubriqueModels = rubriqueRepository.findByClasseOrderByRubFraisUniqueDescRubOrdreAsc(
                     inscription.getClasse());
                 //TODO: Récupérer les rubriques dans la table historique
-                List<RubriquePayer> rubriquePayers = inscription.getRubliquesPayes();
+                List<HistoriqueRubriqueInscription> historiqueRubriqueInscriptions = historiqueRubriqueInscriptionService
+                    .getHistoriqueRubriqueInscriptionByInscription(inscription);
+
                 //Récuperations de toutes les rubriques obligatoires
                 List<RubriqueModel> rubriqueObligatoire = rubriqueRepository
                 .findByClasseAndRubFraisUniqueTrueOrderByRubFraisUniqueAscRubOrdreAsc(inscription.getClasse());
                 //On fait la somme des montants obligatoires
                  Double montantAverserObligatoire = sommeMontantRubrique(rubriqueObligatoire); 
                 //Montant à verser
-                Double montantRestant = request.getMontantVerse();
+                Double montantRestant = request.getMontantVerse(),montantVerse = 0.0;
                 boolean flag = false;
-                //Déjà effectué un paiement
-                if (rubriquePayers.size() > 0) {
+               
+                //Vérifier historique de paiement pour cette inscription
+                if (historiqueRubriqueInscriptions.size() > 0) {
 
-                        for (RubriqueModel rubriqueModel : rubriqueModels) {
-                                RubriquePayer rubriquePayer = rubriquePayerService.getRubriquePayer(inscription, rubriqueModel);
-                                if(montantRestant > 0){
-                                    if(!Objects.equals(rubriquePayer, null)){
-                                        if(rubriquePayer.getRbpMontantRestant() > 0 
-                                        ){
-                                            Double rubriquePayerMontantRestant = rubriquePayer.getRbpMontantRestant();
-                                            miseAjourEncaissement(rubriquePayer, montantRestant);
-                                            montantRestant = montantRestant - rubriquePayerMontantRestant;
-                                            flag = true;
-                                        }else {
-                                            response.setDescription(String.format("La rubrique %s est déjà soldée",rubriqueModel.getRubLib()));
-                                            response.setMessage("Attention");
-                                        }
-                                    }else{
-                                        nouvelEncaissement(inscription,rubriqueModel,montantRestant);
+                    final Double montantTotalRubriquePayer = rubriquePayerService.getSumRubMontantByInscription(inscription);
+                    final Double montantTotalHistorique = historiqueRubriqueInscriptionService.getSumHisMontantByInscription(inscription);
+                    
+                    if (montantTotalRubriquePayer < montantTotalHistorique) {
+                        
+                        for (HistoriqueRubriqueInscription historiqueRubriqueInscription : historiqueRubriqueInscriptions) {
+                            if(montantRestant > 0){
+                                    
+                                RubriquePayer rubriquePayer = rubriquePayerService.getRubriquePayerByRubriqueAndInscription(
+                                        historiqueRubriqueInscription.getRubrique(),
+                                        inscription);
+                                RubriquePayer rubriquePayer2 ;
+                                
+                                    if(!Objects.equals(rubriquePayer, null) && 
+                                        rubriquePayer.getRbpMontantRestant() > 0 ){
+                                        rubriquePayer2 = miseAjourEncaissement(rubriquePayer, montantRestant);
+                                        montantVerse = montantVerse + (rubriquePayer2.getRbpMontant() - rubriquePayer.getRbpMontant());
+                                        montantRestant = montantRestant +(rubriquePayer2.getRbpMontantRestant() - rubriquePayer.getRbpMontantRestant());
                                         flag = true;
-                                        montantRestant -= rubriqueModel.getRubMontant();
+                                    }else{
+                                        rubriquePayer2 =  nouvelEncaissement(inscription,historiqueRubriqueInscription,montantRestant);
+                                        montantVerse = montantVerse + (rubriquePayer2.getRbpMontant());
+                                        montantRestant = montantRestant +(rubriquePayer2.getRbpMontantRestant());
+                                        flag = true;
                                     }
-                                }
+                                   
+                            }
                         }
-                        //Effectuer un versement
-                        if(flag){
-                            /* verser(inscription, request.getMontantVerse()); */
-                            response.setDescription("Versement effectué avec succès");
-                            response.setMessage("Succès");
-                            response.setMontantRestant(montantRestant);
-                            return response;
-                        }
-                        else{
-                            response.setDescription("Toutes les rubriques sont déjà soldées");
-                            response.setMessage("Information");
-                            response.setMontantRestant(montantRestant);
-                            //TODO: marqué l'inscription comme soldée
-                            return response;
-                        }
-                          
+
+                        response.setMessage("Succès");        
+                        response.setDescription("Versement effectué avec succès");
+                        response.setMontantRestant(montantRestant); 
+                        response.setMontantVerse(montantVerse); 
+                    }else{
+                        //inscriptionService.updateInsSoldInscription(inscription.getInsCode(), inscription);
+                        response.setMessage("Information");        
+                        response.setDescription("Toutes les rubriques sont déjà soldées");
+                        response.setMontantVerse(montantVerse);
+                        response.setMontantRestant(montantRestant);        
+                    }
+
                 }else{
                     //Premier versement
 
@@ -105,13 +112,17 @@ public class VersementRequestService  {
 
                         for (RubriqueModel rubriqueModel : rubriqueModels) {
                             if(montantRestant > 0){
-                                if(montantRestant >= rubriqueModel.getRubMontant() &&
-                                rubriqueModel.getRubFraisUnique())
-                                    nouvelEncaissement(inscription, rubriqueModel,rubriqueModel.getRubMontant());
-                                else
-                                    nouvelEncaissement(inscription, rubriqueModel, montantRestant);
+                                RubriquePayer rubriquePayer2 ;
+                                    if(montantRestant >= rubriqueModel.getRubMontant() &&
+                                       rubriqueModel.getRubFraisUnique()){
+                                        rubriquePayer2 =  nouvelEncaissement(inscription, rubriqueModel,rubriqueModel.getRubMontant());
+                                    }
+                                    else{
+                                        rubriquePayer2 = nouvelEncaissement(inscription, rubriqueModel, montantRestant);
+                                    }
+                                    montantVerse = montantVerse + rubriquePayer2.getRbpMontant();
+                                    montantRestant = montantRestant - rubriquePayer2.getRbpMontant();
                             }
-                            
                         }
                         
                         //TODO: Créer une historique pour les rubriques à payer de cette inscription
@@ -120,6 +131,7 @@ public class VersementRequestService  {
                         response.setDescription("Versement effectué avec succès");
                         response.setMessage("Succès");
                         response.setMontantRestant(montantRestant);
+                        response.setMontantVerse(montantVerse);
                     }else
                         throw new IllegalStateException(
                             String.format(
@@ -154,16 +166,40 @@ public class VersementRequestService  {
         return versementService.createVersement(versement);
     }
 
-    public RubriquePayer 
-    nouvelEncaissement(Inscription inscription,
-                        RubriqueModel rubriqueModel,
-                        Double montantVerse){
+    public RubriquePayer nouvelEncaissement(
+        Inscription inscription,
+        RubriqueModel rubriqueModel,
+        Double montantVerse){
+                            
         RubriquePayer rubriquePayer = new RubriquePayer();
         rubriquePayer.setInscription(inscription);
         rubriquePayer.setRubrique(rubriqueModel);
         rubriquePayer.setRbpPrevu(rubriqueModel.getRubMontant());
+
         if(montantVerse > rubriqueModel.getRubMontant()){
             rubriquePayer.setRbpMontant(rubriqueModel.getRubMontant());
+            rubriquePayer.setRbpMontantRestant(0.0);
+        }else{
+            rubriquePayer.setRbpMontant(montantVerse);
+            rubriquePayer.setRbpMontantRestant(rubriquePayer.getRbpPrevu() - montantVerse);
+        }
+        rubriquePayer.setRbpDate(LocalDate.now());
+        return rubriquePayerService.createRubriquePayer(rubriquePayer);
+    }
+
+
+    public RubriquePayer nouvelEncaissement(
+        Inscription inscription,
+        HistoriqueRubriqueInscription historiqueRubriqueInscription,
+        Double montantVerse){
+                            
+        RubriquePayer rubriquePayer = new RubriquePayer();
+        rubriquePayer.setInscription(inscription);
+        rubriquePayer.setRubrique(historiqueRubriqueInscription.getRubrique());
+        rubriquePayer.setRbpPrevu(historiqueRubriqueInscription.getHisMontantPrevu());
+
+        if(montantVerse > historiqueRubriqueInscription.getHisMontantPrevu()){
+            rubriquePayer.setRbpMontant(historiqueRubriqueInscription.getHisMontantPrevu());
             rubriquePayer.setRbpMontantRestant(0.0);
         }else{
             rubriquePayer.setRbpMontant(montantVerse);
@@ -182,6 +218,9 @@ public class VersementRequestService  {
         existsRubriquePayer.setRbpMontantRestant(existsRubriquePayer.getRbpPrevu() - existsRubriquePayer.getRbpMontant());
        return rubriquePayerService.updateRubriquePayer(existsRubriquePayer.getRbpCode(), existsRubriquePayer);
     }
+
+
+    
 
     public Double sommeMontantRubrique(List<RubriqueModel> rubriqueModels){
         return rubriqueModels.stream()

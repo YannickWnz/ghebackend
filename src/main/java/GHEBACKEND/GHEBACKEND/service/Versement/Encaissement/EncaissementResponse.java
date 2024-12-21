@@ -13,4 +13,6 @@ import lombok.experimental.NonFinal;
 public class EncaissementResponse {
     private String message;
     private String description;
+    private Double montantVerse;
+    private Double montantRestant;
 }

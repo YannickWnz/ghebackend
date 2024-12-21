@@ -37,6 +37,11 @@ public class HistoriqueRubriqueInscriptionService {
             return historiqueRubriqueInscriptionRepository.findByInscription(inscription);
     }
 
+    public Double getSumHisMontantByInscription(Inscription inscription){
+        return historiqueRubriqueInscriptionRepository
+        .findSumHisMontantPrevuByInscription(inscription);
+    }
+
     public HistoriqueRubriqueInscription updateHistoriqueRubriqueInscription(
         Integer codeHistoriqueRubriqueInscription,
         HistoriqueRubriqueInscription historiqueRubriqueInscription

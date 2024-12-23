@@ -3,28 +3,23 @@ package GHEBACKEND.GHEBACKEND.controller.Versement;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.apache.catalina.connector.Response;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
-import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequest;
-import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequestService;
-import GHEBACKEND.GHEBACKEND.service.Versement.VersementService;
 import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementRequest;
 import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementService;
 import io.swagger.v3.oas.annotations.Operation;
+import GHEBACKEND.GHEBACKEND.service.Versement.VersementRequestService;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/versement")
 @RequiredArgsConstructor
@@ -33,7 +28,7 @@ public class VersementController {
     private final VersementRequestService service;
     private final EncaissementService encaissementService;
 
-    @PreAuthorize("hasAuthority('VERSEMENT_CREATE')")
+    // @PreAuthorize("hasAuthority('VERSEMENT_CREATE')")
     @PostMapping
     @Operation(
         description = "Cette fonctionnalite permet d'effectuer un versement"

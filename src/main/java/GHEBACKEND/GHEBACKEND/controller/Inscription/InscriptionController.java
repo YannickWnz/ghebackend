@@ -43,7 +43,7 @@ public class InscriptionController {
         }
     }
 
-    @PreAuthorize("hasAuthority('INSCRIPTION_READ') and hasRole('ADMINISTRATEUR')")
+    // @PreAuthorize("hasAuthority('INSCRIPTION_READ') and hasRole('ADMINISTRATEUR')")
     @GetMapping
     public ResponseEntity<?> getInscriptions() {
         return ResponseEntity.ok(inscriptionService.getAllInscription());
@@ -90,17 +90,17 @@ public class InscriptionController {
             return ResponseEntity.status(HttpStatus.OK).body(service.modifierInscription(code,request));
     }
 
-    @PreAuthorize("hasAuthority('INSCRIPTION_VALIDATE')")
-    @PutMapping("/valider/{code}")
-    public ResponseEntity<?> validerInscription(@PathVariable Integer code) { 
-        return ResponseEntity.status(HttpStatus.OK).body(service.validerInscription(code));
-    }
+    // @PreAuthorize("hasAuthority('INSCRIPTION_VALIDATE')")
+    // @PutMapping("/valider/{code}")
+    // public ResponseEntity<?> validerInscription(@PathVariable Integer code) { 
+    //     return ResponseEntity.status(HttpStatus.OK).body(service.validerInscription(code));
+    // }
 
-    @PreAuthorize("hasAuthority('INSCRIPTION_REJET')")
-    @PutMapping("/rejeter/{code}")
-    public ResponseEntity<?> rejetterInscription(@PathVariable Integer code) { 
-        return ResponseEntity.status(HttpStatus.OK).body(service.rejeterInscription(code));
-    }
+    // @PreAuthorize("hasAuthority('INSCRIPTION_REJET')")
+    // @PutMapping("/rejeter/{code}")
+    // public ResponseEntity<?> rejetterInscription(@PathVariable Integer code) { 
+    //     return ResponseEntity.status(HttpStatus.OK).body(service.rejeterInscription(code));
+    // }
 
     @DeleteMapping("/{code}")
     public ResponseEntity<?> deleteInscription(@PathVariable Integer code){

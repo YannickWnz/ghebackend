@@ -35,13 +35,16 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception{
         return httpSecurity
                     .csrf(csrf -> csrf.disable())
-                    .authorizeHttpRequests(
-                        authorize ->
-                            authorize
-                            .requestMatchers(POST, "/api/creer-compte").permitAll()
-                            .requestMatchers(POST,"/api/connexion").permitAll()
-                            /* .requestMatchers(GET, "/api/inscription").hasRole("ADMINISTRATEUR") */
-                            .anyRequest().authenticated()
+
+                    // .authorizeHttpRequests(
+                    //     authorize ->
+                    //         authorize
+                    //         .requestMatchers(POST, "/api/creer-compte").permitAll()
+                    //         .requestMatchers(POST,"/api/connexion").permitAll()
+                    //         /* .requestMatchers(GET, "/api/inscription").hasRole("ADMINISTRATEUR") */
+                    //         .anyRequest().authenticated()
+                    .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
                     )
 
                     .sessionManagement(

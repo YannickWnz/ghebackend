@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.security.access.prepost.PreAuthorize;
 import GHEBACKEND.GHEBACKEND.model.Versement.Versement;
 import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementRequest;
 import GHEBACKEND.GHEBACKEND.service.Versement.Encaissement.EncaissementService;

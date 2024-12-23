@@ -79,7 +79,7 @@ public class RubriqueService {
         // HANDLING RUB ORDER PAYMENT STARTS
         if(!rubriqueModel.getRubFraisUnique()) {
    
-            int rub_order_payment = rubriqueModel.getRubOrdrePaiement();
+            int rub_order_payment = rubriqueModel.getRubOrdre();
 
             String getExistingPaymentOrder = "SELECT RUB_CODE FROM T_RUBRIQUE WHERE RUB_ORDRE_PAYMENT = ?";
 
@@ -100,7 +100,7 @@ public class RubriqueService {
             }
         } 
         else {
-            rubriqueModel.setRubOrdrePaiement(null);
+            rubriqueModel.SetRubOrdre(null);
         } 
         // HANDLING RUB ORDER PAYMENT ENDS
 

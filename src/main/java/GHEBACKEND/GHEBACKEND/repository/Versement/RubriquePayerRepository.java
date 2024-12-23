@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
@@ -28,5 +29,10 @@ public interface RubriquePayerRepository extends JpaRepository<RubriquePayer, St
     RubriquePayer findByRubriqueAndInscription(RubriqueModel rubrique,Inscription inscription);
 
 
+    @Query("select r from RubriquePayer r where r.inscription = :inscription and r.rubrique.rub_code = :rubCode")
+    RubriquePayer findByInscriptionAndRubCode(@Param("inscription") Inscription inscription,@Param("rubCode") String rubCode);
+
+    @Query("select sum(r.rbpMontant) from RubriquePayer r where r.inscription = :inscription")
+    Double findSumRubMontantByInscription(@Param("inscription") Inscription inscription);
 }
 

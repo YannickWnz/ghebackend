@@ -12,6 +12,8 @@ import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
 
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.StudentInscriptionDetailsProjection;
+import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
+
 
 /* 
  * 
@@ -42,4 +44,7 @@ public interface InscriptionRepository extends  JpaRepository<Inscription,Intege
 
     @Query("select max(i.insCode) from Inscription i where i.etudiant = :etudiantModel")
     Optional<Integer> findMaximumByEtudiant(@Param("etudiantModel") EtudiantModel etudiantModel);
+
+    //select * from inscription where InsSold = 'value'
+    List<Inscription> findByInsSoldAndEtudiant(boolean insSold,EtudiantModel etudiant);
 }

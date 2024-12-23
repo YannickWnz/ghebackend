@@ -40,7 +40,6 @@ public class InscriptionController {
             return ResponseEntity.status(HttpStatus.OK).body(service.inscrire(request)) ;
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-
         }
     }
 

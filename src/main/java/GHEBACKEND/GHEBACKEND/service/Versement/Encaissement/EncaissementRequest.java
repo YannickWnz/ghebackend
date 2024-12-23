@@ -15,8 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EncaissementRequest {
-    private EtudiantModel etudiant;
+    private Inscription inscription;
     private LocalDate date;
     private Double montant;
-    private Inscription inscription;
 }

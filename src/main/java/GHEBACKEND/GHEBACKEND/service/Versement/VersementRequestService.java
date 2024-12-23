@@ -114,8 +114,7 @@ public class VersementRequestService  {
                             
                         }
                         
-                        //TODO: Créer une historique pour les rubriques à payer de cette inscription
-                        createHistoriqueRubriqueInscription(inscription);
+                        
 
                         response.setDescription("Versement effectué avec succès");
                         response.setMessage("Succès");
@@ -213,22 +212,5 @@ public class VersementRequestService  {
         return versementService.getVersementByDateVersement(localDate);
     }
 
-    public void createHistoriqueRubriqueInscription(Inscription inscription){
-        List<RubriqueModel> rubriqueModels = inscription.getClasse().getRubrique();
-
-        for (RubriqueModel rubriqueModel : rubriqueModels) {
-            HistoriqueRubriqueInscription historiqueRubriqueInscription = 
-                HistoriqueRubriqueInscription.builder()
-                    .hisDateCreation(LocalDate.now())
-                    .hisFraisUnique(rubriqueModel.getRubFraisUnique())
-                    .hisMontantPrevu(rubriqueModel.getRubMontant())
-                    .hisRubLib(rubriqueModel.getRubLib())
-                    .hisRubOrdre(rubriqueModel.getRubOrdre())
-                    .rubrique(rubriqueModel)
-                    .inscription(inscription)
-                    .build();
-            historiqueRubriqueInscriptionService
-                .createHistoriqueRubriqueInscription(historiqueRubriqueInscription);
-        }
-    }
+   
 }

@@ -5,9 +5,13 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.model.Inscription.HistoriqueRubriqueInscription;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.repository.Inscription.HistoriqueRubriqueInscriptionRepository;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.ClasseService;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.RubriqueService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -15,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class HistoriqueRubriqueInscriptionService {
 
     private final HistoriqueRubriqueInscriptionRepository historiqueRubriqueInscriptionRepository;
+    
 
     public HistoriqueRubriqueInscription getHistoriqueRubriqueHistoriqueById(Integer code){
         return this.historiqueRubriqueInscriptionRepository.findById(code)
@@ -70,5 +75,7 @@ public class HistoriqueRubriqueInscriptionService {
             return historiqueRubriqueInscriptionRepository
                 .save(existsHistoriqueRubriqueInscription);
     } 
+
+    
 
 }

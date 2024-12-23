@@ -33,7 +33,7 @@ public class InscriptionController {
     private final InscriptionRequestService service;
     private final InscriptionService inscriptionService;
 
-    @PreAuthorize("hasAuthority('INSCRIPTION_CREATE')")
+   /*  @PreAuthorize("hasAuthority('INSCRIPTION_CREATE')") */
     @PostMapping
     public ResponseEntity<?> createInscription(@RequestBody InscriptionRequest request){
         try {

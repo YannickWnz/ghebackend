@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
@@ -165,6 +166,10 @@ public class RubriqueService {
 
         List<RubriqueModel> rubriqueData = rubriqueRepo.findAll();
 
+    }
+
+    public List<RubriqueModel> getRubriqueModelByClasse(ClasseModel classeModel){
+        return rubriqueRepo.findByClasse(classeModel);
     }
 
 }

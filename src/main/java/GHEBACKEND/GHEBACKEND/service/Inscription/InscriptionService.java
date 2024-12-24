@@ -151,6 +151,15 @@ public class InscriptionService {
      * Modifier une inscription
      * @GaiusYan
      */
+
+    public Inscription updateInsSoldInscription(Integer code, Inscription inscription){
+        Inscription existInscription = inscriptionRepository.findById(code)
+                .orElseThrow(() -> new IllegalStateException(
+                        String.format("Cette inscription de numero %s n'existe pas",code)));
+        existInscription.setInsSold(true);
+        return inscriptionRepository.save(existInscription);
+    } 
+
     @Transactional
     public Inscription updateInscription(
         @NonNull Integer code,
@@ -242,9 +251,14 @@ public class InscriptionService {
         return inscriptionRepository.save(existInscription);
     }
 
+    //select * from inscription where inscode not in ('23')
     public List<Inscription> getInscriptionByEtudiantAndInsCodeNotIn(EtudiantModel etudiantModel, List<Integer> inscriptionCodes){
         return inscriptionRepository
             .findByEtudiantAndInsCodeNotInOrderByInsCodeAscInsDateAsc(etudiantModel,inscriptionCodes);
+    }
+  
+    public List<Inscription> getInscriptionByInsSoldeAndEtudiant(boolean insSold,EtudiantModel etudiant){
+        return inscriptionRepository.findByInsSoldAndEtudiant(insSold,etudiant);
     }
 
 }

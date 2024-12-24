@@ -23,11 +23,11 @@ public class RubriquePayerRequestService {
     private final InscriptionService inscriptionService;
     private final EtudiantService etudiantService;
 
-    public List<RubriquePayerResponse> getRubriquesByInscription(Integer code){
+    public List<RubriquePayerResponse> getRubriquesByInscription(Integer inscriptionCode){
 
-        if (Objects.equals(code, null)) throw new EntityNotFoundException("Aucun numero d'inscription...");
+        if (Objects.equals(inscriptionCode, null)) throw new EntityNotFoundException("Aucun numero d'inscription...");
 
-        Inscription inscription = inscriptionService.getInscriptionById(code);
+        Inscription inscription = inscriptionService.getInscriptionById(inscriptionCode);
         List<RubriqueModel> rubriques = inscription.getClasse().getRubrique();
         List<RubriquePayerResponse> rubriquePayerResponses = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public class RubriquePayerRequestService {
         List<Integer> inscriptionCodes = new ArrayList<>();
         Integer inscriptionCode = inscriptionService.getMaximumInscriptionByEtudiant(etudiant);
 
-        if (Objects.equals(inscriptionCode, null)) throw new EntityNotFoundException("Aucune inscription antérieurement effectuée...");
+        if (Objects.equals(inscriptionCode, null)) return new ArrayList<>();
         
         inscriptionCodes.add(
             inscriptionService

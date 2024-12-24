@@ -10,12 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.AnneeAcademique;
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
+import GHEBACKEND.GHEBACKEND.model.Inscription.HistoriqueRubriqueInscription;
 import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.repository.PriseEnCharge.EtudiantRepo;
 import GHEBACKEND.GHEBACKEND.security.Utilisateur.Utilisateur;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.AnneeAcademiqueService;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.ClasseService;
 import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.PromotionService;
+import GHEBACKEND.GHEBACKEND.service.DonneesReferentielles.RubriqueService;
+import GHEBACKEND.GHEBACKEND.service.Inscription.HistoriqueRubriqueInscription.HistoriqueRubriqueInscriptionService;
 import GHEBACKEND.GHEBACKEND.service.PriseEnCharge.EtudiantService;
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +31,8 @@ public class InscriptionRequestService {
     private final PromotionService promotionService;
     private final ClasseService classeService;
     private final AnneeAcademiqueService anneeAcademiqueService;
+    private final HistoriqueRubriqueInscriptionService historiqueRubriqueInscriptionService;
+    private final RubriqueService rubriqueService;
 
     public InscriptionResponse inscrire(InscriptionRequest request){
         Inscription inscription = new Inscription();
@@ -46,6 +52,7 @@ public class InscriptionRequestService {
         inscription.setAnneeAcademique(anneeAcademiqueService.getAnneeAcademiqueByAaCode(request.getAnnee().getAacCode()));
         
         service.createInscription(inscription);
+        createHistoriqueRubriqueInscription(inscription);
         return new InscriptionResponse(
             "Inscription effectuée avec succès",
             "Succès");
@@ -117,6 +124,48 @@ public class InscriptionRequestService {
     //             .build();
     // }
 
+    public InscriptionResponse rejeterInscription(Integer code){
+        Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
+                                .getContext().getAuthentication().getPrincipal();
+        Inscription inscription = service.getInscriptionById(code);
+        if(
+            utilisateur.getRole().getRolNiveauValidation().equals(inscription.getInsNiveauValidation())
+        ){
+            service.rejeterInscription(
+                code,
+                utilisateur.getRole().getRolNiveauValidation()
+            );
+        }else 
+        throw new RuntimeException(
+            "Vous ne disposer pas de droit nécéssaire pour effectuer la validation de cette inscription"
+            );
+        return InscriptionResponse.builder()
+                .message("Succès")
+                .description("Validation efffectuée avec succès")
+                .build();
+    }
+
+
+     public void createHistoriqueRubriqueInscription(Inscription inscription){
+        List<RubriqueModel> rubriqueModels = rubriqueService
+            .getRubriqueModelByClasse(inscription.getClasse());
+
+        for (RubriqueModel rubriqueModel : rubriqueModels) {
+            HistoriqueRubriqueInscription historiqueRubriqueInscription = 
+                HistoriqueRubriqueInscription.builder()
+                    .hisDateCreation(LocalDate.now())
+                    .hisFraisUnique(rubriqueModel.getRubFraisUnique())
+                    .hisMontantPrevu(rubriqueModel.getRubMontant())
+                    .hisRubLib(rubriqueModel.getRubLib())
+                    .hisRubOrdre(rubriqueModel.getRubOrdre())
+                    .rubrique(rubriqueModel)
+                    .inscription(inscription)
+                    .build();
+            historiqueRubriqueInscriptionService
+                .createHistoriqueRubriqueInscription(historiqueRubriqueInscription);
+        }
+    }
+
     // public InscriptionResponse rejeterInscription(Integer code){
     //     Utilisateur utilisateur = (Utilisateur) SecurityContextHolder
     //                             .getContext().getAuthentication().getPrincipal();
@@ -137,4 +186,5 @@ public class InscriptionRequestService {
     //             .description("Validation efffectuée avec succès")
     //             .build();
     // }
+
 }

@@ -33,14 +33,13 @@ public class InscriptionController {
     private final InscriptionRequestService service;
     private final InscriptionService inscriptionService;
 
-    // @PreAuthorize("hasAuthority('INSCRIPTION_CREATE')")
+   /*  @PreAuthorize("hasAuthority('INSCRIPTION_CREATE')") */
     @PostMapping
     public ResponseEntity<?> createInscription(@RequestBody InscriptionRequest request){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.inscrire(request)) ;
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-
         }
     }
 

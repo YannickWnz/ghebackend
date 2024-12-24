@@ -29,9 +29,9 @@ public class Utilisateur implements UserDetails{
     @Id
     @Column(name = "UTI_CODE", nullable = false)
     private String utiCode;
-    @Column(name = "UTI_NOM", nullable = true)
+    @Column(name = "UTI_NOM", nullable = false)
     private String utiNom;
-    @Column(name = "UTI_PRENOM", nullable = true)
+    @Column(name = "UTI_PRENOM", nullable = false)
     private String utiPrenom;
     @Column(name = "UTI_PASSWORD", nullable = false)
     private String utiPassword;

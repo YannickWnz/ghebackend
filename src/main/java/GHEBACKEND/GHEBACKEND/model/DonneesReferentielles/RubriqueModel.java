@@ -132,7 +132,7 @@ public class RubriqueModel {
         this.classe = cla_code;
     }
 
-    public void SetRubOrdre(Integer rubOrdre){
+    public void setRubOrdre(Integer rubOrdre){
         this.rubOrdre = rubOrdre;
     }
 

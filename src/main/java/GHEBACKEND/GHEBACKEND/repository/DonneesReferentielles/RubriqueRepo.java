@@ -33,4 +33,7 @@ public interface RubriqueRepo extends JpaRepository<RubriqueModel, Integer> {
 
     //Cette méthode permet d'afficher la liste des rubriques qui ne sont obligatoires
     List<RubriqueModel> findByClasseAndRubFraisUniqueTrueOrderByRubFraisUniqueAscRubOrdreAsc(ClasseModel classe);
+
+    //select * from t_rubrique where cla_code = ?
+    List<RubriqueModel> findByClasse(ClasseModel classeModel);
 }

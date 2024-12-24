@@ -25,5 +25,4 @@ public interface ClasseRepo extends JpaRepository<ClasseModel, Integer> {
     @Query(value="SELECT CLA_CODE, CLA_LIB, FIL_LIB, NIV_LIB FROM T_CLASSE CLA, T_FILIERE FIL, T_NIVEAU NIV WHERE CLA.FIL_CODE = FIL.FIL_CODE AND CLA.NIV_CODE = NIV.NIV_CODE", nativeQuery=true)
     List<ClasseDataProjection> getClassesData();
 
-
 }

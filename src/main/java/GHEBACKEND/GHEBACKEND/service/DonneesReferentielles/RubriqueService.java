@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.ClasseModel;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueDataProjection;
 import GHEBACKEND.GHEBACKEND.model.DonneesReferentielles.RubriqueModel;
 import GHEBACKEND.GHEBACKEND.repository.DonneesReferentielles.RubriqueRepo;
@@ -78,7 +79,7 @@ public class RubriqueService {
         // HANDLING RUB ORDER PAYMENT STARTS
         if(!rubriqueModel.getRubFraisUnique()) {
    
-            int rub_order_payment = rubriqueModel.getRubOrdrePaiement();
+            int rub_order_payment = rubriqueModel.getRubOrdre();
 
             String getExistingPaymentOrder = "SELECT RUB_CODE FROM T_RUBRIQUE WHERE RUB_ORDRE_PAYMENT = ?";
 
@@ -99,7 +100,7 @@ public class RubriqueService {
             }
         } 
         else {
-            rubriqueModel.setRubOrdrePaiement(null);
+            rubriqueModel.SetRubOrdre(null);
         } 
         // HANDLING RUB ORDER PAYMENT ENDS
 
@@ -165,6 +166,10 @@ public class RubriqueService {
 
         List<RubriqueModel> rubriqueData = rubriqueRepo.findAll();
 
+    }
+
+    public List<RubriqueModel> getRubriqueModelByClasse(ClasseModel classeModel){
+        return rubriqueRepo.findByClasse(classeModel);
     }
 
 }

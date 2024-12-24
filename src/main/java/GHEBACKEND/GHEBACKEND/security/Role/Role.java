@@ -53,7 +53,7 @@ public class Role {
         final List<GrantedAuthority> grantedAuthorities = permissions.stream().map(
             permission -> new SimpleGrantedAuthority(permission.getFonctionnalite().getFncLib().toUpperCase())
         ).collect(Collectors.toList());
-        grantedAuthorities.add(new SimpleGrantedAuthority(String.format("ROLE_%s", this.getRolLib().replace(" ", "_"))));
+        grantedAuthorities.add(new SimpleGrantedAuthority(String.format("ROLE_%s", this.getRolLib().replace(" ", "_").toUpperCase())));
         return grantedAuthorities;
     } 
 }

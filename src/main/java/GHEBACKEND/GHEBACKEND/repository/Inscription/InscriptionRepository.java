@@ -12,6 +12,8 @@ import GHEBACKEND.GHEBACKEND.model.Inscription.Inscription;
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.EtudiantModel;
 
 import GHEBACKEND.GHEBACKEND.model.PriseEnCharge.StudentInscriptionDetailsProjection;
+import GHEBACKEND.GHEBACKEND.model.Versement.RubriquePayer;
+
 
 /* 
  * 
@@ -33,11 +35,16 @@ public interface InscriptionRepository extends  JpaRepository<Inscription,Intege
     
     List<Inscription> findByEtudiantOrderByInsCodeAscInsDateAsc(EtudiantModel etudiant);
 
-    List<Inscription> findByEtudiantAndInsCodeNotInOrderByInsCodeAscInsDateAsc(EtudiantModel etudiant,List<Integer> InsCodes);
+    //select * from t_inscription where insCode not in (listCode)
+    List<Inscription> findByEtudiantAndInsCodeNotInOrderByInsCodeAscInsDateAsc
+    (EtudiantModel etudiant,List<Integer> InsCodes);
 
     @Query(value="SELECT AAC_LIB, CLA_LIB, PRO_LIB, FIL_LIB, NIV_LIB FROM T_ANNEE_ACADEMIQUE AAC, T_PROMOTION PRO, T_CLASSE CLA, T_INSCRIPTION INS, T_FILIERE FIL, T_NIVEAU NIV  WHERE INS.ETD_CODE = ?1 AND INS.aac_code = AAC.AAC_CODE AND INS.CLA_CODE = CLA.CLA_CODE AND INS.PRO_CODE = PRO.PRO_CODE AND CLA.FIL_CODE = FIL.FIL_CODE AND CLA.NIV_CODE= NIV.NIV_CODE ORDER BY INS_CODE DESC", nativeQuery=true)
     List<StudentInscriptionDetailsProjection> getStudentInscriptionDetails(Integer code);
 
     @Query("select max(i.insCode) from Inscription i where i.etudiant = :etudiantModel")
     Optional<Integer> findMaximumByEtudiant(@Param("etudiantModel") EtudiantModel etudiantModel);
+
+    //select * from inscription where InsSold = 'value'
+    List<Inscription> findByInsSoldAndEtudiant(boolean insSold,EtudiantModel etudiant);
 }
